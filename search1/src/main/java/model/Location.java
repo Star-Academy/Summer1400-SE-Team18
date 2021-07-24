@@ -21,7 +21,7 @@ public class Location {
     public int getIndex() {
         return index;
     }
-
+    
     @Override
     public String toString() {
         return "String index : " + index + ls +
