@@ -95,7 +95,7 @@
                     <configuration>
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>searchbemola.App</mainClass>
+                        <mainClass>Main</mainClass>
                         </transformer>
                     </transformers>
                     </configuration>
