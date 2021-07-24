@@ -1,6 +1,5 @@
 
 import controller.ProgramController;
-import model.CustomStemmer;
 
 public class Main {
     

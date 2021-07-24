@@ -38,19 +38,16 @@ public class SearchController {
         ArrayList<HashSet<String>> noTags = new ArrayList<>();
         ArrayList<HashSet<String>> plusTags = new ArrayList<>();
         ArrayList<HashSet<String>> minusTags = new ArrayList<>();
-        boolean isPositive = false;
+        boolean isNoTag = false;
         for (String word : words) {
             if (word.startsWith("-")) addToList(word.substring(1), minusTags);
-            else if (word.startsWith("+")) { 
-                addToList(word.substring(1), plusTags);
-                isPositive = true;
-            } else addToList(word, noTags);
+            else if (word.startsWith("+")) addToList(word.substring(1), plusTags);
+            else {
+                addToList(word, noTags);
+                isNoTag = true;
+            } 
         }
         System.out.println("noTags: " + noTags.size() + "\n" + "plusTags: " + plusTags.size() + "\n" + "minusTags: " + minusTags.size());
-        HashSet<String> pluses = new HashSet();
-        for (HashSet<String> plusTag : plusTags) pluses.addAll(plusTag);
-        HashSet<String> minuses = new HashSet();
-        for (HashSet<String> minusTag : minusTags) minuses.addAll(minusTag);
         HashSet<String> answers = noTags.size() == 0 ? new HashSet() : noTags.get(0);
         Iterator<String> iterator = answers.iterator();
         while(iterator.hasNext()) {
@@ -62,14 +59,31 @@ public class SearchController {
                 }
             }
         }
-        final boolean isPositiveFinal = isPositive;
-        answers.removeIf(e -> {
-            if (minuses.contains(e)) return true;
-            if (isPositiveFinal && !pluses.contains(e)) return true;
-            return false;
-        });
+        HashSet<String> pluses = new HashSet();
+        for (HashSet<String> plusTag : plusTags) pluses.addAll(plusTag);
+        HashSet<String> minuses = new HashSet();
+        for (HashSet<String> minusTag : minusTags) minuses.addAll(minusTag);
+
+        if (isNoTag) searchWithNoTags(answers, pluses, minuses);
+        else searchWithoutNoTags(answers, pluses, minuses);
+
+        // answers.removeIf(e -> {
+        //     if (minuses.contains(e)) return true;
+        //     if (isPositive && !pluses.contains(e)) return true;
+        //     return false;
+        // });
         printResult(answers);
         return answers; 
+    }
+
+    private void searchWithNoTags(HashSet<String> answers, HashSet<String> pluses, HashSet<String> minuses) {
+        answers.removeAll(minuses);
+        answers.retainAll(pluses);
+    }
+
+    private void searchWithoutNoTags(HashSet<String> answers, HashSet<String> pluses, HashSet<String> minuses) {
+        answers.addAll(pluses);
+        answers.removeAll(minuses);
     }
 
     private void addToList(String word, ArrayList<HashSet<String>> tags) {

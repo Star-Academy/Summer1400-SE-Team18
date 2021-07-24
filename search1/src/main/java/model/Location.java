@@ -24,7 +24,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "String index : " + index + "ls" +
-                "File name : " + filename + "ls";
+        return "String index : " + index + ls +
+                "File name : " + filename + ls;
     }
 }

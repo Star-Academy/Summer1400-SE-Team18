@@ -27,7 +27,7 @@ public class MainMenuController {
         // if (!file.getName().endsWith(".txt")) return false;
         try {
             String fileString = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            fileString = fileString.replaceAll("[^a-zA-Z0-9\\s]", "");
+            fileString = fileString.replaceAll("[^a-zA-Z0-9\\s]", " ");
             String[] fileStrings = fileString.split("[\\s]+");
             for (int i = 0; i < fileStrings.length; i++) {
                 String word = fileStrings[i];
