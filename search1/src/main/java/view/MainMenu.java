@@ -38,7 +38,7 @@ public class MainMenu {
 
     private static void read(String command) {
         try {
-            if (MainMenuController.readFile(command.split("[\\s+]")[1]))
+            if (MainMenuController.readFile(command.substring(command.indexOf(' ') + 1)))
                 System.out.println("file added to database.");
             else System.out.println("wrong file name!");
         } catch(Exception e) {

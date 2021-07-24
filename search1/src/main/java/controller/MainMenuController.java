@@ -17,7 +17,7 @@ public class MainMenuController {
         if (!file.getName().endsWith(".txt")) return false;
         try {
             String fileString = new String(Files.readAllBytes(Paths.get(file.getPath())));
-            fileString.replaceAll("[^\\w]", "");
+            fileString = fileString.replaceAll("[^\\w\\s]", "");
             String[] fileStrings = fileString.split("[\\s]+");
             for (int i = 0; i < fileStrings.length; i++) {
                 if (datas.containsKey(fileStrings[i])) {
