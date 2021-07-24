@@ -3,11 +3,13 @@ package view;
 import java.util.Scanner;
 
 import controller.MainMenuController;
+import controller.ProgramController;
+import controller.SearchController;
 
 public class MainMenu {
     public static void run() {
         String command;
-        final Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ProgramController.getScanner();
         while(true) {
             command = scanner.nextLine();
             if (command.startsWith("read")) {
@@ -26,19 +28,19 @@ public class MainMenu {
     }
 
     private static void help() {
-        System.out.println("read : to add a file to database (with path)\n" + 
+        System.out.println("read : to add a folder to database (with path)\n" + 
                 "choose : choose a file from file explorer\n" +
                 "search : search for a word in the current database\n" + 
                 "quit : quit the program");
     }
 
     private static void search(String command) {
-        // todo
+        SearchController.getInstance().run();
     }
 
     private static void read(String command) {
         try {
-            if (MainMenuController.readFile(command.substring(command.indexOf(' ') + 1)))
+            if (MainMenuController.readFolder(command.substring(command.indexOf(' ') + 1)))
                 System.out.println("file added to database.");
             else System.out.println("wrong file name!");
         } catch(Exception e) {
@@ -47,6 +49,6 @@ public class MainMenu {
     }
 
     private static void chooseFile() {
-        //
+        // todo
     }
 }

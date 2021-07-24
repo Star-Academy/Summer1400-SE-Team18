@@ -10,6 +10,10 @@ public class CustomStemmer {
         stemmer = new Stemmer();
     }
 
+    public CustomStemmer() {
+        word = "";
+    }
+
     public CustomStemmer(String word) {
         this.word = word;
         stem();
@@ -24,6 +28,12 @@ public class CustomStemmer {
         word = word.toLowerCase();
         stemmer.add(word.toCharArray(), word.length());
         stemmer.stem();
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+        stemmer = new Stemmer();
+        stem();
     }
 
     @Override
