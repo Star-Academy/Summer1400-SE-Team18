@@ -1,12 +1,11 @@
 package view;
 
 import java.util.Scanner;
-import java.util.function.ToDoubleBiFunction;
 
 public class MainMenu {
     public static void run() {
         String command;
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         while(true) {
             command = scanner.nextLine();
             if (command.startsWith("read")) {
@@ -16,6 +15,7 @@ public class MainMenu {
             } else if (command.startsWith("help")) {
                 help();
             } else if (command.startsWith("quit")) {
+                scanner.close();
                 System.exit(0);
             }
         }
