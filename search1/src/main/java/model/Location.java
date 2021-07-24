@@ -21,10 +21,10 @@ public class Location {
     public int getIndex() {
         return index;
     }
-
+    
     @Override
     public String toString() {
-        return "String index : " + index + "ls" +
-                "File name : " + filename + "ls";
+        return "String index : " + index + ls +
+                "File name : " + filename + ls;
     }
 }
