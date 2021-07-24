@@ -48,16 +48,17 @@ public class SearchController {
             } else addToList(word, noTags);
         }
         System.out.println("noTags: " + noTags.size() + "\n" + "plusTags: " + plusTags.size() + "\n" + "minusTags: " + minusTags.size());
-        // System.out.println(noTags.get(0));
         HashSet<String> pluses = new HashSet();
         for (HashSet<String> plusTag : plusTags) pluses.addAll(plusTag);
         HashSet<String> minuses = new HashSet();
         for (HashSet<String> minusTag : minusTags) minuses.addAll(minusTag);
         HashSet<String> answers = noTags.size() == 0 ? new HashSet() : noTags.get(0);
-        for (String string : answers) {
+        Iterator<String> iterator = answers.iterator();
+        while(iterator.hasNext()) {
+            String string = iterator.next();
             for (HashSet<String> noTag : noTags) {
                 if (!noTag.contains(string)) {
-                    answers.remove(string); 
+                    iterator.remove(); 
                     break;
                 }
             }
