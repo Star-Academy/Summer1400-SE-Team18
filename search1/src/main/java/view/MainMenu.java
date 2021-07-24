@@ -14,7 +14,7 @@ public class MainMenu {
                 search();
             } else if (command.startsWith("help")) {
                 help();
-            } else if (command.startsWith("choose") {
+            } else if (command.startsWith("choose")) {
                 chooseFile();
             } else if (command.startsWith("quit")) {
                 scanner.close();
