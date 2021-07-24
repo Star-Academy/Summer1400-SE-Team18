@@ -2,6 +2,8 @@ package view;
 
 import java.util.Scanner;
 
+import controller.MainMenuController;
+
 public class MainMenu {
     public static void run() {
         String command;
@@ -9,9 +11,9 @@ public class MainMenu {
         while(true) {
             command = scanner.nextLine();
             if (command.startsWith("read")) {
-                read();
+                read(command);
             } else if (command.startsWith("search")) {
-                search();
+                search(command);
             } else if (command.startsWith("help")) {
                 help();
             } else if (command.startsWith("choose")) {
@@ -30,15 +32,21 @@ public class MainMenu {
                 "quit : quit the program");
     }
 
-    private static void search() {
+    private static void search(String command) {
         // todo
     }
 
-    private static void read() {
-        // todo
+    private static void read(String command) {
+        try {
+            if (MainMenuController.readFile(command.substring(command.indexOf(' ') + 1)))
+                System.out.println("file added to database.");
+            else System.out.println("wrong file name!");
+        } catch(Exception e) {
+            System.out.println("wrong file name!");
+        }
     }
 
     private static void chooseFile() {
-        // todo
+        //
     }
 }
