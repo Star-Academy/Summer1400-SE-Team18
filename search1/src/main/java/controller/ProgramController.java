@@ -1,5 +1,7 @@
 package controller;
 
+import view.MainMenu;
+
 public class ProgramController {
     
     private static ProgramController instance;
@@ -16,7 +18,7 @@ public class ProgramController {
     }
 
     public void run() {
-        // todo
+        MainMenu.run();
     }
 
 }
