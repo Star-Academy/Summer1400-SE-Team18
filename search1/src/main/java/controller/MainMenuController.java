@@ -7,4 +7,8 @@ import model.Location;
 
 public class MainMenuController {
     private final static HashMap<String, ArrayList<Location>> datas = new HashMap<>();
+
+    public static void readFile(String filename) {
+        //todo
+    }
 }

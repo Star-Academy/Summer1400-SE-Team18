@@ -14,6 +14,8 @@ public class MainMenu {
                 search();
             } else if (command.startsWith("help")) {
                 help();
+            } else if (command.startsWith("choose") {
+                chooseFile();
             } else if (command.startsWith("quit")) {
                 scanner.close();
                 System.exit(0);
@@ -23,6 +25,7 @@ public class MainMenu {
 
     private static void help() {
         System.out.println("read : to add a file to database (with path)\n" + 
+                "choose : choose a file from file explorer\n" +
                 "search : search for a word in the current database\n" + 
                 "quit : quit the program");
     }
@@ -32,6 +35,10 @@ public class MainMenu {
     }
 
     private static void read() {
+        // todo
+    }
+
+    private static void chooseFile() {
         // todo
     }
 }
