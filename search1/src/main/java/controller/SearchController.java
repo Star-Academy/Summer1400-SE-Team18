@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.util.*;
 
 import model.CustomStemmer;
@@ -64,8 +63,8 @@ public class SearchController {
         }
         final boolean isPositiveFinal = isPositive;
         answers.removeIf(e -> {
-            if (minusTags.contains(e)) return true;
-            if (isPositiveFinal && !plusTags.contains(e)) return true;
+            if (minuses.contains(e)) return true;
+            if (isPositiveFinal && !pluses.contains(e)) return true;
             return false;
         });
         printResult(answers);
