@@ -33,6 +33,7 @@ public class MainMenuController {
                 String word = fileStrings[i];
                 stemmer.setWord(word);
                 word = fileStrings[i] = stemmer.toString();
+                if (isPrePosition(word)) continue;
                 if (datas.containsKey(word)) {
                     datas.get(word).add(new Location(file.getPath(), file.getName(), i));
                 } else {
@@ -44,6 +45,11 @@ public class MainMenuController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean isPrePosition(String word) {
+        if (word.length() <= 1) return true;
+        return word.equals("an") || word.equals("the") || word.equals("as") || word.equals("at");
     }
 
     public static HashMap<String, ArrayList<Location>> getDatas() {
