@@ -2,7 +2,11 @@ package model;
 
 public class Location {
 
-    private static final String ls = System.lineSeparator();
+    private static final String ls;
+
+    static {
+        ls = System.lineSeparator();
+    }
 
     private final int index;
     private final String filename;

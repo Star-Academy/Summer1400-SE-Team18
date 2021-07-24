@@ -67,11 +67,6 @@ public class SearchController {
         if (isNoTag) searchWithNoTags(answers, pluses, minuses);
         else searchWithoutNoTags(answers, pluses, minuses);
 
-        // answers.removeIf(e -> {
-        //     if (minuses.contains(e)) return true;
-        //     if (isPositive && !pluses.contains(e)) return true;
-        //     return false;
-        // });
         printResult(answers);
         return answers; 
     }
