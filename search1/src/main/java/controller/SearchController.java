@@ -78,7 +78,7 @@ public class SearchController {
 
     private void searchWithNoTags(HashSet<String> answers, HashSet<String> pluses, HashSet<String> minuses) {
         answers.removeAll(minuses);
-        answers.retainAll(pluses);
+        if (pluses.size() != 0) answers.retainAll(pluses);
     }
 
     private void searchWithoutNoTags(HashSet<String> answers, HashSet<String> pluses, HashSet<String> minuses) {
