@@ -4,8 +4,6 @@ import java.util.Scanner;
 import java.util.*;
 
 import model.AnswersWrapper;
-import model.CustomStemmer;
-import model.Location;
 import model.SearchCommandWrapper;
 import view.MainMenu;
 
@@ -30,7 +28,10 @@ public class SearchController {
         System.out.println("Please enter word for search ($back for back to main menu): ");
         while(true) {
             command = scanner.nextLine();
-            if (command.equals("$back")) MainMenu.getInstance().run();
+            if (command.equals("$back")) {
+                MainMenu.getInstance().run();
+                break;
+            }
             else search(command);
         }
     }

@@ -8,11 +8,15 @@ import controller.MainMenuController;
 
 
 public class SearchCommandWrapper {
-    ArrayList<HashSet<String>> noTags = new ArrayList<>();
-    ArrayList<HashSet<String>> plusTags = new ArrayList<>();
-    ArrayList<HashSet<String>> minusTags = new ArrayList<>();
+    private ArrayList<HashSet<String>> noTags = new ArrayList<>();
+    private ArrayList<HashSet<String>> plusTags = new ArrayList<>();
+    private ArrayList<HashSet<String>> minusTags = new ArrayList<>();
 
     public SearchCommandWrapper(String command) {
+        commandParser(command);
+    }
+
+    private void commandParser(String command) {
         String[] words = command.split("[\\s]+");
         for (String word : words) {
             if (word.startsWith("-")) addToList(word.substring(1), minusTags);
@@ -21,7 +25,7 @@ public class SearchCommandWrapper {
         }
     }
 
-    public void addToList(String word, ArrayList<HashSet<String>> tags) {
+    private void addToList(String word, ArrayList<HashSet<String>> tags) {
         CustomStemmer wordStemmer = new CustomStemmer(word);
         HashSet<String> hashSet = new HashSet<String>();
         HashMap<String, ArrayList<Location>> datas = MainMenuController.getInstance().getIndexMap();

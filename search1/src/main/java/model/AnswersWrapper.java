@@ -20,8 +20,8 @@ public class AnswersWrapper {
 
     public HashSet<String> chooseAnswerFromNoTags(ArrayList<HashSet<String>> noTags) {
         if (noTags.size() == 0) return new HashSet<String>();
-        HashSet<String> ret = noTags.get(0);
-        Iterator<String> iterator = ret.iterator();
+        HashSet<String> answer = noTags.get(0);
+        Iterator<String> iterator = answer.iterator();
         while(iterator.hasNext()) {
             String string = iterator.next();
             for (HashSet<String> noTag : noTags) 
@@ -30,7 +30,7 @@ public class AnswersWrapper {
                     break;
                 }
         }
-        return ret;
+        return answer;
     }
 
     public HashSet<String> getNoTagAnswers() {

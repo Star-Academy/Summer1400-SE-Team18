@@ -31,6 +31,8 @@ public class MainMenu {
                 help();
             } else if (command.startsWith("quit")) {
                 quit();
+            } else {
+                invalidCommand();
             }
         }
     }
@@ -59,6 +61,10 @@ public class MainMenu {
     private void quit() {
         ProgramController.getScanner().close();
         System.exit(0);
+    }
+
+    private void invalidCommand() {
+        System.out.println("Invalid Command!");
     }
 
     public static MainMenu getInstance() {

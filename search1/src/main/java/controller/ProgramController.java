@@ -21,12 +21,12 @@ public class ProgramController {
         return instance;
     }
 
-    public void run() {
-        MainMenu.getInstance().run();
-    }
-
     public static Scanner getScanner() {
         return scanner;
+    }
+
+    public void run() {
+        MainMenu.getInstance().run();
     }
 
 }
