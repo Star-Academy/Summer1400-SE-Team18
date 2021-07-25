@@ -30,10 +30,17 @@ public class CustomStemmer {
         stemmer.stem();
     }
 
-    public void setWord(String word) {
+    public String stemWord(String word) {
+        this.word = word;
+        stem();
+        return stemmer.toString();
+    } 
+
+    public CustomStemmer setWord(String word) {
         this.word = word;
         stemmer = new Stemmer();
         stem();
+        return this;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ProgramController {
     }
 
     public void run() {
-        MainMenu.run();
+        MainMenu.getInstance().run();
     }
 
     public static Scanner getScanner() {

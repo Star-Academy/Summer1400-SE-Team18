@@ -1,5 +1,7 @@
 package model;
 
+import java.io.File;
+
 public class Location {
 
     private static final String ls;
@@ -10,11 +12,9 @@ public class Location {
 
     private final int index;
     private final String filename;
-    private final String path;
 
-    public Location(String path, String filename, int index) {
-        this.filename = filename;
-        this.path = path;
+    public Location(File file, int index) {
+        this.filename = file.getName();
         this.index = index;
     }
 
