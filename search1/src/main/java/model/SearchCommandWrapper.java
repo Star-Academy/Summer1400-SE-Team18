@@ -8,9 +8,15 @@ import controller.MainMenuController;
 
 
 public class SearchCommandWrapper {
-    private ArrayList<HashSet<String>> noTags = new ArrayList<>();
-    private ArrayList<HashSet<String>> plusTags = new ArrayList<>();
-    private ArrayList<HashSet<String>> minusTags = new ArrayList<>();
+    private ArrayList<HashSet<String>> noTags;
+    private ArrayList<HashSet<String>> plusTags;
+    private ArrayList<HashSet<String>> minusTags;
+
+    {
+        noTags = new ArrayList<>();
+        plusTags = new ArrayList<>();
+        minusTags = new ArrayList<>();
+    }
 
     public SearchCommandWrapper(String command) {
         commandParser(command);
