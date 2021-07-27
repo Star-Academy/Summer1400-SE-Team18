@@ -53,6 +53,6 @@ public class SearchTest {
         assertTrue(searcher.search("+dubai").equals(new HashSet<>(Arrays.asList(new String[]{"sag", "4"}))));
         assertTrue(searcher.search("+dubai +talaii").equals(new HashSet<>(Arrays.asList(new String[]{"sag", "4"}))));
         assertTrue(searcher.search("mohammad -mikham +mohammad").equals(new HashSet<>(Arrays.asList(new String[]{"1", "mohammad"}))));
-        assertTrue(searcher.search(""));
+        assertTrue(searcher.search("abbas +rafte +dubai +sag -mikham -taghi").equals(new HashSet<>(Arrays.asList(new String[]{"4", "gorbe", "mohammad"}))));
     }
 }

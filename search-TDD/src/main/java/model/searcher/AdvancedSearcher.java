@@ -30,7 +30,7 @@ public class AdvancedSearcher implements Searcher {
     }
     
     private HashSet<String> getMinusWords(String[] words) {
-        ArrayList<String> minusWords
+        return Arrays.stream(words).filter(e -> e.startsWith("-")).toArray(String[]::new);
     }
 
     private String[] getPlusWords(String[] words) {
