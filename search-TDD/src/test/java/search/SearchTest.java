@@ -46,13 +46,18 @@ public class SearchTest {
         reader.read("TestDataBase");
         assertTrue(searcher.search("mohammad -am").equals(new HashSet<String>()));
         reader.read("TestDataBase2");
-        assertTrue(searcher.search("mohammad -am").equals(new HashSet<>(Arrays.asList("mohammad"))));
+        assertTrue(assertEqual(searcher.search("mohammad -am"), (new HashSet<>(Arrays.asList("mohammad")))));
+        assertTrue(searcher.search("-amirraftKhonnashoonKhabeshMioomad").equals(new HashSet<>(Arrays.asList(new String[]{}))));
         assertTrue(searcher.search("taghi +mamooli -dubai").equals(new HashSet<String>()));
-        assertTrue(searcher.search("sag +mikham").equals(new HashSet<>(Arrays.asList(new String[]{"3"}))));
-        assertTrue(searcher.search("+sag -mikham").equals(new HashSet<>(Arrays.asList(new String[]{"sag"}))));
+        assertTrue(assertEqual(searcher.search("sag +mikham"), (new HashSet<>(Arrays.asList(new String[]{"3", "gorbe"})))));
+        assertTrue(assertEqual(searcher.search("+sag -mikham"), (new HashSet<>(Arrays.asList(new String[]{"gorbe"})))));
         assertTrue(searcher.search("+dubai").equals(new HashSet<>(Arrays.asList(new String[]{"sag", "4"}))));
         assertTrue(searcher.search("+dubai +talaii").equals(new HashSet<>(Arrays.asList(new String[]{"sag", "4"}))));
         assertTrue(searcher.search("mohammad -mikham +mohammad").equals(new HashSet<>(Arrays.asList(new String[]{"1", "mohammad"}))));
         assertTrue(searcher.search("abbas +rafte +dubai +sag -mikham -taghi").equals(new HashSet<>(Arrays.asList(new String[]{"4", "gorbe", "mohammad"}))));
+    }
+
+    private boolean assertEqual(HashSet<String> given, HashSet<String> expected){
+        return expected.equals(given);
     }
 }

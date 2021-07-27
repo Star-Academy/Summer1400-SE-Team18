@@ -28,10 +28,7 @@ public class FileReader implements Reader {
             String text = new String(Files.readAllBytes(Paths.get(file.getPath())));
             text = removeNonAlphabetical(text);
             String[] result = getCommands(text);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = getStem(result[i]);
-            }
-            return result;
+            return Arrays.asList(result).stream().map(s -> getStem(s)).toArray(String[]::new);
         } catch (IOException e) {return  null;}
     }
 
