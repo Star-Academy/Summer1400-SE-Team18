@@ -188,12 +188,17 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+pom.xml
 
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*/.vscode/
+*/TestDataBase/
+*/TestDataBase2/
+
 
 # Ignore all local history of files
 .history

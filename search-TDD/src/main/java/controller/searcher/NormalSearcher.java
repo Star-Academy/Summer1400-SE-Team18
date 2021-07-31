@@ -1,4 +1,4 @@
-package model.searcher;
+package controller.searcher;
 
 import static controller.WordController.getStem;
 import java.util.HashSet;
