@@ -2,7 +2,6 @@ package controller.searcher;
 
 import java.util.HashSet;
 
-import model.Database;
 import controller.DatabaseController;
 import controller.ProgramController;
 

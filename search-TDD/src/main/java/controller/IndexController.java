@@ -3,18 +3,25 @@ package controller;
 import static controller.ProgramController.*;
 import static controller.WordController.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 
 public class IndexController {
     private final static String WORD_SPLITTER = "~";
 
-    public static void execute(String folderName) {
-        String text = getFolderReader().read(folderName);
+    public static void addFolderToDatabase(String path) {
+        String text = getFolderReader().read(path);
         String[] fileNamesAndWords = text.split(WORD_SPLITTER);
         for (int i = 1; i < fileNamesAndWords.length; i = i + 2) {
             addFileToDatabase(fileNamesAndWords[i], fileNamesAndWords[i + 1]);
         }
+    }
+
+    public static void addFileTextToDatabase(String path) {
+        String text = getFileReader().read(path);
+        String fileName = findFileName(path);
+        addFileToDatabase(fileName, text);
     }
 
     private static void addFileToDatabase(String filename, String text) {
@@ -32,5 +39,10 @@ public class IndexController {
 
     private static HashSet<String> convertNameToHashSet(String filename) {
         return new HashSet<>(Arrays.asList(new String[]{filename}));
+    }
+
+    private static String findFileName(String path) {
+        File file = new File(path);
+        return file.getName();
     }
 }

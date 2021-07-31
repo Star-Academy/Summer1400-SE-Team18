@@ -1,11 +1,11 @@
 package model;
 
-import model.CustomSet;
+import java.util.HashSet;
 
 public class Database {
-    private static CustomSet<Data> DATA = new CustomSet<>();
+    private static HashSet<Data> DATA = new HashSet<>();
 
-    public static CustomSet<Data> getData() {
+    public static HashSet<Data> getData() {
         return DATA;
     }
 }

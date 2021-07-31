@@ -21,15 +21,10 @@ public class Data {
         return FILENAMES;
     }
 
-    // public void addFile(String fileName) {
-    //     FILENAMES.add(fileName);
-    // }
-
     @Override
     public boolean equals(Object object) {
         if (!( object instanceof Data )) return false;
         Data dataObject = (Data) object;
-        System.out.println("miooo");
         return WORD.equals(dataObject.WORD) && FILENAMES.equals(dataObject.FILENAMES);
     }
 
@@ -37,4 +32,10 @@ public class Data {
     public String toString() {
         return WORD + "\n" + FILENAMES + "\n";
     }
+
+    @Override
+    public int hashCode() {
+        return (WORD + "~" + FILENAMES.toString()).hashCode();
+    }
+
 }
