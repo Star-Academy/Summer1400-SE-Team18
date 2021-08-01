@@ -30,16 +30,4 @@ private final static String WORD_SPLITTER = "~";
         return !(file.exists() && file.isDirectory());
     }
 
-    // private File getFile(String filename) {
-    //     File file = new File(filename);
-    //     return file.isDirectory() && file.exists() ? file : null;
-    // }
-
-    // private void addFileChildren(File file) {
-    //     File[] files = file.listFiles();
-    //     Reader fileReader = new FileReader();
-    //     for (File temporaryFile : files) {
-    //         fileReader.read(temporaryFile.getPath());
-    //     }
-    // }
 }

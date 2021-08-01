@@ -2,16 +2,12 @@ package controller.searcher;
 
 import static controller.TagFilter.*;
 import static controller.WordController.getStem;
-import static controller.ProgramController.*;
 
 import controller.DatabaseController;
 import controller.ProgramController;
-import controller.WordController;
 import model.AnswerTags;
-import model.FilteredTags;
 import model.TagsInterface;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 

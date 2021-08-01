@@ -10,11 +10,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class NormalSearcher implements Searcher {
-    private final String TAG_REGEX = "\\+|-";
 
     @Override
     public HashSet<String> search(String command) {
-        if (command.matches(TAG_REGEX)) return null;
         String[] wordsToSearch = command.split(" ");
         String[] stemmedWords = getWordsStemmed(wordsToSearch);
         return getAnswerForWords(stemmedWords);
