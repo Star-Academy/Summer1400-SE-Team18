@@ -12,6 +12,7 @@ public class IndexController {
 
     public static void addFolderToDatabase(String path) {
         String text = getFolderReader().read(path);
+        if (text == null) return;
         String[] fileNamesAndWords = text.split(WORD_SPLITTER);
         for (int i = 1; i < fileNamesAndWords.length; i = i + 2) {
             addFileToDatabase(fileNamesAndWords[i], fileNamesAndWords[i + 1]);
@@ -20,6 +21,7 @@ public class IndexController {
 
     public static void addFileTextToDatabase(String path) {
         String text = getFileReader().read(path);
+        if (text == null) return;
         String fileName = findFileName(path);
         addFileToDatabase(fileName, text);
     }

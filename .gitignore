@@ -190,6 +190,10 @@ buildNumber.properties
 .flattened-pom.xml
 pom.xml
 
+*/pom.xml
+*/.vscode/
+
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
