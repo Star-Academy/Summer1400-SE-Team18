@@ -1,49 +1,80 @@
 package controller;
 
-import model.reader.FolderReader;
-import model.reader.Reader;
-import model.searcher.AdvancedSearcher;
-import model.searcher.NormalSearcher;
-import model.searcher.Searcher;
-import view.Menu;
+import java.util.Scanner;
+
+import controller.reader.FolderReader;
+import controller.searcher.*;
+import controller.reader.*;
+import opennlp.tools.stemmer.PorterStemmer;
 
 public class ProgramController {
 
-    private static ProgramController instance;
+    private static final String PLUS_SIGN = "+";
+    private static final String MINUS_SIGN = "-";
+    private static DatabaseController databaseController;
+    private static Reader fileReader;
+    private static Reader folderReader;
+    private static Searcher normalSearcher;
+    private static Searcher AdvancedSearcher;
+    private static Scanner scanner;
+    private static PorterStemmer porterStemmer;
+    private static MainMenuController mainMenuController;
 
     static {
-        instance = new ProgramController();
-    }
-
-    public static ProgramController getInstance() {
-        return instance;
+        databaseController = new DatabaseController();
+        fileReader = new FileReader();
+        folderReader = new FolderReader();
+        scanner = new Scanner(System.in);
+        porterStemmer = new PorterStemmer();
+        mainMenuController = new MainMenuController();
+        normalSearcher = new NormalSearcher();
+        AdvancedSearcher = new AdvancedSearcher();
     }
 
     private ProgramController() {
     }
 
-    public void run() {
-        String command;
-        while (!(command = Menu.getNextLine()).equals("quit")) {
-            if (command.startsWith("read")) {
-                read(command.substring(command.indexOf(' ') + 1));
-            } else if (command.startsWith("search")) {
-                search(command.substring(command.indexOf(' ') + 1));
-            }
-        }
+    public static DatabaseController getDatabaseController() {
+        return databaseController;
     }
 
-    private void read(String folderName) {
-        Reader reader = new FolderReader();
-        reader.read(folderName);
+    public static Reader getFileReader() {
+        return fileReader;
     }
-    
-    private void search(String command) {
-        Searcher searcher;
-        if (command.contains("+") || command.contains("-"))
-            searcher = new AdvancedSearcher();
-        else 
-            searcher = new NormalSearcher();
-        Menu.showMessage(searcher.search(command).toString());
+
+    public static Reader getFolderReader() {
+        return folderReader;
+    }
+
+    public static Scanner getScanner() {
+        return scanner;
+    }
+
+    public static PorterStemmer getPorterStemmer() {
+        return porterStemmer;
+    }
+
+    public static MainMenuController getMainMenuController() {
+        return mainMenuController;
+    }
+
+    public static Searcher getNormalSearcher() {
+        return normalSearcher;
+    }
+
+    public static Searcher getAdvancedSearcher() {
+        return AdvancedSearcher;
+    }
+
+    public static String getPlusSign() {
+        return PLUS_SIGN;
+    }
+
+    public static String getMinusSign() {
+        return MINUS_SIGN;
+    }
+
+    public static void setScanner(Scanner scanner) {
+        ProgramController.scanner = scanner;
     }
 }
