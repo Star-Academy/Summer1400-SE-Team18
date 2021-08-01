@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 public class Data {
 
-
     private final static Data NULL_DATA = new Data ("", new HashSet<>());
 
     private final String WORD;
@@ -33,11 +32,6 @@ public class Data {
         if (!( object instanceof Data )) return false;
         Data dataObject = (Data) object;
         return WORD.equals(dataObject.WORD) && FILENAMES.equals(dataObject.FILENAMES);
-    }
-
-    @Override
-    public String toString() {
-        return WORD + "\n" + FILENAMES + "\n";
     }
 
     @Override

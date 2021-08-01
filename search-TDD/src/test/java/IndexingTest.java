@@ -1,5 +1,3 @@
-package search;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static controller.WordController.*;
 import static controller.IndexController.*; 
@@ -25,7 +23,7 @@ public class IndexingTest {
         addFolderToDatabase("TestDataBase");
         HashSet<Data> expectedData = new HashSet<>();
         //file 1
-        expectedData.add(makeData(getStem("hello"), new HashSet<>(Arrays.asList(new String[]{"1"}))));
+        expectedData.add(makeData(getStem("hessllo"), new HashSet<>(Arrays.asList(new String[]{"1"}))));
         expectedData.add(makeData(getStem("dear"), new HashSet<>(Arrays.asList(new String[]{"1"}))));
         expectedData.add(makeData(getStem("i"), new HashSet<>(Arrays.asList(new String[]{"1"}))));
         expectedData.add(makeData(getStem("am"), new HashSet<>(Arrays.asList(new String[]{"1"}))));

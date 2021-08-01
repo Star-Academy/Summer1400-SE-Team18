@@ -74,8 +74,7 @@ public class ProgramController {
         return MINUS_SIGN;
     }
 
-    public void run() {
-
+    public static void setScanner(Scanner scanner) {
+        ProgramController.scanner = scanner;
     }
-
 }

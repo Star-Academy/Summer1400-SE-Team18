@@ -1,5 +1,3 @@
-package search;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
@@ -8,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import controller.TagFilter;
-import model.FilteredTags;
 import model.TagsInterface;
 
 public class TagFilterTest {

@@ -1,5 +1,3 @@
-package search;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,7 @@ public class ReadTest {
         Reader fileReader = new FileReader();
         String readingString = fileReader.read("TestDataBase/3");
         String expectedString = "man sag mikham" + ls + "sag khoshgel - mikham !!! mio !!!" + ls;
-        assertEquals(expectedString, readingString); // pipi bokhor
+        assertEquals(expectedString, readingString);
     }
 
     @Test

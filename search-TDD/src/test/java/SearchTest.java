@@ -1,11 +1,7 @@
-package search;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static controller.WordController.*;
 import static controller.IndexController.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 
 

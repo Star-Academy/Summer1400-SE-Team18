@@ -1,6 +1,9 @@
 package controller;
 
-import controller.reader.*;
+import static controller.IndexController.*;
+
+import java.util.HashSet;
+
 import controller.searcher.*;
 import view.Menu;
 
@@ -8,7 +11,9 @@ public class MainMenuController {
 
     public void execute() {
         String command;
+        Menu.showMessage("Welcome to Searcher!");
         while (!(command = Menu.getNextLine()).equals("quit")) {
+            command = command.toLowerCase();
             commandParser(command);
         }
         Menu.showMessage("We hope to see you again soon!");
@@ -28,14 +33,18 @@ public class MainMenuController {
     }
  
     private void readCommand(String folderName) {
-        Reader reader = new FolderReader();
-        reader.read(folderName);
+        addFolderToDatabase(folderName);
     }
     
     private void searchCommand(String command) {
         Searcher searcher = getCorrectSearcher(command);
-        String searchResult = searcher.search(command).toString();
-        Menu.showMessage(searchResult);
+        HashSet<String> searchResult = searcher.search(command);
+        String finalResult = getResult(searchResult);
+        Menu.showMessage(finalResult);
+    }
+
+    private String getResult(HashSet<String> set) {
+        return set.size() == 0 ? "No results found!" : set.toString();
     }
 
     private Searcher getCorrectSearcher(String command) {
