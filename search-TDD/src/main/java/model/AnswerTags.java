@@ -2,13 +2,13 @@ package model;
 
 import java.util.HashSet;
 
-public class FilteredTags implements TagsInterface {
+public class AnswerTags implements TagsInterface {
     private HashSet<String> noTagWords;
     private HashSet<String> plusTagWords;
     private HashSet<String> minusTagWords;
     
 
-    public FilteredTags() {
+    public AnswerTags() {
         noTagWords = new HashSet<>();
         plusTagWords = new HashSet<>();
         minusTagWords = new HashSet<>();

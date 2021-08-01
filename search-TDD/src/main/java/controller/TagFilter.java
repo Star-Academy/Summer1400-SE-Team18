@@ -1,14 +1,15 @@
 package controller;
 
 import model.FilteredTags;
+import model.TagsInterface;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import static controller.ProgramController.*;
 
 public class TagFilter {
     
-    public static FilteredTags parse(String tags) {
+    public static TagsInterface parse(String tags) {
         FilteredTags filteredTags = new FilteredTags();
         for (String tag : tags.split("\\s+")){
             assignTagToDesiredArrayList(tag, filteredTags);
@@ -18,12 +19,12 @@ public class TagFilter {
 
     private static void assignTagToDesiredArrayList(String tag, FilteredTags filteredTags) {
         String trimmedWord = trimTag(tag);
-        if (tag.startsWith(getPlusSign())) addWordToArrayList(trimmedWord, filteredTags.getPlusTagWords());
-        else if (tag.startsWith(getMinusSign())) addWordToArrayList(trimmedWord, filteredTags.getMinusTagWords());
-        else addWordToArrayList(tag, filteredTags.getNoTagWords());;
+        if (tag.startsWith(getPlusSign())) addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
+        else if (tag.startsWith(getMinusSign())) addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
+        else addWordToHashSet(tag, filteredTags.getNoTags());;
     }
 
-    private static void addWordToArrayList(String word, ArrayList<String> strings) {
+    private static void addWordToHashSet(String word, HashSet<String> strings) {
         strings.add(word);
     }
 

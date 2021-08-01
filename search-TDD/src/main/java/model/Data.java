@@ -5,12 +5,19 @@ import java.util.HashSet;
 
 public class Data {
 
+
+    private final static Data NULL_DATA = new Data ("", new HashSet<>());
+
     private final String WORD;
     private final HashSet<String> FILENAMES;
 
     public Data(String WORD, HashSet<String> FILENAMES) {
         this.FILENAMES = FILENAMES;
         this.WORD = WORD;
+    }
+
+    public static Data getNullData() {
+        return NULL_DATA;
     }
 
     public String getWord() {

@@ -34,7 +34,7 @@ public class IndexController {
     private static void addWordToDatabase(String filename, String word) {
         DatabaseController databaseController = ProgramController.getDatabaseController();
         if (databaseController.wordExistsInDataBase(word))
-            databaseController.getDataNamesForWord(word).getFileNames().add(filename);
+            databaseController.getDataForWord(word).getFileNames().add(filename);
         else 
             databaseController.addWordToDatabase(word, convertNameToHashSet(filename));;
     }

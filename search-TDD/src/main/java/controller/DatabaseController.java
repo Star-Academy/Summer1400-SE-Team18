@@ -16,11 +16,11 @@ public class DatabaseController {
         Database.getData().add(data);
     }
 
-    public Data getDataNamesForWord(String word) {
+    public Data getDataForWord(String word) {
         for (Data data : Database.getData()) {
             if (wordEqualsData(word, data)) return data;
         }
-        return null; // todo
+        return Data.getNullData();
     }
 
     private boolean wordEqualsData(String word, Data data) {
