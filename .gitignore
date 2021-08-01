@@ -192,6 +192,7 @@ pom.xml
 
 */*.xml
 */.vscode/
+search-TDD/pom.xml
 
 
 .vscode/*
