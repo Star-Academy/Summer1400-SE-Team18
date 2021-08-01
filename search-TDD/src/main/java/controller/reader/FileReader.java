@@ -26,39 +26,4 @@ public class FileReader implements Reader {
         return new String(fileBytes);
     }
 
-    // private File getFile(String fileString) {
-    //     File file = new File(fileString);
-    //     return file.exists() && file.isFile() ? file : null;
-    // }
-
-    // private String[] getFileWords(File file) {
-    //     try {
-    //         String text = new String(Files.readAllBytes(Paths.get(file.getPath())));
-    //         text = removeNonAlphabetical(text);
-    //         String[] result = getCommands(text);
-    //         return Arrays.asList(result).stream().map(s -> getStem(s)).toArray(String[]::new);
-    //     } catch (IOException e) {return  null;}
-    // }
-
-    // private void addWordsToData(String[] words, String fileName) {
-    //     for (String word : words) {
-    //         if (!isWordAlreadyInDatabase(word)) 
-    //             createData(word, new HashSet<>(Arrays.asList(new String[]{fileName})));
-    //         else 
-    //             DATA.get(word).add(fileName);
-    //     }
-    // }
-
-    // private boolean isWordAlreadyInDatabase(String word) {
-    //     return getDatabaseController().wordExistsInDataBase(word);
-    // };
-    
-    // private void createData(String word, HashSet<String> fileNames) {
-    //     getDatabaseController().addWordToDatabase(word, fileNames);
-    // }
-
-    // private DatabaseController getDatabaseController() {
-    //     return ProgramController.getDatabaseController();
-    // }
-
 }
