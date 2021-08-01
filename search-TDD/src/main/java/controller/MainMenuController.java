@@ -33,8 +33,9 @@ public class MainMenuController {
     }
     
     private void searchCommand(String command) {
-        Searcher searcher = getCorrectSearcher(command);  
-         Menu.showMessage(searcher.search(command).toString());
+        Searcher searcher = getCorrectSearcher(command);
+        String searchResult = searcher.search(command).toString();
+        Menu.showMessage(searchResult);
     }
 
     private Searcher getCorrectSearcher(String command) {

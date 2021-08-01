@@ -8,7 +8,7 @@ import static controller.ProgramController.*;
 
 public class TagFilter {
     
-    public static FilteredTags execute(String tags) {
+    public static FilteredTags parse(String tags) {
         FilteredTags filteredTags = new FilteredTags();
         for (String tag : tags.split("\\s+")){
             assignTagToDesiredArrayList(tag, filteredTags);
