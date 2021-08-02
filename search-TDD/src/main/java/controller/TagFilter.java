@@ -1,11 +1,11 @@
 package controller;
 
+import static controller.ProgramController.*;
+
 import model.FilteredTags;
 import model.TagsInterface;
 
 import java.util.HashSet;
-
-import static controller.ProgramController.*;
 
 public class TagFilter {
     

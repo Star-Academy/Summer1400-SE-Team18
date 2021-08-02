@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 public class FilteredTags implements TagsInterface {
@@ -27,5 +28,10 @@ public class FilteredTags implements TagsInterface {
     @Override
     public HashSet<String> getMinusTags() {
         return minusTagWords;
+    }
+
+    @Override
+    public void addToNoTags(Collection<String> collection) {
+        noTagWords.addAll(collection);
     }
 }

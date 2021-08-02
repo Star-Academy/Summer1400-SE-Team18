@@ -24,7 +24,7 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private HashSet<String> getFinalAnswer(TagsInterface answerTags) {
-        answerTags.getNoTags().addAll(answerTags.getPlusTags());
+        answerTags.addToNoTags(answerTags.getPlusTags());
         answerTags.getNoTags().removeAll(answerTags.getMinusTags());
         return answerTags.getNoTags();
     }
@@ -43,7 +43,7 @@ public class AdvancedSearcher implements Searcher {
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
         String stemmed = wordController.getStem(iterator.next());
-        answerTags.getNoTags().addAll(databaseController.getDataForWord(stemmed).getFileNames());
+        answerTags.addToNoTags(databaseController.getDataForWord(stemmed).getFileNames());
         while (iterator.hasNext()) {
             stemmed = wordController.getStem(iterator.next());
             answerTags.getNoTags().retainAll(databaseController.getDataForWord(stemmed).getFileNames());
