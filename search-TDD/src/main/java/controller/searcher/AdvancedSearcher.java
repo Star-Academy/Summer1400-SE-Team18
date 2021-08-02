@@ -5,6 +5,7 @@ import controller.ProgramController;
 import controller.TagFilter;
 import controller.WordController;
 import model.AnswerTags;
+import model.Data;
 import model.TagsInterface;
 
 import java.util.HashSet;
@@ -38,15 +39,14 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillNoTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
         WordController wordController = ProgramController.getWordController();
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
         String stemmed = wordController.getStem(iterator.next());
-        answerTags.addToNoTags(databaseController.getDataForWord(stemmed).getFileNames());
+        answerTags.addToNoTags(getFileNamesForWord(stemmed));
         while (iterator.hasNext()) {
             stemmed = wordController.getStem(iterator.next());
-            answerTags.getNoTags().retainAll(databaseController.getDataForWord(stemmed).getFileNames());
+            answerTags.getNoTags().retainAll(getFileNamesForWord(stemmed));
         }
     }
 
@@ -59,12 +59,19 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
         WordController wordController = ProgramController.getWordController();
         for (String taggedWord : taggedWords) {
             String stemmed = wordController.getStem(taggedWord);
-            answers.addAll(databaseController.getDataForWord(stemmed).getFileNames());
+            answers.addAll(getFileNamesForWord(stemmed));
         }
     }
+
+    private Data getDataForWord(String word) {
+        DatabaseController databaseController = ProgramController.getDatabaseController();
+        return databaseController.getDataForWord(word);
+    }
     
+    private HashSet<String> getFileNamesForWord(String word) {
+        return getDataForWord(word).getFileNames();
+    }
 }
