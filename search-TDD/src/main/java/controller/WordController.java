@@ -3,6 +3,7 @@ package controller;
 import static controller.ProgramController.getPorterStemmer;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class WordController {
 
@@ -13,7 +14,9 @@ public class WordController {
     }
 
     private String[] mapWordToWordStem(String[] words) {
-        return Arrays.stream(words).map(e -> getStem(e)).toArray(String[]::new);
+        Stream<String> wordsStream = Arrays.stream(words);
+        Stream<String> stemmedWordsStream = wordsStream.map(e -> getStem(e));
+        return stemmedWordsStream.toArray(String[]::new);
     }
 
     public String getStem(String word) {

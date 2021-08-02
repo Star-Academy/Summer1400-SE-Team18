@@ -5,6 +5,7 @@ import static controller.ProgramController.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 public class IndexController {
     private final String WORD_SPLITTER = "~";
@@ -28,7 +29,8 @@ public class IndexController {
     private void addFileToDatabase(String filename, String text) {
         WordController wordController = ProgramController.getWordController();
         String[] words = wordController.textSeperator(text);
-        Arrays.stream(words).forEach(e -> addWordToDatabase(filename, e));
+        Stream<String> wordsStream = Arrays.stream(words);
+        wordsStream.forEach(e -> addWordToDatabase(filename, e));
     }
 
     private void addWordToDatabase(String filename, String word) {

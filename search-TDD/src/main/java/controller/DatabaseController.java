@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 import model.Data;
 import model.Database;
@@ -8,7 +9,9 @@ import model.Database;
 public class DatabaseController {
 
     public boolean wordExistsInDataBase(String word) {
-        return Database.getData().stream().filter(e -> wordEqualsData(word, e)).count() != 0;
+        Stream<Data> datasStream = Database.getData().stream();
+        Stream<Data> filteredDatasStream = datasStream.filter(e -> wordEqualsData(word, e));
+        return filteredDatasStream.count() != 0;
     }
 
     public void addWordToDatabase(String word, HashSet<String> fileNames) {

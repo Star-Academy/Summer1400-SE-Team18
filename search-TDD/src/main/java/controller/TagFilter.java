@@ -19,8 +19,10 @@ public class TagFilter {
 
     private void assignTagToDesiredArrayList(String tag, FilteredTags filteredTags) {
         String trimmedWord = trimTag(tag);
-        if (tag.startsWith(getPlusSign())) addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
-        else if (tag.startsWith(getMinusSign())) addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
+        if (tag.startsWith(getPlusSign())) 
+            addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
+        else if (tag.startsWith(getMinusSign())) 
+            addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
         else addWordToHashSet(tag, filteredTags.getNoTags());;
     }
 
