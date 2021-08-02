@@ -1,7 +1,5 @@
 package controller;
 
-import static controller.IndexController.*;
-
 import java.util.HashSet;
 
 import controller.searcher.*;
@@ -33,7 +31,8 @@ public class MainMenuController {
     }
  
     private void readCommand(String folderName) {
-        addFolderToDatabase(folderName);
+        IndexController indexController = ProgramController.getIndexController();
+        indexController.addFolderToDatabase(folderName);
     }
     
     private void searchCommand(String command) {
@@ -48,6 +47,6 @@ public class MainMenuController {
     }
 
     private Searcher getCorrectSearcher(String command) {
-        return command.matches("\\+|-") ? ProgramController.getAdvancedSearcher() : ProgramController.getNormalSearcher();
+        return ProgramController.getSearcher();
     }
 }
