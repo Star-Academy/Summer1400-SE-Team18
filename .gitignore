@@ -200,6 +200,9 @@ search-TDD/TestDataBase2/
 search-TDD/.vscode/
 search-TDD/pom.xml
 school/School/Database
+Search-TDD-CSharp/Search/obj/Debug/
+Search-TDD-CSharp/Search/obj/
+Search-TDD-CSharp/SearchTest/obj/
 
 # Ignore all local history of files
 .history
