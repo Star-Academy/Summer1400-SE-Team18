@@ -5,7 +5,7 @@ using Xunit;
 
 namespace SearchTest
 {
-    public class IoTest
+    public class IOTest
     {
         private IReader _fileReader;
         private IReader _folderReader;
@@ -13,6 +13,7 @@ namespace SearchTest
         [Fact]
         public void ReadFileTest()
         {
+            
             var readingString = _fileReader.Read("TestDataBase/3");
             var expectedString = "man sag mikham\nsag khoshgel - mikham !!! mio !!!\n";
         }
