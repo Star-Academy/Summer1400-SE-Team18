@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Scores.model;
-using Scores.view;
+﻿using Scores.Model;
+using Scores.View;
 
-namespace Scores.controller
+namespace Scores.Controller
 {
     public class ProcessData
     {

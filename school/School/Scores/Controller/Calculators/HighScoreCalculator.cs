@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Scores.model;
+using Scores.Model;
 
-namespace Scores.controller.calculators
+namespace Scores.Controller.Calculators
 {
     public class HighScoreCalculator : ICalculator
     {

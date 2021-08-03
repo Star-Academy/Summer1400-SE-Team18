@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Scores.model;
+using Scores.Model;
 
-namespace Scores.view
+namespace Scores.View
 {
     public class Menu
     {

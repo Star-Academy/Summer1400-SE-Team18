@@ -1,4 +1,4 @@
-﻿namespace Scores.model
+﻿namespace Scores.Model
 {
     public class Student
     {

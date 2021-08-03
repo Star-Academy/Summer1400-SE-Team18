@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Scores.model
+﻿namespace Scores.Model
 {
     public class StudentScore
     {

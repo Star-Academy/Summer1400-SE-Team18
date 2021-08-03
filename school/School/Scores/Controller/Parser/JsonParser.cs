@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 
-namespace Scores.controller.parser
+namespace Scores.Controller.Parser
 {
     public class JsonParser : IJson
     {

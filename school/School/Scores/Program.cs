@@ -1,4 +1,4 @@
-﻿using Scores.controller;
+﻿using Scores.Controller;
 
 namespace Scores
 {

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Scores.controller.reader
+namespace Scores.Controller.Reader
 {
     public class FileReader : IReader
     {

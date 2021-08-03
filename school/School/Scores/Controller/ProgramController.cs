@@ -1,8 +1,8 @@
-﻿using Scores.controller.calculators;
-using Scores.controller.parser;
-using Scores.controller.reader;
+﻿using Scores.Controller.Calculators;
+using Scores.Controller.Parser;
+using Scores.Controller.Reader;
 
-namespace Scores.controller
+namespace Scores.Controller
 {
     public class ProgramController
     {

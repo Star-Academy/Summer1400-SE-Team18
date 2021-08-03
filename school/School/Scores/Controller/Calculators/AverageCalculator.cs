@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Scores.model;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Scores.Model;
 
-namespace Scores.controller.calculators
+namespace Scores.Controller.Calculators
 {
     public class AverageCalculator : ICalculator
     {
