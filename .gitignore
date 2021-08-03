@@ -198,4 +198,7 @@ buildNumber.properties
 # Ignore all local history of files
 .history
 
+# Ignore Database
+school/School/Scores/Database/*
+
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
