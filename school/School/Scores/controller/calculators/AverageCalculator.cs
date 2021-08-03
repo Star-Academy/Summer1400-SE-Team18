@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Scores.model;
 using System.Linq;
 
-namespace Scores
+namespace Scores.controller.calculators
 {
     public class AverageCalculator : ICalculator
     {

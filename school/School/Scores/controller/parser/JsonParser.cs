@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.Json;
 
-namespace Scores
+namespace Scores.controller.parser
 {
     public class JsonParser : IJson
     {

@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using Scores.model;
-using Scores.reader;
+﻿using Scores.controller.calculators;
+using Scores.controller.parser;
+using Scores.controller.reader;
 
-namespace Scores
+namespace Scores.controller
 {
     public class ProgramController
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Scores
+namespace Scores.controller.parser
 {
     public interface IJson
     {

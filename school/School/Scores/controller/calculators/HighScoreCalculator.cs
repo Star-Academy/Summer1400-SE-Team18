@@ -2,7 +2,7 @@
 using System.Linq;
 using Scores.model;
 
-namespace Scores
+namespace Scores.controller.calculators
 {
     public class HighScoreCalculator : ICalculator
     {

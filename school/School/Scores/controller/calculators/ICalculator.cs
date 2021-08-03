@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Scores.model;
 
-namespace Scores
+namespace Scores.controller.calculators
 {
     public interface ICalculator
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Text.Json;
+﻿using System.IO;
 
-namespace Scores.reader
+namespace Scores.controller.reader
 {
     public class FileReader : IReader
     {

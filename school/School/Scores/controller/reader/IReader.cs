@@ -1,4 +1,4 @@
-﻿namespace Scores.reader
+﻿namespace Scores.controller.reader
 {
     public interface IReader
     {

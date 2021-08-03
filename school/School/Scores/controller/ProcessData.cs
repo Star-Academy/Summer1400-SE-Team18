@@ -2,7 +2,7 @@
 using Scores.model;
 using Scores.view;
 
-namespace Scores
+namespace Scores.controller
 {
     public class ProcessData
     {
