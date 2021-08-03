@@ -1,5 +1,7 @@
 using System;
+using Iveonik.Stemmers;
 using Xunit;
+
 
 namespace SearchTest
 {
@@ -8,7 +10,7 @@ namespace SearchTest
         [Fact]
         public void Test1()
         {
-            Assert.Equal("abbas", "abbas");
+            string a = new EnglishStemmer().Stem("this");
         }
     }
 }
