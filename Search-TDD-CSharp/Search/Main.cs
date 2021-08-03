@@ -6,7 +6,6 @@ namespace Search
     {
         public static void Main(string[] args)
         {
-            
         }
     }
 }
