@@ -18,7 +18,7 @@ namespace SearchTest
 
         public SearchTest()
         {
-            Manager.Database.GetAllData().Clear();
+            Manager.Reset();
         }
         
         [Fact]

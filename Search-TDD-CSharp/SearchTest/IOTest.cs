@@ -18,6 +18,11 @@ namespace SearchTest
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = TestEssentials.Ls;
 
+        public IoTest()
+        {
+            Manager.Reset();
+        }
+        
         [Fact]
         public void Should_Read_When_Path_Is_File()
         {

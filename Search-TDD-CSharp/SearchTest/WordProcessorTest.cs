@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Search.Dependencies;
 using Search.Word;
 using Xunit;
 using Xunit.Abstractions;
@@ -9,11 +10,10 @@ namespace SearchTest
     public class WordProcessorTest
     {
         private IWordProcessor _wordProcessor = new WordProcessor();
-        private readonly ITestOutputHelper _output;
 
-        public WordProcessorTest(ITestOutputHelper output)
+        public WordProcessorTest()
         {
-            this._output = output;
+            Manager.Reset();
         }
 
         [Fact]

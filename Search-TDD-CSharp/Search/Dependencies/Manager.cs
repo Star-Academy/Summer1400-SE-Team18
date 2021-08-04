@@ -17,13 +17,13 @@ namespace Search.Dependencies
         public static IIndexer Indexer = new Indexer();
         public static TagCreator TagCreator = new TagCreator();
 
-        public static void reset()
+        public static void Reset()
         {
             IReader FileReaderInstance = new FileReader();
             IReader FolderReaderInstance = new FolderReader();
             EnglishStemmer Stemmer = new EnglishStemmer();
             IWordProcessor WordProcessorInstance = new WordProcessor();
-            IDatabase Database = new Database();
+            Database.GetAllData().Clear();
             IIndexer Indexer = new Indexer();
             TagCreator TagCreator = new TagCreator();
         }
