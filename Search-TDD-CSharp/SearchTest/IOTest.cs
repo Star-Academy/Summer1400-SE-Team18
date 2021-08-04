@@ -17,13 +17,15 @@ namespace SearchTest
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = TestEssentials.Ls;
 
+        [Fact]
         public void Should_Read_When_Path_Is_File()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
             var expectedString = $"man sag mikham{_ls}sag khoshgel - mikham !!! mio !!!{_ls}";
             Assert.Equal(expectedString, readingData["3"]);
         }
-
+        
+        [Fact]
         public void Should_Read_When_Path_Is_Directory()
         {
             IReader reader = Substitute.For<IReader>();

@@ -2,6 +2,7 @@
 using NSubstitute;
 using Search.Database;
 using Search.Dependencies;
+using Search.Index;
 using Search.IO;
 using Search.Word;
 using Xunit;
@@ -11,22 +12,10 @@ namespace SearchTest
     public class IndexerTest
     {
 
+        private IIndexer _indexer;
         private IReader _reader = Substitute.For<IReader>();
         private IWordProcessor _wordProcessor = Substitute.For<IWordProcessor>();
         private readonly string _ls = TestEssentials.Ls;
-
-
-        // [Fact]
-        // public void IndexingFileTest()
-        // {
-        //     var expectedData = new HashSet<Data>();
-        //     var fileName = new HashSet<string>() {"1"};
-        //     expectedData.Add(MakeData(GetStem("hello"), fileName));
-        //     expectedData.Add(MakeData(GetStem("dear"), fileName));
-        //     expectedData.Add(MakeData(GetStem("i"), fileName));
-        //     expectedData.Add(MakeData(GetStem("am"), fileName));
-        //     expectedData.Add(MakeData(GetStem("mohammad"), fileName));
-        // }
 
         [Fact]
         public void IndexingFolderTest()
@@ -60,6 +49,8 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
             
+            _indexer.Index("TestDataBase");
+            Assert.Equal(expectedData, Manager.Database.GetAllData());
         }
 
         private void MockingFolderReader()
