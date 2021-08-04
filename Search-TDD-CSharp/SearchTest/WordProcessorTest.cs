@@ -5,6 +5,7 @@ using Xunit.Abstractions;
 
 namespace SearchTest
 {
+    [Collection("Test Collection 1")]
     public class WordProcessorTest
     {
         private IWordProcessor _wordProcessor = new WordProcessor();

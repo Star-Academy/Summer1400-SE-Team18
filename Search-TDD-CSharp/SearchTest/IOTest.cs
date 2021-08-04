@@ -9,6 +9,7 @@ using Xunit.Priority;
 
 namespace SearchTest
 {
+    [Collection("Test Collection 1")]
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     [DefaultPriority(10)]
     public class IoTest

@@ -9,6 +9,7 @@ using Xunit;
 
 namespace SearchTest
 {
+    [Collection("Test Collection 1")]
     public class IndexerTest
     {
         private IIndexer _indexer = new Indexer();

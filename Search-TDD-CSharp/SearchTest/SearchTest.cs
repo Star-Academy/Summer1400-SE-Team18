@@ -10,6 +10,7 @@ using Xunit;
 
 namespace SearchTest
 {
+    [Collection("Test Collection 1")]
     public class SearchTest
     {
         private ISearcher _searcher = new Searcher();

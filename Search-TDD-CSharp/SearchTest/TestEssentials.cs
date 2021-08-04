@@ -4,9 +4,11 @@ using NSubstitute;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.IO;
+using Xunit;
 
 namespace SearchTest
 {
+    [Collection("Test Collection 1")]
     public class TestEssentials
     {
         public static readonly string Ls = Environment.NewLine;
