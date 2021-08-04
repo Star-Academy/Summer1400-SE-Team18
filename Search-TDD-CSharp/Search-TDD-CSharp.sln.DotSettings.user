@@ -1,13 +1,16 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Mir\.nuget\packages\xunit.priority\1.1.6\lib\netstandard2.0\Xunit.Priority.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=048c6d03_002D8330_002D41b1_002D83d2_002D291e1caa36d0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ReadFolderTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::64C36003-7CA4-4306-8865-2B054B109E24::net5.0::SearchTest.IoTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::64C36003-7CA4-4306-8865-2B054B109E24::net5.0::SearchTest.WordProcessorTest.Should_Parse_Text&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1a883985_002D1bd5_002D4072_002Da234_002D9b1fa9143778/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ReadFolderTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::64C36003-7CA4-4306-8865-2B054B109E24::net5.0::SearchTest.IoTest.ReadFolderTest&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=242fadee_002D13fe_002D46ec_002D909e_002D13a0b4f09a5e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WordProcessorTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::64C36003-7CA4-4306-8865-2B054B109E24::net5.0::SearchTest.WordProcessorTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
@@ -33,8 +36,6 @@
     &lt;TestId&gt;xUnit::64C36003-7CA4-4306-8865-2B054B109E24::net5.0::SearchTest.IoTest.ReadFileTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	
-	
 	
 	
 	</wpf:ResourceDictionary>
