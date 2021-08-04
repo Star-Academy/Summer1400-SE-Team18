@@ -1,5 +1,7 @@
 ﻿using System;
 using Iveonik.Stemmers;
+using Search.Dependencies;
+using Search.IO;
 using static Iveonik.Stemmers.EnglishStemmer;
 
 namespace Search
@@ -8,8 +10,7 @@ namespace Search
     {
         public static void Main(string[] args)
         {
-            string a = new EnglishStemmer().Stem("stability");
-            Console.WriteLine(a);
+            
         }
     }
 }
