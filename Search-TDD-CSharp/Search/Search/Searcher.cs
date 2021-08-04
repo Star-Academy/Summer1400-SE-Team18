@@ -12,45 +12,35 @@ namespace Search.Search
         public HashSet<string> Search(string command)
         {
             var tags = Manager.TagCreator.CreateTags(command);
-            HashSet<string> result = new HashSet<string>();
-            //No Tag
+            var result = GetNoTagWordsData(tags);
+            result.UnionWith(GetPlusTagWordsData(tags));
+            result.RemoveWhere(fileName => GetMinusTagWordsData(tags).Contains(fileName));
+            
+            return result;
+        }
+
+        private HashSet<string> GetNoTagWordsData(HashSet<Tag> tags)
+        {
             try
             {
-                result = tags.Where(tag => tag.Type == TagType.NoTag)
+                return tags.Where(tag => tag.Type == TagType.NoTag)
                     .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem)
-                    .Aggregate((current, next) => current.Intersect(next).ToHashSet()).ToHashSet();
-            }
-            catch (Exception ignored)
-            {
-                // ignored
-            }
-
-            //Plus Tag
-            try
-            {
-                var query = tags.Where(tag => tag.Type == TagType.Plus)
-                    .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
-                result.UnionWith(query);
-            }
-            catch (Exception ignored)
-            {
-                // ignored
-            }
-
-            //Minus Tag
-            try
-            {
-                var query = tags.Where(tag => tag.Type == TagType.Minus)
-                    .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
-                result.RemoveWhere(tag => query.Contains(tag));
+                    .Aggregate((current, next) => current.Intersect(next).ToHashSet())
+                    .ToHashSet();
             } 
             catch (Exception ignored)
             {
-                // ignored
+                return new HashSet<string>();
             }
-                
-            return result;
         }
+
+        private HashSet<string> GetPlusTagWordsData(HashSet<Tag> tags) 
+            => tags.Where(tag => tag.Type == TagType.Plus)
+            .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
+        
+        private HashSet<string> GetMinusTagWordsData(HashSet<Tag> tags) 
+            => tags.Where(tag => tag.Type == TagType.Minus)
+            .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
 
         private static Data GetDataForWord(string word)
         {
