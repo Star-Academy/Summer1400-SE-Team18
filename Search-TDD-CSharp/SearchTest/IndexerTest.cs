@@ -1,24 +1,30 @@
 ﻿using System.Collections.Generic;
 using NSubstitute;
-using Search.Database;
+using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.Index;
 using Search.IO;
 using Search.Word;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SearchTest
 {
     public class IndexerTest
     {
 
-        private IIndexer _indexer;
+        private IIndexer _indexer = new Indexer();
         private IReader _reader = Substitute.For<IReader>();
-        private IWordProcessor _wordProcessor = Substitute.For<IWordProcessor>();
         private readonly string _ls = TestEssentials.Ls;
+        private readonly ITestOutputHelper _output;
+
+        public IndexerTest(ITestOutputHelper output)
+        {
+            this._output = output;
+        }
 
         [Fact]
-        public void IndexingFolderTest()
+        public void Should_Index_Correctly_WhenReading_Folder()
         {
             MockingFolderReader();
             var expectedData = new HashSet<Data>();
@@ -29,7 +35,7 @@ namespace SearchTest
                 new HashSet<string>(){"4"}
             };
             //file 1
-            expectedData.Add(MakeData(GetStem("hessllo"), fileNames[0]));
+            expectedData.Add(MakeData(GetStem("hello"), fileNames[0]));
             expectedData.Add(MakeData(GetStem("dear"), fileNames[0]));
             expectedData.Add(MakeData(GetStem("i"), fileNames[0]));
             expectedData.Add(MakeData(GetStem("am"), fileNames[0]));
@@ -63,7 +69,7 @@ namespace SearchTest
                 },
                 {
                     "3", $"man sag mikham{_ls}" +
-                         $"sag khoshgel -  !!! mio !!!{_ls}"
+                         $"sag khoshgel - mikham !!! mio !!!{_ls}"
                 },
                 {
                     "4", "Mir rafte dubai vase nakhle talaii !!"
@@ -71,7 +77,7 @@ namespace SearchTest
             };
 
             _reader.Read("TestDataBase").Returns(folderData);
-            Manager.FileReaderInstance = _reader;
+            Manager.FolderReaderInstance = _reader;
         }
 
         private Data MakeData(string word, HashSet<string> fileNames) {

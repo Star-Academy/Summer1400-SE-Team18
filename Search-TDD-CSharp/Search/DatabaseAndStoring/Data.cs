@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Search.Database
+namespace Search.DatabaseAndStoring
 {
     public class Data
     {
@@ -17,6 +17,24 @@ namespace Search.Database
         public static Data GetNullData()
         {
             return NullData;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is not Data comparedData) return false;
+            return comparedData.GetHashCode() == this.GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            string filenames = "";
+            foreach (var s in FilesWithWordInThem)
+            {
+                filenames += s;
+            }
+
+            return (Word + filenames).GetHashCode();
         }
     }
 }

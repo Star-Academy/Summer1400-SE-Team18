@@ -11,7 +11,6 @@ namespace Search.IO
         {
             var result = new Dictionary<string, string>();
             var fileReader = Manager.FileReaderInstance;
-            var a = Directory.GetFiles(path);
             foreach (var file in Directory.GetFiles(path))
             {
                 var fileContent = fileReader.Read(file);
