@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
+using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.IO;
 using Search.Search;
@@ -14,6 +15,11 @@ namespace SearchTest
         private ISearcher _searcher = new Searcher();
         private static string _ls = TestEssentials.Ls;
 
+        public SearchTest()
+        {
+            Manager.Database.GetAllData().Clear();
+        }
+        
         [Fact]
         public void Should_Search_For_One_Word()
         {
@@ -22,8 +28,6 @@ namespace SearchTest
             MockFolderReaderForDataBase2(folderReader);
             Manager.FolderReaderInstance = folderReader;
             Manager.Indexer.Index("TestDataBase");
-            Assert.Equal(_searcher.Search("mir"), new HashSet<string>(new[] {"4"}));
-            Assert.Equal(_searcher.Search("mikham"), new HashSet<string>(new[] {"3"}));
             Assert.All(new []
             {
                 new {

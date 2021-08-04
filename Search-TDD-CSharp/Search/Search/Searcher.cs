@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
@@ -11,21 +12,43 @@ namespace Search.Search
         public HashSet<string> Search(string command)
         {
             var tags = Manager.TagCreator.CreateTags(command);
-            var result = tags.Where(tag => tag.Type == TagType.NoTag)
-                .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem)
-                .Aggregate((current, next) => current.Intersect(next).ToHashSet()).ToHashSet();
-            result.UnionWith(tags.Where(tag => tag.Type == TagType.Plus)
-                .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem).Aggregate((current, next) =>
-                {
-                    current.UnionWith(next);
-                    return current;
-                }).ToHashSet());
-            result.RemoveWhere((tag) => tags.Where(tag => tag.Type == TagType.Minus)
-                .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem).Aggregate((current, next) =>
-                {
-                    current.UnionWith(next);
-                    return current;
-                }).ToHashSet().Contains(tag));
+            HashSet<string> result = new HashSet<string>();
+            //No Tag
+            try
+            {
+                result = tags.Where(tag => tag.Type == TagType.NoTag)
+                    .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem)
+                    .Aggregate((current, next) => current.Intersect(next).ToHashSet()).ToHashSet();
+            }
+            catch (Exception ignored)
+            {
+                // ignored
+            }
+
+            //Plus Tag
+            try
+            {
+                var query = tags.Where(tag => tag.Type == TagType.Plus)
+                    .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
+                result.UnionWith(query);
+            }
+            catch (Exception ignored)
+            {
+                // ignored
+            }
+
+            //Minus Tag
+            try
+            {
+                var query = tags.Where(tag => tag.Type == TagType.Minus)
+                    .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
+                result.RemoveWhere(tag => query.Contains(tag));
+            } 
+            catch (Exception ignored)
+            {
+                // ignored
+            }
+                
             return result;
         }
 
