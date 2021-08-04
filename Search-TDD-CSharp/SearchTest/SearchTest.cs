@@ -43,8 +43,8 @@ namespace SearchTest
             Assert.All(new []
             {
                 new {
-                    SearchFor = "sag",
-                    Answers = new HashSet<string>(new []{"3", "gorbe"})
+                    SearchFor = "sag mikham",
+                    Answers = new HashSet<string>(new []{"3"})
                 }, 
                 new {
                     SearchFor = "dubai",
