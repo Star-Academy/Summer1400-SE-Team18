@@ -14,7 +14,7 @@ namespace SearchTest
         private readonly string _ls = Environment.NewLine;
 
         [Fact]
-        public void ReadFileTest()
+        public void Should_Read_When_Path_Is_File()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
             string expectedString;
@@ -23,7 +23,7 @@ namespace SearchTest
         }
 
         [Fact]
-        public void ReadFolderTest()
+        public void Should_Read_When_Path_Is_Directory()
         {
             IReader reader = Substitute.For<IReader>();
             reader.Read("TestDataBase\\1").Returns(new Dictionary<string, string>()
