@@ -29,7 +29,7 @@ namespace Search.DatabaseAndStoring
 
         public bool ContainsWord(string word)
         {
-            return _datas.Any(data => data.Word == word);
+            return GetData(word).FilesWithWordInThem.Count != 0;
         }
     }
 }
