@@ -7,13 +7,14 @@ using Xunit;
 
 namespace SearchTest
 {
+    [TestCaseOrderer("SearchTest.PriorityOrderer", "SearchTest")]
     public class IoTest
     {
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = Environment.NewLine;
 
-        [Fact]
+        [Fact, TestPriority(10)]
         public void Should_Read_When_Path_Is_File()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
@@ -21,7 +22,7 @@ namespace SearchTest
             Assert.Equal(expectedString, readingData["3"]);
         }
 
-        [Fact]
+        [Fact, TestPriority(0)]
         public void Should_Read_When_Path_Is_Directory()
         {
             IReader reader = Substitute.For<IReader>();
