@@ -9,23 +9,24 @@ namespace Scores.Controller.Calculators
 
         public Dictionary<Student, double> Calculate(Student[] students, StudentScore[] studentsScores)
         {
-            var query = students.GroupJoin(studentsScores
+            return students.GroupJoin(studentsScores
                 , student => student.StudentNumber
                 , score => score.StudentNumber
                 , (student, scores) =>
                 {
-                    var studentScores = scores as StudentScore[] ?? scores.ToArray();
+                    var studentScores = scores.ToArray();
                     return new
                     {
                         Student = student,
-                        Average = !studentScores.Any()
-                            ? 0
-                            : studentScores.Select(score => score.Score).Aggregate((current,
-                                next) => current + next) / studentScores.Count()
+                        Average = GetAverageOfStudentScores(studentScores)
                     };
                 }).ToDictionary(studentAndAverage => studentAndAverage.Student
                 , studentAndAverage => studentAndAverage.Average);
-            return query;
+        }
+
+        private double GetAverageOfStudentScores(StudentScore[] studentScores)
+        {
+            return !studentScores.Any() ? 0 : studentScores.Select(score => score.Score).Average();
         }
     }
 }
