@@ -4,9 +4,7 @@ using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.Index;
 using Search.IO;
-using Search.Word;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace SearchTest
 {
@@ -15,12 +13,6 @@ namespace SearchTest
         private IIndexer _indexer = new Indexer();
         private IReader _reader = Substitute.For<IReader>();
         private readonly string _ls = TestEssentials.Ls;
-        private readonly ITestOutputHelper _output;
-
-        public IndexerTest(ITestOutputHelper output)
-        {
-            this._output = output;
-        }
 
         [Fact]
         public void Should_Index_Correctly_WhenReading_Folder()
