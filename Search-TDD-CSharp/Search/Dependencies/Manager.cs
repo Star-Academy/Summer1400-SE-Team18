@@ -1,5 +1,6 @@
 ﻿using Iveonik.Stemmers;
 using Search.DatabaseAndStoring;
+using Search.Index;
 using Search.IO;
 using Search.Word;
 
@@ -12,5 +13,6 @@ namespace Search.Dependencies
         public static EnglishStemmer Stemmer = new EnglishStemmer();
         public static IWordProcessor WordProcessorInstance = new WordProcessor();
         public static IDatabase Database = new Database();
+        public static IIndexer Indexer = new Indexer();
     }
 }

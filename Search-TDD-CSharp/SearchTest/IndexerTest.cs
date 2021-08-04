@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using static SearchTest.TestEssentials;
+using System.Collections.Generic;
 using NSubstitute;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
@@ -69,16 +70,6 @@ namespace SearchTest
 
             _reader.Read("TestDataBase").Returns(folderData);
             Manager.FolderReaderInstance = _reader;
-        }
-
-        private Data MakeData(string word, HashSet<string> fileNames)
-        {
-            return new Data(word, fileNames);
-        }
-
-        private string GetStem(string word)
-        {
-            return Manager.Stemmer.Stem(word);
         }
     }
 }
