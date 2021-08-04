@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Search.Searcher
+namespace Search.Search
 {
     public interface ISearcher
     {

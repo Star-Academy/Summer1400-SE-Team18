@@ -2,6 +2,7 @@
 using Search.DatabaseAndStoring;
 using Search.Index;
 using Search.IO;
+using Search.Tags;
 using Search.Word;
 
 namespace Search.Dependencies
@@ -14,5 +15,6 @@ namespace Search.Dependencies
         public static IWordProcessor WordProcessorInstance = new WordProcessor();
         public static IDatabase Database = new Database();
         public static IIndexer Indexer = new Indexer();
+        public static TagCreator TagCreator = new TagCreator();
     }
 }

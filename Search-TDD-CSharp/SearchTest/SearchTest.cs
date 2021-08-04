@@ -4,14 +4,14 @@ using System.Linq;
 using NSubstitute;
 using Search.Dependencies;
 using Search.IO;
-using Search.Searcher;
+using Search.Search;
 using Xunit;
 
 namespace SearchTest
 {
     public class SearchTest
     {
-        private ISearcher _searcher;
+        private ISearcher _searcher = new Searcher();
         private static string _ls = TestEssentials.Ls;
 
         [Fact]
