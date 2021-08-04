@@ -2,7 +2,6 @@
 using Search.Dependencies;
 using Search.Word;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace SearchTest
 {

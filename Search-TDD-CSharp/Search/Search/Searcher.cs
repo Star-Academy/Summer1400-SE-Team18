@@ -28,7 +28,7 @@ namespace Search.Search
                     .Aggregate((current, next) => current.Intersect(next).ToHashSet())
                     .ToHashSet();
             } 
-            catch (Exception ignored)
+            catch (Exception)
             {
                 return new HashSet<string>();
             }

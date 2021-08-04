@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NSubstitute;
 using Search.Dependencies;
 using Search.IO;
 using Xunit;
-using Xunit.Abstractions;
 using Xunit.Priority;
 
 namespace SearchTest

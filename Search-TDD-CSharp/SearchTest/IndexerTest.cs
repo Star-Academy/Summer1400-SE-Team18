@@ -12,8 +12,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class IndexerTest
     {
-        private IIndexer _indexer = new Indexer();
-        private IReader _reader = Substitute.For<IReader>();
+        private readonly IIndexer _indexer = new Indexer();
+        private readonly IReader _reader = Substitute.For<IReader>();
         private readonly string _ls = TestEssentials.Ls;
 
         public IndexerTest()
@@ -26,7 +26,7 @@ namespace SearchTest
         {
             MockingFolderReader();
             var expectedData = new HashSet<Data>();
-            var fileNames = new HashSet<string>[]
+            var fileNames = new []
             {
                 new HashSet<string>() {"1"},
                 new HashSet<string>() {"3"},
