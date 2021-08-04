@@ -60,6 +60,7 @@ namespace SearchTest
         {
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
+            Manager.Indexer.Index("TestDataBase");
             Manager.FolderReaderInstance = folderReader;
             Manager.Indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
@@ -72,6 +73,8 @@ namespace SearchTest
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
             Manager.FolderReaderInstance = folderReader;
+            Manager.Indexer.Index("TestDataBase");
+            Manager.Indexer.Index("TestDataBase2");
             Assert.All(new []
             {
                 new {
