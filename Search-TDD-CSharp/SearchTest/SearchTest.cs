@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
-using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.IO;
 using Search.Search;
@@ -13,8 +12,7 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class SearchTest
     {
-        private ISearcher _searcher = new Searcher();
-        private static string _ls = TestEssentials.Ls;
+        private readonly ISearcher _searcher = new Searcher();
 
         public SearchTest()
         {
