@@ -4,14 +4,14 @@ namespace Search.Database
 {
     public class Data
     {
-        private static readonly Data NullData = new Data("", new List<string>());
+        private static readonly Data NullData = new Data("", new HashSet<string>());
         public string Word { get; }
-        public List<string> FilesWithWordInThem { get; }
+        public HashSet<string> FilesWithWordInThem { get; }
 
-        public Data(string word, List<string> filesWithWordInThem)
+        public Data(string word, HashSet<string> filesWithWordInThem)
         {
-            this.Word = word;
-            this.FilesWithWordInThem = filesWithWordInThem;
+            Word = word;
+            FilesWithWordInThem = filesWithWordInThem;
         }
 
         public static Data GetNullData()

@@ -12,7 +12,7 @@ namespace SearchTest
     {
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
-        private readonly string _ls = Environment.NewLine;
+        private readonly string _ls = TestEssentials.Ls;
 
         [Fact, TestPriority(10)]
         public void Should_Read_When_Path_Is_File()

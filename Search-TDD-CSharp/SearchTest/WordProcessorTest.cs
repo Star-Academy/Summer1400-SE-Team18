@@ -1,12 +1,19 @@
 ﻿using System.Linq;
+using Search.Word;
 using Xunit;
-using Search.WordProcessor;
+using Xunit.Abstractions;
 
 namespace SearchTest
 {
     public class WordProcessorTest
     {
         private IWordProcessor _wordProcessor = new WordProcessor();
+        private readonly ITestOutputHelper _output;
+
+        public WordProcessorTest(ITestOutputHelper output)
+        {
+            this._output = output;
+        }
 
         [Fact]
         public void Should_Parse_Normal_text()

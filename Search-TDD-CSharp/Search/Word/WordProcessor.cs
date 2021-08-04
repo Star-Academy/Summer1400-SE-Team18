@@ -1,23 +1,24 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Search.Dependencies;
-using System.Linq;
 
-namespace Search.WordProcessor
+namespace Search.Word
 {
     public class WordProcessor : IWordProcessor
     {
         public string[] ParseText(string text)
         {
             text = RemoveNonAlphabeticalWords(text);
-            var parsedText = SplitWordsInText(text);
-            var result = parsedText.Select(GetStem);
+            var splitText = SplitWordsInText(text);
+            var parsedText = splitText.Select(GetStem).ToArray();
 
             return parsedText;
         }
 
         public string GetStem(string word)
         {
-            return Manager.Stemmer.Stem(word);
+            var lowerCaseWord = word.ToLower();
+            return Manager.Stemmer.Stem(lowerCaseWord);
         }
 
         public string[] SplitWordsInText(string text)
@@ -26,8 +27,9 @@ namespace Search.WordProcessor
         }
 
         public string RemoveNonAlphabeticalWords(string text)
-        {
-            return Regex.Replace(text, "[^A-Za-z ]", "");
+        { 
+            text = Regex.Replace(text, "[^A-Za-z ]", " ");
+            return text.Trim();
         }
     }
 }

@@ -11,11 +11,11 @@ namespace SearchTest
         public IEnumerable<TTestCase> OrderTestCases<TTestCase>(
             IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
         {
-            string assemblyName = typeof(TestPriorityAttribute).AssemblyQualifiedName!;
+            var assemblyName = typeof(TestPriorityAttribute).AssemblyQualifiedName!;
             var sortedMethods = new SortedDictionary<int, List<TTestCase>>();
-            foreach (TTestCase testCase in testCases)
+            foreach (var testCase in testCases)
             {
-                int priority = testCase.TestMethod.Method
+                var priority = testCase.TestMethod.Method
                     .GetCustomAttributes(assemblyName)
                     .FirstOrDefault()
                     ?.GetNamedArgument<int>(nameof(TestPriorityAttribute.Priority)) ?? 0;
@@ -23,7 +23,7 @@ namespace SearchTest
                 GetOrCreate(sortedMethods, priority).Add(testCase);
             }
 
-            foreach (TTestCase testCase in
+            foreach (var testCase in
                 sortedMethods.Keys.SelectMany(
                     priority => sortedMethods[priority].OrderBy(
                         testCase => testCase.TestMethod.Method.Name)))

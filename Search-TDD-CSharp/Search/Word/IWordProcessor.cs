@@ -1,4 +1,4 @@
-﻿namespace Search.WordProcessor
+﻿namespace Search.Word
 {
     public interface IWordProcessor
     {
