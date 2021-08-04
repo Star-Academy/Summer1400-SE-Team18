@@ -9,16 +9,15 @@ namespace SearchTest
 {
     public class IoTest
     {
-        private IReader _fileReader = new FileReader();
-        private IReader _folderReader = new FolderReader();
+        private readonly IReader _fileReader = new FileReader();
+        private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = Environment.NewLine;
 
         [Fact]
         public void Should_Read_When_Path_Is_File()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
-            string expectedString;
-            expectedString = $"man sag mikham{_ls}sag khoshgel - mikham !!! mio !!!{_ls}";
+            var expectedString = $"man sag mikham{_ls}sag khoshgel - mikham !!! mio !!!{_ls}";
             Assert.Equal(expectedString, readingData["3"]);
         }
 
