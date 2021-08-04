@@ -23,9 +23,31 @@ namespace SearchTest
             Manager.Indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mir"), new HashSet<string>(new[] {"4"}));
             Assert.Equal(_searcher.Search("mikham"), new HashSet<string>(new[] {"3"}));
+            Assert.All(new []
+            {
+                new {
+                    SearchFor = "mir",
+                    Answers = new HashSet<string>(new []{"4"})
+                }, 
+                new {
+                    SearchFor = "mikham",
+                    Answers = new HashSet<string>(new []{"3"})
+                }
+            }.Select(str => str), (commandAndAnswers) => 
+                Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
             Manager.Indexer.Index("TestDataBase2");
-            Assert.Equal(_searcher.Search("sag"), new HashSet<string>(new[] {"3", "gorbe"}));
-            Assert.Equal(_searcher.Search("dubai"), new HashSet<string>(new[] {"4", "sag"}));
+            Assert.All(new []
+            {
+                new {
+                    SearchFor = "sag",
+                    Answers = new HashSet<string>(new []{"3", "gorbe"})
+                }, 
+                new {
+                    SearchFor = "dubai",
+                    Answers = new HashSet<string>(new []{"4", "sag"})
+                }
+            }.Select(str => str), (commandAndAnswers) => 
+                Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
         }
 
         [Fact]
