@@ -6,7 +6,7 @@ namespace SearchTest
 {
     public class WordProcessorTest
     {
-        private IWordProcessor _wordProcessor;
+        private IWordProcessor _wordProcessor = new WordProcessor();
 
         [Fact]
         public void Should_Parse_Normal_text()
