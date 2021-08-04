@@ -15,6 +15,11 @@ namespace SearchTest
         private IReader _reader = Substitute.For<IReader>();
         private readonly string _ls = TestEssentials.Ls;
 
+        public IndexerTest()
+        {
+            Manager.Reset();
+        }
+
         [Fact]
         public void Should_Index_Correctly_WhenReading_Folder()
         {
