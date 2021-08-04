@@ -4,27 +4,39 @@ using NSubstitute;
 using Search.Dependencies;
 using Search.IO;
 using Xunit;
+using Xunit.Abstractions;
+using Xunit.Priority;
 
 namespace SearchTest
 {
-    [TestCaseOrderer("SearchTest.PriorityOrderer", "SearchTest")]
+    [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
+    [DefaultPriority(10)]
     public class IoTest
     {
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = Environment.NewLine;
+        private readonly ITestOutputHelper _output;
+        public static int Abbas = 0;
+        
+        public IoTest(ITestOutputHelper output)
+        {
+            this._output = output;
+        }
 
-        [Fact, TestPriority(10)]
         public void Should_Read_When_Path_Is_File()
         {
+            _output.WriteLine(Abbas + "");
+            Abbas = 2;
             var readingData = _fileReader.Read("TestDataBase/3");
             var expectedString = $"man sag mikham{_ls}sag khoshgel - mikham !!! mio !!!{_ls}";
             Assert.Equal(expectedString, readingData["3"]);
         }
 
-        [Fact, TestPriority(0)]
         public void Should_Read_When_Path_Is_Directory()
         {
+            _output.WriteLine(Abbas + "");
+            Abbas = 1;
             IReader reader = Substitute.For<IReader>();
             reader.Read("TestDataBase\\1").Returns(new Dictionary<string, string>()
             {
