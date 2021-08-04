@@ -17,9 +17,10 @@ namespace SearchTest
         [Fact]
         public void Should_Search_For_One_Word()
         {
-            IReader folderReader = new FolderReader();
+            IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
+            Manager.FolderReaderInstance = folderReader;
             Manager.Indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mir"), new HashSet<string>(new[] {"4"}));
             Assert.Equal(_searcher.Search("mikham"), new HashSet<string>(new[] {"3"}));
@@ -55,6 +56,7 @@ namespace SearchTest
         {
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
+            Manager.FolderReaderInstance = folderReader;
             Manager.Indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
         }
@@ -65,6 +67,7 @@ namespace SearchTest
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
+            Manager.FolderReaderInstance = folderReader;
             Assert.All(new []
             {
                 new {
