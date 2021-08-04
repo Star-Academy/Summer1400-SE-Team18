@@ -12,7 +12,6 @@ namespace SearchTest
 {
     public class IndexerTest
     {
-
         private IIndexer _indexer = new Indexer();
         private IReader _reader = Substitute.For<IReader>();
         private readonly string _ls = TestEssentials.Ls;
@@ -30,9 +29,9 @@ namespace SearchTest
             var expectedData = new HashSet<Data>();
             var fileNames = new HashSet<string>[]
             {
-                new HashSet<string>(){"1"},
-                new HashSet<string>(){"3"},
-                new HashSet<string>(){"4"}
+                new HashSet<string>() {"1"},
+                new HashSet<string>() {"3"},
+                new HashSet<string>() {"4"}
             };
             //file 1
             expectedData.Add(MakeData(GetStem("hello"), fileNames[0]));
@@ -54,7 +53,7 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("vase"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
-            
+
             _indexer.Index("TestDataBase");
             Assert.Equal(expectedData, Manager.Database.GetAllData());
         }
@@ -80,7 +79,8 @@ namespace SearchTest
             Manager.FolderReaderInstance = _reader;
         }
 
-        private Data MakeData(string word, HashSet<string> fileNames) {
+        private Data MakeData(string word, HashSet<string> fileNames)
+        {
             return new Data(word, fileNames);
         }
 
@@ -88,6 +88,5 @@ namespace SearchTest
         {
             return Manager.Stemmer.Stem(word);
         }
-        
     }
 }
