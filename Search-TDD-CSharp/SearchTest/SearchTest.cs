@@ -62,7 +62,6 @@ namespace SearchTest
             MockFolderReaderForDataBase(folderReader);
             Manager.Indexer.Index("TestDataBase");
             Manager.FolderReaderInstance = folderReader;
-            Manager.Indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
         }
 
