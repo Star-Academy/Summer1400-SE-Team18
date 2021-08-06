@@ -23,9 +23,12 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private HashSet<String> getFinalAnswer(TagsInterface answerTags) {
-        answerTags.addToNoTags(answerTags.getPlusTags());
-        answerTags.getNoTags().removeAll(answerTags.getMinusTags());
-        return answerTags.getNoTags();
+        HashSet<String> resultsForPlusTags = answerTags.getPlusTags();
+        answerTags.addToNoTags(resultsForPlusTags);
+        HashSet<String> resultsForMinusTags = answerTags.getMinusTags();
+        answerTags.getNoTags().removeAll(resultsForMinusTags);
+        HashSet<String> results = answerTags.getNoTags();
+        return results;
     }
 
     private TagsInterface getAnswerForEachTag(TagsInterface filteredTags) {

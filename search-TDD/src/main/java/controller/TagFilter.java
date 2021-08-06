@@ -1,6 +1,5 @@
 package controller;
 
-import static controller.ProgramController.*;
 
 import model.FilteredTags;
 import model.TagsInterface;
