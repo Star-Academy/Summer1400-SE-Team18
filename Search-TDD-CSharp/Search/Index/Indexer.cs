@@ -21,7 +21,7 @@ namespace Search.Index
             var parsedText = Manager.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
-                if (database.ContainsWord(word)) AppendFilenameToData(word, filename, database);
+                if (database.DoesContainsWord(word)) AppendFilenameToData(word, filename, database);
                 else MakeKeyInDataBase(word, filename, database);
             }
         }
