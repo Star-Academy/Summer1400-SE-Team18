@@ -16,7 +16,7 @@ namespace SearchTest
 
         public SearchTest()
         {
-            Manager.Reset();
+            Reset();
         }
         
         [Fact]

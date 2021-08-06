@@ -16,10 +16,5 @@ namespace Search.Dependencies
         public static readonly IDatabase Database = new Database();
         public static readonly IIndexer Indexer = new Indexer();
         public static readonly TagCreator TagCreator = new TagCreator();
-
-        public static void Reset()
-        {
-            Database.ClearAll();
-        }
     }
 }

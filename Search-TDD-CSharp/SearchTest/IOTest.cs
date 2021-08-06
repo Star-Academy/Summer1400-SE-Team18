@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using static SearchTest.TestEssentials;
+using System.Collections.Generic;
 using NSubstitute;
 using Search.Dependencies;
 using Search.IO;
@@ -18,7 +19,7 @@ namespace SearchTest
 
         public IoTest()
         {
-            Manager.Reset();
+            Reset();
         }
         
         [Fact]

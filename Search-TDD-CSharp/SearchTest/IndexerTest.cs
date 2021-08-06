@@ -18,7 +18,7 @@ namespace SearchTest
 
         public IndexerTest()
         {
-            Manager.Reset();
+            Reset();
         }
 
         [Fact]
