@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Search.DatabaseAndStoring
@@ -14,12 +15,14 @@ namespace Search.DatabaseAndStoring
 
         public Data GetData(string word)
         {
-            foreach (var data in _data)
+            try
             {
-                if (data.Word == word) return data;
+                return _data.First(data => data.Word == word);
             }
-
-            return Data.GetNullData();
+            catch
+            {
+                return Data.NullData;
+            }
         }
 
         public HashSet<Data> GetAllData()

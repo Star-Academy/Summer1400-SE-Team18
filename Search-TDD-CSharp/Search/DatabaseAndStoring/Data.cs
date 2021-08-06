@@ -4,11 +4,7 @@ namespace Search.DatabaseAndStoring
 {
     public class Data
     {
-        public static Data NullData {
-            get {
-                return new Data("", new HashSet<String>());
-            };
-        }
+        public static Data NullData => new Data("", new HashSet<string>());
         public string Word { get; }
         public HashSet<string> FilesWithWordInThem { get; }
 
@@ -27,7 +23,7 @@ namespace Search.DatabaseAndStoring
 
         public override int GetHashCode()
         {
-            return (Word + filenames).GetHashCode();
+            return Word.GetHashCode();
         }
     }
 }
