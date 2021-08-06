@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
 
+import controller.ProgramController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,9 @@ public class TagFilterTest {
 
     @Test
     public void tagFilterTest() {
+        TagFilter tagFilter = ProgramController.getTagFilter();
         String command = "+a +b -c d e +f g";
-        TagsInterface filteredTags = TagFilter.parse(command);
+        TagsInterface filteredTags = tagFilter.parse(command);
         //No Tags
         HashSet<String> expectedNoTags = new HashSet<>();
         expectedNoTags.add("e");

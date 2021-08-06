@@ -1,11 +1,11 @@
 package controller.searcher;
 
-import static controller.TagFilter.*;
-import static controller.WordController.getStem;
-
 import controller.DatabaseController;
 import controller.ProgramController;
+import controller.TagFilter;
+import controller.WordController;
 import model.AnswerTags;
+import model.Data;
 import model.TagsInterface;
 
 import java.util.HashSet;
@@ -18,13 +18,14 @@ public class AdvancedSearcher implements Searcher {
 
     @Override
     public HashSet<String> search(String command) {
-        TagsInterface filteredTags = parse(command);
+        TagFilter tagFilter = ProgramController.getTagFilter();
+        TagsInterface filteredTags = tagFilter.parse(command);
         TagsInterface answerTags = getAnswerForEachTag(filteredTags);
         return getFinalAnswer(answerTags);
     }
 
     private HashSet<String> getFinalAnswer(TagsInterface answerTags) {
-        answerTags.getNoTags().addAll(answerTags.getPlusTags());
+        answerTags.addToNoTags(answerTags.getPlusTags());
         answerTags.getNoTags().removeAll(answerTags.getMinusTags());
         return answerTags.getNoTags();
     }
@@ -38,14 +39,14 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillNoTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        WordController wordController = ProgramController.getWordController();
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
-        String stemmed = getStem(iterator.next());
-        answerTags.getNoTags().addAll(databaseController.getDataForWord(stemmed).getFileNames());
+        String stemmed = wordController.getStem(iterator.next());
+        answerTags.addToNoTags(getFileNamesForWord(stemmed));
         while (iterator.hasNext()) {
-            stemmed = getStem(iterator.next());
-            answerTags.getNoTags().retainAll(databaseController.getDataForWord(stemmed).getFileNames());
+            stemmed = wordController.getStem(iterator.next());
+            answerTags.getNoTags().retainAll(getFileNamesForWord(stemmed));
         }
     }
 
@@ -58,11 +59,19 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        WordController wordController = ProgramController.getWordController();
         for (String taggedWord : taggedWords) {
-            String stemmed = getStem(taggedWord);
-            answers.addAll(databaseController.getDataForWord(stemmed).getFileNames());
+            String stemmed = wordController.getStem(taggedWord);
+            answers.addAll(getFileNamesForWord(stemmed));
         }
     }
+
+    private Data getDataForWord(String word) {
+        DatabaseController databaseController = ProgramController.getDatabaseController();
+        return databaseController.getDataForWord(word);
+    }
     
+    private HashSet<String> getFileNamesForWord(String word) {
+        return getDataForWord(word).getFileNames();
+    }
 }

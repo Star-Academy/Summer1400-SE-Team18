@@ -14,11 +14,13 @@ public class ProgramController {
     private static DatabaseController databaseController;
     private static Reader fileReader;
     private static Reader folderReader;
-    private static Searcher normalSearcher;
     private static Searcher AdvancedSearcher;
     private static Scanner scanner;
     private static PorterStemmer porterStemmer;
     private static MainMenuController mainMenuController;
+    private static IndexController indexController;
+    private static TagFilter tagFilter;
+    private static WordController wordController;
 
     static {
         databaseController = new DatabaseController();
@@ -27,8 +29,10 @@ public class ProgramController {
         scanner = new Scanner(System.in);
         porterStemmer = new PorterStemmer();
         mainMenuController = new MainMenuController();
-        normalSearcher = new NormalSearcher();
         AdvancedSearcher = new AdvancedSearcher();
+        indexController = new IndexController();
+        tagFilter = new TagFilter();
+        wordController = new WordController();
     }
 
     private ProgramController() {
@@ -58,11 +62,7 @@ public class ProgramController {
         return mainMenuController;
     }
 
-    public static Searcher getNormalSearcher() {
-        return normalSearcher;
-    }
-
-    public static Searcher getAdvancedSearcher() {
+    public static Searcher getSearcher() {
         return AdvancedSearcher;
     }
 
@@ -76,5 +76,17 @@ public class ProgramController {
 
     public static void setScanner(Scanner scanner) {
         ProgramController.scanner = scanner;
+    }
+
+    public static IndexController getIndexController() {
+        return indexController;
+    }
+
+    public static TagFilter getTagFilter() {
+        return tagFilter;
+    }
+
+    public static WordController getWordController() {
+        return wordController;
     }
 }

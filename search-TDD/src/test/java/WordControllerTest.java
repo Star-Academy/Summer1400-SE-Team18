@@ -1,11 +1,14 @@
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import controller.ProgramController;
 import org.junit.jupiter.api.Test;
 
 import controller.WordController;
 
 public class WordControllerTest {
+
+    private WordController wordController = ProgramController.getWordController();
 
     @Test
     public void getCommandsTest() {
@@ -15,14 +18,14 @@ public class WordControllerTest {
             "+Dear",
             "-My"
         };
-        assertArrayEquals(commands, WordController.getCommands(command));
+        assertArrayEquals(commands, wordController.getCommands(command));
     }
 
     @Test
     public void removeNonAlphabeticalTest() {
         String text = "Hello, I'm Mohammad. nice to meet you!";
         String expectedAlphabeticalText = "hello  i m mohammad  nice to meet you ";
-        assertEquals(expectedAlphabeticalText, WordController.removeNonAlphabetical(text));
+        assertEquals(expectedAlphabeticalText, wordController.removeNonAlphabetical(text));
     }
 
     @Test
@@ -46,11 +49,11 @@ public class WordControllerTest {
             getStem("draw"),
             getStem("side")
         };
-        assertArrayEquals(expected, WordController.textSeperator(text));
+        assertArrayEquals(expected, wordController.textSeperator(text));
     }
 
     public String getStem(String word) {
-        return WordController.getStem(word);
+        return ProgramController.getWordController().getStem(word);
     } 
     
 }

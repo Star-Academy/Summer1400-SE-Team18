@@ -3,28 +3,31 @@ package controller;
 import static controller.ProgramController.getPorterStemmer;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class WordController {
 
-    public static String[] textSeperator(String text) {
+    public String[] textSeperator(String text) {
         String cleanText = removeNonAlphabetical(text);
         String[] commands = getCommands(cleanText);
         return mapWordToWordStem(commands);
     }
 
-    private static String[] mapWordToWordStem(String[] words) {
-        return Arrays.stream(words).map(e -> getStem(e)).toArray(String[]::new);
+    private String[] mapWordToWordStem(String[] words) {
+        Stream<String> wordsStream = Arrays.stream(words);
+        Stream<String> stemmedWordsStream = wordsStream.map(e -> getStem(e));
+        return stemmedWordsStream.toArray(String[]::new);
     }
 
-    public static String getStem(String word) {
+    public String getStem(String word) {
         return getPorterStemmer().stem(word);
     }
 
-    public static String removeNonAlphabetical(String text) {
+    public String removeNonAlphabetical(String text) {
         return text.toLowerCase().replaceAll("[^a-z0-9]", " ");
     }
 
-    public static String[] getCommands(String string) {
+    public String[] getCommands(String string) {
         return string.split("[\\s]+");
     }
 }
