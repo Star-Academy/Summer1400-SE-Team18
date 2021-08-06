@@ -19,7 +19,7 @@ namespace Search.Dependencies
 
         public static void Reset()
         {
-            Database.GetAllData().Clear();
+            Database.ClearAll();
         }
     }
 }

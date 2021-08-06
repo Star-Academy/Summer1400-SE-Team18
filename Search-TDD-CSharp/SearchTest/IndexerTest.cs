@@ -52,9 +52,28 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("vase"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
+            Database database = Manager.Database;
+            var databaseInfo = new HashSet<Data>();
+            data.add(database.GetData("hello"));
+            data.add(database.GetData("dear"));
+            data.add(database.GetData("i"));
+            data.add(database.GetData("am"));
+            data.add(database.GetData("mohammad"));
+            data.add(database.GetData("man"));
+            data.add(database.GetData("sag"));
+            data.add(database.GetData("mikham"));
+            data.add(database.GetData("khoshgel"));
+            data.add(database.GetData("mikham"));
+            data.add(database.GetData("mio"));
+            data.add(database.GetData("mir"));
+            data.add(database.GetData("rafte"));
+            data.add(database.GetData("dubai"));
+            data.add(database.GetData("vase"));
+            data.add(database.GetData("nakhle"));
+            data.add(database.GetData("talaii"));
 
             _indexer.Index("TestDataBase");
-            Assert.Equal(expectedData, Manager.Database.GetAllData());
+            Assert.Equal(expectedData, databaseInfo);
         }
 
         private void MockingFolderReader()

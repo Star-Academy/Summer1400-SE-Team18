@@ -6,7 +6,6 @@ namespace Search.DatabaseAndStoring
     {
         void AddData(Data data);
         Data GetData(string word);
-        HashSet<Data> GetAllData();
         bool ContainsWord(string word);
     }
 }
