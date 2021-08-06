@@ -1,5 +1,7 @@
 package view;
 
+import java.util.HashSet;
+
 import controller.ProgramController;
 
 public class Menu {
@@ -8,7 +10,16 @@ public class Menu {
         System.out.println(message);
     }
 
+    public static void showResult(HashSet<String> set) {
+        if (set.size() == 0) {
+            showMessage("No results found!");
+        } else {
+            showMessage(set.toString());
+        }
+    }
+
     public static String getNextLine() {
-        return ProgramController.getScanner().nextLine();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        return controllerInstance.getScanner().nextLine();
     }
 }

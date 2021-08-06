@@ -9,20 +9,21 @@ import opennlp.tools.stemmer.PorterStemmer;
 
 public class ProgramController {
 
-    private static final String PLUS_SIGN = "+";
-    private static final String MINUS_SIGN = "-";
-    private static DatabaseController databaseController;
-    private static Reader fileReader;
-    private static Reader folderReader;
-    private static Searcher AdvancedSearcher;
-    private static Scanner scanner;
-    private static PorterStemmer porterStemmer;
-    private static MainMenuController mainMenuController;
-    private static IndexController indexController;
-    private static TagFilter tagFilter;
-    private static WordController wordController;
+    private static final ProgramController programController = new ProgramController();
+    private final String PLUS_SIGN = "+";
+    private final String MINUS_SIGN = "-";
+    private DatabaseController databaseController;
+    private Reader fileReader;
+    private Reader folderReader;
+    private Searcher AdvancedSearcher;
+    private Scanner scanner;
+    private PorterStemmer porterStemmer;
+    private MainMenuController mainMenuController;
+    private IndexController indexController;
+    private TagFilter tagFilter;
+    private WordController wordController;
 
-    static {
+    {
         databaseController = new DatabaseController();
         fileReader = new FileReader();
         folderReader = new FolderReader();
@@ -38,55 +39,59 @@ public class ProgramController {
     private ProgramController() {
     }
 
-    public static DatabaseController getDatabaseController() {
+    public DatabaseController getDatabaseController() {
         return databaseController;
     }
 
-    public static Reader getFileReader() {
+    public Reader getFileReader() {
         return fileReader;
     }
 
-    public static Reader getFolderReader() {
+    public Reader getFolderReader() {
         return folderReader;
     }
 
-    public static Scanner getScanner() {
+    public Scanner getScanner() {
         return scanner;
     }
 
-    public static PorterStemmer getPorterStemmer() {
+    public PorterStemmer getPorterStemmer() {
         return porterStemmer;
     }
 
-    public static MainMenuController getMainMenuController() {
+    public MainMenuController getMainMenuController() {
         return mainMenuController;
     }
 
-    public static Searcher getSearcher() {
+    public Searcher getSearcher() {
         return AdvancedSearcher;
     }
 
-    public static String getPlusSign() {
+    public String getPlusSign() {
         return PLUS_SIGN;
     }
 
-    public static String getMinusSign() {
+    public String getMinusSign() {
         return MINUS_SIGN;
     }
 
-    public static void setScanner(Scanner scanner) {
-        ProgramController.scanner = scanner;
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 
-    public static IndexController getIndexController() {
+    public IndexController getIndexController() {
         return indexController;
     }
 
-    public static TagFilter getTagFilter() {
+    public TagFilter getTagFilter() {
         return tagFilter;
     }
 
-    public static WordController getWordController() {
+    public WordController getWordController() {
         return wordController;
+    }
+
+    public static ProgramController getInstance() {
+        return programController;
     }
 }

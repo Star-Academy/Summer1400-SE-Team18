@@ -18,10 +18,11 @@ public class TagFilter {
     }
 
     private void assignTagToDesiredArrayList(String tag, FilteredTags filteredTags) {
-        String trimmedWord = trimTag(tag);
-        if (tag.startsWith(getPlusSign())) 
+        ProgramController controllerInstance = ProgramController.getInstance();
+        String trimmedWord = trimTag(tag), plusSign = controllerInstance.getPlusSign(), minusSign = controllerInstance.getMinusSign();
+        if (tag.startsWith(plusSign)) 
             addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
-        else if (tag.startsWith(getMinusSign())) 
+        else if (tag.startsWith(minusSign)) 
             addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
         else addWordToHashSet(tag, filteredTags.getNoTags());;
     }

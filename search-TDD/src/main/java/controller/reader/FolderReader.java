@@ -16,7 +16,8 @@ private final static String WORD_SPLITTER = "~";
     
     private String getSubFilesStrings(File file) {
         StringBuilder stringBuilder = new StringBuilder();
-        Reader reader = ProgramController.getFileReader();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        Reader reader = controllerInstance.getFileReader();
         for (File temporaryFile : file.listFiles()) {
             stringBuilder.append(WORD_SPLITTER);
             stringBuilder.append(temporaryFile.getName());

@@ -11,7 +11,7 @@ public class IndexController {
     private final String WORD_SPLITTER = "~";
 
     public void addFolderToDatabase(String path) {
-        String text = getFolderReader().read(path);
+        String text = getInstance().getFolderReader().read(path);
         if (text == null) return;
         String[] fileNamesAndWords = text.split(WORD_SPLITTER);
         for (int i = 1; i < fileNamesAndWords.length; i = i + 2) {
@@ -20,21 +20,23 @@ public class IndexController {
     }
 
     public void addFileTextToDatabase(String path) {
-        String text = getFileReader().read(path);
+        String text = getInstance().getFileReader().read(path);
         if (text == null) return;
         String fileName = findFileName(path);
         addFileToDatabase(fileName, text);
     }
 
     private void addFileToDatabase(String filename, String text) {
-        WordController wordController = ProgramController.getWordController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        WordController wordController = controllerInstance.getWordController();
         String[] words = wordController.textSeperator(text);
         Stream<String> wordsStream = Arrays.stream(words);
         wordsStream.forEach(e -> addWordToDatabase(filename, e));
     }
 
     private void addWordToDatabase(String filename, String word) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        DatabaseController databaseController = controllerInstance.getDatabaseController();
         if (databaseController.wordExistsInDataBase(word))
             databaseController.getDataForWord(word).getFileNames().add(filename);
         else 

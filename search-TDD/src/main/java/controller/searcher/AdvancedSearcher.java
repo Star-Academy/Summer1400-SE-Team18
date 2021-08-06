@@ -12,13 +12,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class AdvancedSearcher implements Searcher {
-    public final static String PLUS_SIGN = ProgramController.getPlusSign();
-    public final static String MINUS_SIGN = ProgramController.getMinusSign();
+    public final String PLUS_SIGN;
+    public final String MINUS_SIGN;
+
+    {
+        ProgramController controllerInstance = ProgramController.getInstance();
+        PLUS_SIGN = controllerInstance.getPlusSign();
+        MINUS_SIGN = controllerInstance.getMinusSign();
+    }
     
 
     @Override
     public HashSet<String> search(String command) {
-        TagFilter tagFilter = ProgramController.getTagFilter();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        TagFilter tagFilter = controllerInstance.getTagFilter();
         TagsInterface filteredTags = tagFilter.parse(command);
         TagsInterface answerTags = getAnswerForEachTag(filteredTags);
         return getFinalAnswer(answerTags);
@@ -39,7 +46,8 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillNoTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
-        WordController wordController = ProgramController.getWordController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        WordController wordController = controllerInstance.getWordController();
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
         String stemmed = wordController.getStem(iterator.next());
@@ -59,7 +67,8 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        WordController wordController = ProgramController.getWordController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        WordController wordController = controllerInstance.getWordController();
         for (String taggedWord : taggedWords) {
             String stemmed = wordController.getStem(taggedWord);
             answers.addAll(getFileNamesForWord(stemmed));
@@ -67,7 +76,8 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private Data getDataForWord(String word) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        DatabaseController databaseController = controllerInstance.getDatabaseController();
         return databaseController.getDataForWord(word);
     }
     

@@ -12,41 +12,30 @@ public class MainMenuController {
         Menu.showMessage("Welcome to Searcher!");
         while (!(command = Menu.getNextLine()).equals("quit")) {
             command = command.toLowerCase();
-            commandParser(command);
+            chooseCommand(command);
         }
         Menu.showMessage("We hope to see you again soon!");
     }
 
-    private void commandParser(String command) {
-        String parsedCommand = cutCommandPartOfString(command);
+    private void chooseCommand(String command) {
+        String parsedCommand = command.substring(command.indexOf(' ') + 1);
         if (command.startsWith("read")) {
             readCommand(parsedCommand);
         } else if (command.startsWith("search")) {
             searchCommand(parsedCommand);
         }
     }
-
-    private String cutCommandPartOfString(String command) {
-        return command.substring(command.indexOf(' ') + 1);
-    }
  
     private void readCommand(String folderName) {
-        IndexController indexController = ProgramController.getIndexController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        IndexController indexController = controllerInstance.getIndexController();
         indexController.addFolderToDatabase(folderName);
     }
     
     private void searchCommand(String command) {
-        Searcher searcher = getCorrectSearcher(command);
+        ProgramController controllerInstance = ProgramController.getInstance();
+        Searcher searcher = controllerInstance.getSearcher();
         HashSet<String> searchResult = searcher.search(command);
-        String finalResult = getResult(searchResult);
-        Menu.showMessage(finalResult);
-    }
-
-    private String getResult(HashSet<String> set) {
-        return set.size() == 0 ? "No results found!" : set.toString();
-    }
-
-    private Searcher getCorrectSearcher(String command) {
-        return ProgramController.getSearcher();
+        Menu.showResult(searchResult);
     }
 }
