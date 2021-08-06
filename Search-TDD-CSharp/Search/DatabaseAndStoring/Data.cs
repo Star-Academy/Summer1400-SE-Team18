@@ -4,7 +4,11 @@ namespace Search.DatabaseAndStoring
 {
     public class Data
     {
-        private static readonly Data NullData = new Data("", new HashSet<string>());
+        public static Data NullData {
+            get {
+                return new Data("", new HashSet<String>());
+            };
+        }
         public string Word { get; }
         public HashSet<string> FilesWithWordInThem { get; }
 
@@ -12,11 +16,6 @@ namespace Search.DatabaseAndStoring
         {
             Word = word;
             FilesWithWordInThem = filesWithWordInThem;
-        }
-
-        public static Data GetNullData()
-        {
-            return NullData;
         }
 
         public override bool Equals(object obj)
@@ -28,12 +27,6 @@ namespace Search.DatabaseAndStoring
 
         public override int GetHashCode()
         {
-            string filenames = "";
-            foreach (var s in FilesWithWordInThem)
-            {
-                filenames += s;
-            }
-
             return (Word + filenames).GetHashCode();
         }
     }
