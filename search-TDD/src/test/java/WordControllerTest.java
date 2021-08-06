@@ -8,7 +8,8 @@ import controller.WordController;
 
 public class WordControllerTest {
 
-    private WordController wordController = ProgramController.getWordController();
+    private final ProgramController controllerInstance = ProgramController.getInstance();
+    private final WordController wordController = controllerInstance.getWordController();
 
     @Test
     public void getCommandsTest() {
@@ -53,7 +54,7 @@ public class WordControllerTest {
     }
 
     public String getStem(String word) {
-        return ProgramController.getWordController().getStem(word);
+        return wordController.getStem(word);
     } 
     
 }
