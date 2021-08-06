@@ -3,7 +3,9 @@
 
 .metadata
 bin/
+obj/
 tmp/
+*.user
 *.tmp
 *.bak
 *.swp
