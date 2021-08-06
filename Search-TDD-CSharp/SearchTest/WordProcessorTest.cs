@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using static SearchTest.TestEssentials;
+using System.Linq;
 using Search.Dependencies;
 using Search.Word;
 using Xunit;
@@ -14,7 +15,7 @@ namespace SearchTest
 
         public WordProcessorTest()
         {
-            ManagerInstance.Reset();
+            Reset();
         }
 
         [Fact]

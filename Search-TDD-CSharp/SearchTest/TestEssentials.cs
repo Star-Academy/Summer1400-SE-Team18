@@ -25,7 +25,7 @@ namespace SearchTest
         {
             return ManagerInstance.Stemmer.Stem(word);
         }
-        
+
         public static void MockFolderReaderForDataBase(IReader reader)
         {
             reader.Read("TestDataBase").Returns(new Dictionary<string, string>()
@@ -43,6 +43,11 @@ namespace SearchTest
                          $"I am Mohammad.{Ls}"
                 }
             });
+        }
+
+        public static void Reset()
+        {
+            Manager.Database.ClearAll();
         }
 
         public static void MockFolderReaderForDataBase2(IReader reader)

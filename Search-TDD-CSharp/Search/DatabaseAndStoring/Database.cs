@@ -25,10 +25,7 @@ namespace Search.DatabaseAndStoring
             }
         }
 
-        public HashSet<Data> GetAllData()
-        {
-            return _data;
-        }
+        public void ClearAll() => _data.Clear();
 
         public bool DoesContainsWord(string word)
         {

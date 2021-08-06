@@ -33,9 +33,5 @@ namespace Search.Dependencies
         public readonly IIndexer Indexer = new Indexer();
         public readonly TagCreator TagCreator = new TagCreator();
 
-        public void Reset()
-        {
-            Database.GetAllData().Clear();
-        }
     }
 }
