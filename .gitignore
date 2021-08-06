@@ -5,6 +5,8 @@
 .metadata
 bin/
 tmp/
+obj/
+*.user
 *.tmp
 *.bak
 *.swp
