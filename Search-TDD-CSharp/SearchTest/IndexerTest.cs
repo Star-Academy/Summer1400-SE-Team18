@@ -55,6 +55,9 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
             Database database = Manager.GetInstance().Database;
             var databaseInfo = new HashSet<Data>();
+
+            _indexer.Index("TestDataBase");
+
             databaseInfo.Add(database.GetData("hello"));
             databaseInfo.Add(database.GetData("dear"));
             databaseInfo.Add(database.GetData("i"));
@@ -72,8 +75,7 @@ namespace SearchTest
             databaseInfo.Add(database.GetData("vase"));
             databaseInfo.Add(database.GetData("nakhle"));
             databaseInfo.Add(database.GetData("talaii"));
-
-            _indexer.Index("TestDataBase");
+            
             Assert.Equal(expectedData, databaseInfo);
         }
 
