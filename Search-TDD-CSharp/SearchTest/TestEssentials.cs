@@ -11,6 +11,9 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public static class TestEssentials
     {
+        
+        private static Manager ManagerInstance = Manager.GetInstance();
+
         public static readonly string Ls = Environment.NewLine;
         
         public static Data MakeData(string word, HashSet<string> fileNames)
@@ -20,7 +23,7 @@ namespace SearchTest
 
         public static string GetStem(string word)
         {
-            return Manager.Stemmer.Stem(word);
+            return ManagerInstance.Stemmer.Stem(word);
         }
 
         public static void MockFolderReaderForDataBase(IReader reader)

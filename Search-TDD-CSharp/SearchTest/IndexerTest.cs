@@ -12,6 +12,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class IndexerTest
     {
+        private Manager ManagerInstance = Manager.GetInstance();
+
         private readonly IIndexer _indexer = new Indexer();
         private readonly IReader _reader = Substitute.For<IReader>();
         private readonly string _ls = TestEssentials.Ls;
@@ -94,7 +96,7 @@ namespace SearchTest
             };
 
             _reader.Read("TestDataBase").Returns(folderData);
-            Manager.FolderReaderInstance = _reader;
+            ManagerInstance.FolderReaderInstance = _reader;
         }
     }
 }

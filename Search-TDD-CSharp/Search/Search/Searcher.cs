@@ -9,9 +9,12 @@ namespace Search.Search
 {
     public class Searcher : ISearcher
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+
         public HashSet<string> Search(string command)
         {
-            var tags = Manager.TagCreator.CreateTags(command);
+            var tags = ManagerInstance.TagCreator.CreateTags(command);
             var result = GetNoTagWordsData(tags);
             result.UnionWith(GetPlusTagWordsData(tags));
             result.RemoveWhere(fileName => GetMinusTagWordsData(tags).Contains(fileName));
@@ -42,9 +45,9 @@ namespace Search.Search
             => tags.Where(tag => tag.Type == TagType.Minus)
             .SelectMany(tag => GetDataForWord(tag.Word).FilesWithWordInThem).ToHashSet();
 
-        private static Data GetDataForWord(string word)
+        private Data GetDataForWord(string word)
         {
-            return Manager.Database.GetData(word);
+            return ManagerInstance.Database.GetData(word);
         }
     }
 }

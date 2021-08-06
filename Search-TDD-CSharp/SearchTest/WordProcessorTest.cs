@@ -9,6 +9,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class WordProcessorTest
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
         private IWordProcessor _wordProcessor = new WordProcessor();
 
         public WordProcessorTest()

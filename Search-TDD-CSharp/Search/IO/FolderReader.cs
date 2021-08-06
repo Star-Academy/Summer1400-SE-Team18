@@ -6,10 +6,11 @@ namespace Search.IO
 {
     public class FolderReader : IReader
     {
+        
         public Dictionary<string, string> Read(string path)
         {
             var result = new Dictionary<string, string>();
-            var fileReader = Manager.FileReaderInstance;
+            var fileReader = Manager.GetInstance().FileReaderInstance;
             foreach (var file in Directory.GetFiles(path))
             {
                 var fileContent = fileReader.Read(file);

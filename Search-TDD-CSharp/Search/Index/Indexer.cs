@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 
@@ -6,10 +7,15 @@ namespace Search.Index
 {
     public class Indexer : IIndexer
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+        
         public void Index(string path)
         {
-            var contents = Manager.FolderReaderInstance.Read(path);
-            var database = Manager.Database;
+            if (ManagerInstance == null) throw new NotImplementedException();
+            if (ManagerInstance.FolderReaderInstance == null) throw new AggregateException();
+            var contents = ManagerInstance.FolderReaderInstance.Read(path);
+            var database = ManagerInstance.Database;
             foreach (var (key, value) in contents)
             {
                 AddFileTextToDatabase(value, key, database);
@@ -18,7 +24,7 @@ namespace Search.Index
 
         private void AddFileTextToDatabase(string text, string filename, IDatabase database)
         {
-            var parsedText = Manager.WordProcessorInstance.ParseText(text);
+            var parsedText = ManagerInstance.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
                 if (database.DoesContainsWord(word)) AppendFilenameToData(word, filename, database);

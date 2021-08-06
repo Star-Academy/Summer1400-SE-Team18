@@ -7,6 +7,9 @@ namespace Search.Tags
 {
     public class TagCreator
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+
         public HashSet<Tag> CreateTags(string command)
         {
             var words = Regex.Split(command, "\\s+");
@@ -23,7 +26,7 @@ namespace Search.Tags
             {
                 result = result[1..];
             }
-            result = Manager.Stemmer.Stem(result);
+            result = ManagerInstance.Stemmer.Stem(result);
             return result;
         }
         
