@@ -12,15 +12,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class AdvancedSearcher implements Searcher {
-    public final String PLUS_SIGN;
-    public final String MINUS_SIGN;
-
-    {
-        ProgramController controllerInstance = ProgramController.getInstance();
-        PLUS_SIGN = controllerInstance.getPlusSign();
-        MINUS_SIGN = controllerInstance.getMinusSign();
-    }
-    
 
     @Override
     public HashSet<String> search(String command) {

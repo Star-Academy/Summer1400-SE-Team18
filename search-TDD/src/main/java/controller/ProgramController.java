@@ -10,8 +10,6 @@ import opennlp.tools.stemmer.PorterStemmer;
 public class ProgramController {
 
     private static final ProgramController programController = new ProgramController();
-    private final String PLUS_SIGN = "+";
-    private final String MINUS_SIGN = "-";
     private DatabaseController databaseController;
     private Reader fileReader;
     private Reader folderReader;
@@ -65,14 +63,6 @@ public class ProgramController {
 
     public Searcher getSearcher() {
         return AdvancedSearcher;
-    }
-
-    public String getPlusSign() {
-        return PLUS_SIGN;
-    }
-
-    public String getMinusSign() {
-        return MINUS_SIGN;
     }
 
     public void setScanner(Scanner scanner) {
