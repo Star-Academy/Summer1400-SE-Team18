@@ -27,7 +27,7 @@ namespace Search.DatabaseAndStoring
 
         public void ClearAll() => _data.Clear();
 
-        public bool ContainsWord(string word)
+        public bool DoesContainsWord(string word)
         {
             return GetData(word).HasFilesWithWordInThem();
         }
