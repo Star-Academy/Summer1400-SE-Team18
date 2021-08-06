@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
+import controller.command.CommandParser;
 import controller.reader.FolderReader;
 import controller.searcher.*;
 import controller.reader.*;
@@ -20,6 +21,7 @@ public class ProgramController {
     private IndexController indexController;
     private TagFilter tagFilter;
     private WordController wordController;
+    private CommandParser commandParser;
 
     {
         databaseController = new DatabaseController();
@@ -32,9 +34,18 @@ public class ProgramController {
         indexController = new IndexController();
         tagFilter = new TagFilter();
         wordController = new WordController();
+        commandParser = new CommandParser();
     }
 
     private ProgramController() {
+    }
+
+    public static ProgramController getInstance() {
+        return programController;
+    }
+
+    public CommandParser getCommandParser() {
+        return commandParser;
     }
 
     public DatabaseController getDatabaseController() {
@@ -81,7 +92,4 @@ public class ProgramController {
         return wordController;
     }
 
-    public static ProgramController getInstance() {
-        return programController;
-    }
 }
