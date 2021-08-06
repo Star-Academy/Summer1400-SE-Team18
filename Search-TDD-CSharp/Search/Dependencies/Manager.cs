@@ -20,18 +20,30 @@ namespace Search.Dependencies
             if (Instance == null)
             {
                 Instance = new Manager();
+                Instance.Initialize();
             }
 
             return Instance;
         }
         
-        public IReader FileReaderInstance { set; get; } = new FileReader();
-        public IReader FolderReaderInstance { set; get; } = new FolderReader();
-        public readonly EnglishStemmer Stemmer = new EnglishStemmer();
-        public readonly IWordProcessor WordProcessorInstance = new WordProcessor();
-        public readonly Database Database = new Database();
-        public readonly IIndexer Indexer = new Indexer();
-        public readonly TagCreator TagCreator = new TagCreator();
+        public IReader FileReaderInstance { set; get; }
+        public IReader FolderReaderInstance { set; get; }
+        public EnglishStemmer Stemmer; 
+        public IWordProcessor WordProcessorInstance; 
+        public Database Database; 
+        public IIndexer Indexer; 
+        public TagCreator TagCreator; 
+
+        private void Initialize()
+        {
+            FileReaderInstance = new FileReader();
+            FolderReaderInstance = new FolderReader();
+            Stemmer = new EnglishStemmer();
+            WordProcessorInstance = new WordProcessor();
+            Database = new Database();
+            Indexer = new Indexer();
+            TagCreator = new TagCreator();
+        }
 
     }
 }

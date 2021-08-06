@@ -8,6 +8,7 @@ namespace Search.Tags
     public class TagCreator
     {
         
+        private readonly Manager _managerInstance = Manager.GetInstance();
 
         public HashSet<Tag> CreateTags(string command)
         {
@@ -25,7 +26,7 @@ namespace Search.Tags
             {
                 result = result[1..];
             }
-            result = Manager.GetInstance().Stemmer.Stem(result);
+            result = _managerInstance.Stemmer.Stem(result);
             return result;
         }
         

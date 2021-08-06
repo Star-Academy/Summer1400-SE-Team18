@@ -7,10 +7,12 @@ namespace Search.IO
     public class FolderReader : IReader
     {
         
+        private readonly Manager _managerInstance = Manager.GetInstance();
+
         public Dictionary<string, string> Read(string path)
         {
             var result = new Dictionary<string, string>();
-            var fileReader = Manager.GetInstance().FileReaderInstance;
+            var fileReader = _managerInstance.FileReaderInstance;
             foreach (var file in Directory.GetFiles(path))
             {
                 var fileContent = fileReader.Read(file);

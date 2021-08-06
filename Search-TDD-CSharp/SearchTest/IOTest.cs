@@ -14,6 +14,7 @@ namespace SearchTest
     public class IoTest
     {
         
+        private readonly Manager _managerInstance = Manager.GetInstance();
 
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
@@ -56,7 +57,7 @@ namespace SearchTest
                     "4", "Mir rafte dubai vase nakhle talaii !!"
                 }
             });
-            Manager.GetInstance().FileReaderInstance = reader;
+            _managerInstance.FileReaderInstance = reader;
             var readingData = _folderReader.Read("TestDataBase");
             var expectedData = new Dictionary<string, string>()
             {

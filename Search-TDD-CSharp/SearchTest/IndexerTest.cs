@@ -12,6 +12,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class IndexerTest
     {
+        
+        private readonly Manager _managerInstance = Manager.GetInstance();
 
         private readonly IIndexer _indexer = new Indexer();
         private readonly IReader _reader = Substitute.For<IReader>();
@@ -53,7 +55,7 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("vase"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
-            Database database = Manager.GetInstance().Database;
+            Database database = _managerInstance.Database;
             var databaseInfo = new HashSet<Data>();
 
             _indexer.Index("TestDataBase");
@@ -97,7 +99,7 @@ namespace SearchTest
             };
 
             _reader.Read("TestDataBase").Returns(folderData);
-            Manager.GetInstance().FolderReaderInstance = _reader;
+            _managerInstance.FolderReaderInstance = _reader;
         }
     }
 }
