@@ -20,6 +20,7 @@ public class ProgramController {
     private IndexController indexController;
     private TagFilter tagFilter;
     private WordController wordController;
+    private SetProcessor setProcessor;
 
     {
         databaseController = new DatabaseController();
@@ -32,9 +33,14 @@ public class ProgramController {
         indexController = new IndexController();
         tagFilter = new TagFilter();
         wordController = new WordController();
+        setProcessor = new SetProcessor();
     }
 
     private ProgramController() {
+    }
+
+    public static ProgramController getInstance() {
+        return programController;
     }
 
     public DatabaseController getDatabaseController() {
@@ -81,7 +87,7 @@ public class ProgramController {
         return wordController;
     }
 
-    public static ProgramController getInstance() {
-        return programController;
-    }
+    public SetProcessor getSetProcessor() {
+        return setProcessor;
+    } 
 }
