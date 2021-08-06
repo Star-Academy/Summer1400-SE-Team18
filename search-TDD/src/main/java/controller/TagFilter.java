@@ -8,6 +8,8 @@ import model.TagsInterface;
 import java.util.HashSet;
 
 public class TagFilter {
+    private static final String PLUS_SIGN = "+";
+    private static final String MINUS_SIGN = "-";
     
     public TagsInterface parse(String tags) {
         FilteredTags filteredTags = new FilteredTags();
@@ -18,11 +20,10 @@ public class TagFilter {
     }
 
     private void assignTagToDesiredArrayList(String tag, FilteredTags filteredTags) {
-        ProgramController controllerInstance = ProgramController.getInstance();
-        String trimmedWord = trimTag(tag), plusSign = controllerInstance.getPlusSign(), minusSign = controllerInstance.getMinusSign();
-        if (tag.startsWith(plusSign)) 
+        String trimmedWord = trimTag(tag);
+        if (tag.startsWith(PLUS_SIGN))
             addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
-        else if (tag.startsWith(minusSign)) 
+        else if (tag.startsWith(MINUS_SIGN))
             addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
         else addWordToHashSet(tag, filteredTags.getNoTags());;
     }
