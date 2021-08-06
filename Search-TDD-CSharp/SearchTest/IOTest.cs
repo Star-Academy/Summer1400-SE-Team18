@@ -12,13 +12,16 @@ namespace SearchTest
     [DefaultPriority(10)]
     public class IoTest
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _ls = TestEssentials.Ls;
 
         public IoTest()
         {
-            Manager.Reset();
+            ManagerInstance.Reset();
         }
         
         [Fact]
@@ -53,7 +56,7 @@ namespace SearchTest
                     "4", "Mir rafte dubai vase nakhle talaii !!"
                 }
             });
-            Manager.FileReaderInstance = reader;
+            ManagerInstance.FileReaderInstance = reader;
             var readingData = _folderReader.Read("TestDataBase");
             var expectedData = new Dictionary<string, string>()
             {

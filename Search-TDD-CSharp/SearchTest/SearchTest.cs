@@ -12,11 +12,14 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class SearchTest
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+
         private readonly ISearcher _searcher = new Searcher();
 
         public SearchTest()
         {
-            Manager.Reset();
+            ManagerInstance.Reset();
         }
         
         [Fact]
@@ -25,8 +28,8 @@ namespace SearchTest
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
-            Manager.FolderReaderInstance = folderReader;
-            Manager.Indexer.Index("TestDataBase");
+            ManagerInstance.FolderReaderInstance = folderReader;
+            ManagerInstance.Indexer.Index("TestDataBase");
             Assert.All(new []
             {
                 new {
@@ -39,7 +42,7 @@ namespace SearchTest
                 }
             }.Select(str => str), (commandAndAnswers) => 
                 Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
-            Manager.Indexer.Index("TestDataBase2");
+            ManagerInstance.Indexer.Index("TestDataBase2");
             Assert.All(new []
             {
                 new {
@@ -59,8 +62,8 @@ namespace SearchTest
         {
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
-            Manager.Indexer.Index("TestDataBase");
-            Manager.FolderReaderInstance = folderReader;
+            ManagerInstance.Indexer.Index("TestDataBase");
+            ManagerInstance.FolderReaderInstance = folderReader;
             Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
         }
 
@@ -70,9 +73,9 @@ namespace SearchTest
             IReader folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
-            Manager.FolderReaderInstance = folderReader;
-            Manager.Indexer.Index("TestDataBase");
-            Manager.Indexer.Index("TestDataBase2");
+            ManagerInstance.FolderReaderInstance = folderReader;
+            ManagerInstance.Indexer.Index("TestDataBase");
+            ManagerInstance.Indexer.Index("TestDataBase2");
             Assert.All(new []
             {
                 new {

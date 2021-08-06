@@ -6,6 +6,9 @@ namespace Search.Word
 {
     public class WordProcessor : IWordProcessor
     {
+        
+        private Manager ManagerInstance = Manager.GetInstance();
+
         public string[] ParseText(string text)
         {
             text = RemoveNonAlphabeticalWords(text);
@@ -18,7 +21,7 @@ namespace Search.Word
         public string GetStem(string word)
         {
             var lowerCaseWord = word.ToLower();
-            return Manager.Stemmer.Stem(lowerCaseWord);
+            return ManagerInstance.Stemmer.Stem(lowerCaseWord);
         }
 
         public string[] SplitWordsInText(string text)

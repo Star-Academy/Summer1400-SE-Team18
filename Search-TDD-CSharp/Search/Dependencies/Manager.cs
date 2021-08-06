@@ -7,17 +7,33 @@ using Search.Word;
 
 namespace Search.Dependencies
 {
-    public abstract class Manager
+    public class Manager
     {
-        public static IReader FileReaderInstance = new FileReader();
-        public static IReader FolderReaderInstance = new FolderReader();
-        public static readonly EnglishStemmer Stemmer = new EnglishStemmer();
-        public static readonly IWordProcessor WordProcessorInstance = new WordProcessor();
-        public static readonly IDatabase Database = new Database();
-        public static readonly IIndexer Indexer = new Indexer();
-        public static readonly TagCreator TagCreator = new TagCreator();
+        private static Manager Instance { get; set; }
 
-        public static void Reset()
+        private Manager()
+        {
+        }
+        
+        public static Manager GetInstance()
+        {
+            if (Instance == null)
+            {
+                Instance = new Manager();
+            }
+
+            return Instance;
+        }
+        
+        public IReader FileReaderInstance { set; get; } = new FileReader();
+        public IReader FolderReaderInstance { set; get; } = new FolderReader();
+        public readonly EnglishStemmer Stemmer = new EnglishStemmer();
+        public readonly IWordProcessor WordProcessorInstance = new WordProcessor();
+        public readonly IDatabase Database = new Database();
+        public readonly IIndexer Indexer = new Indexer();
+        public readonly TagCreator TagCreator = new TagCreator();
+
+        public void Reset()
         {
             Database.GetAllData().Clear();
         }
