@@ -51,10 +51,14 @@ public class AdvancedSearcher implements Searcher {
         answerTags.addToNoTags(getFileNamesForWord(stemmed));
         while (iterator.hasNext()) {
             stemmed = wordController.getStem(iterator.next());
-            Set<String> initialSet = answerTags.getNoTags();
-            Set<String> secondSet = getFileNamesForWord(stemmed);
-            setProcessor.retainAll(initialSet, secondSet);
+            updateNoTagAnswers(answerTags, stemmed);
         }
+    }
+
+    private void updateNoTagAnswers(TagsInterface answerTags, String stemmed) {
+        Set<String> initialSet = answerTags.getNoTags();
+        Set<String> secondSet = getFileNamesForWord(stemmed);
+        setProcessor.retainAll(initialSet, secondSet);
     }
 
     private void fillPlusTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
