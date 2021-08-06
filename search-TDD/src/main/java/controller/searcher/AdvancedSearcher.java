@@ -51,7 +51,8 @@ public class AdvancedSearcher implements Searcher {
         answerTags.addToNoTags(getFileNamesForWord(stemmed));
         while (iterator.hasNext()) {
             stemmed = wordController.getStem(iterator.next());
-            Set initialSet = answerTags.getNoTags(), secondSet = getFileNamesForWord(stemmed);
+            Set<String> initialSet = answerTags.getNoTags();
+            Set<String> secondSet = getFileNamesForWord(stemmed);
             setProcessor.retainAll(initialSet, secondSet);
         }
     }
@@ -65,12 +66,15 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        SetProcessor setProcessor = controllerInstance.getSetProcessor();
         for (String taggedWord : taggedWords) {
-            String stemmed = wordController.getStem(taggedWord);
-            Set initialSet = answers, secondSet = getFileNamesForWord(stemmed);
-            setProcessor.addAll(initialSet, secondSet);
+            addWordFilesToAnswer(answers, taggedWord);
         }
+    }
+
+    private void addWordFilesToAnswer(HashSet<String> answers, String taggedWord) {
+        String stemmed = wordController.getStem(taggedWord);
+        Set<String> secondSet = getFileNamesForWord(stemmed);
+        setProcessor.addAll(answers, secondSet);
     }
 
     private Data getDataForWord(String word) {
