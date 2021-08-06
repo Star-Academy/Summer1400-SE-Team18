@@ -7,24 +7,22 @@ namespace Scores.View
 {
     public class Menu
     {
-
         private const string OutString = "Student: {0}-{1} ---> Score: {2}";
-        
-        public static void PrintHighScoreStudents(Dictionary<Student, double> highScoreStudents)
+
+        public static void PrintHighScoreStudents(StudentAndAverage[] highScoreStudents)
         {
-            highScoreStudents.All(highScoreStudent =>
+            foreach (var studentAndAverage in highScoreStudents)
             {
-                ShowMessage(highScoreStudent);
-                return true;
-            });
+                ShowMessage(studentAndAverage);
+            }
         }
 
-        private static void ShowMessage(KeyValuePair<Student, double> highScoreStudent)
+        private static void ShowMessage(StudentAndAverage studentAndAverage)
         {
-            Console.WriteLine(OutString, 
-                highScoreStudent.Key.FirstName, 
-                highScoreStudent.Key.LastName, 
-                highScoreStudent.Value);
+            Console.WriteLine(OutString,
+                studentAndAverage.Student.FirstName,
+                studentAndAverage.Student.LastName,
+                studentAndAverage.Average);
         }
     }
 }

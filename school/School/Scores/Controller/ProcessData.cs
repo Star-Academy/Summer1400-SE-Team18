@@ -7,19 +7,19 @@ namespace Scores.Controller
     {
         public void Process()
         {
-            var students = getStudentsFromJsonFile("Database/Students.json");
-            var scores = getStudentScoresFromJsonFile("Database/Scores.json");
+            var students = GetStudentsFromJsonFile("Database/Students.json");
+            var scores = GetStudentScoresFromJsonFile("Database/Scores.json");
             var highScores = ProgramController.HighScoreCalculator.Calculate(students, scores);
             Menu.PrintHighScoreStudents(highScores);
         }
 
-        private Student[] getStudentsFromJsonFile(string studentsFilePath)
+        private Student[] GetStudentsFromJsonFile(string studentsFilePath)
         {
             string studentsData = ProgramController.FileReader.Read(studentsFilePath);
             return ProgramController.JsonParser.GetObjectsArray<Student[]>(studentsData);
         }
 
-        private StudentScore[] getStudentScoresFromJsonFile(string studentScoresFilePath)
+        private StudentScore[] GetStudentScoresFromJsonFile(string studentScoresFilePath)
         {
             string studentScoresData = ProgramController.FileReader.Read(studentScoresFilePath);
             return ProgramController.JsonParser.GetObjectsArray<StudentScore[]>(studentScoresData);

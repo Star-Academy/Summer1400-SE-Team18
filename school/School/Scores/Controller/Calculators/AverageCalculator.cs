@@ -6,27 +6,40 @@ namespace Scores.Controller.Calculators
 {
     public class AverageCalculator : ICalculator
     {
-
-        public Dictionary<Student, double> Calculate(Student[] students, StudentScore[] studentsScores)
+        public StudentAndAverage[] Calculate(Student[] students, StudentScore[] studentsScores)
         {
-            return students.GroupJoin(studentsScores
-                , student => student.StudentNumber
-                , score => score.StudentNumber
-                , (student, scores) =>
-                {
-                    var studentScores = scores.ToArray();
-                    return new
-                    {
-                        Student = student,
-                        Average = GetAverageOfStudentScores(studentScores)
-                    };
-                }).ToDictionary(studentAndAverage => studentAndAverage.Student
-                , studentAndAverage => studentAndAverage.Average);
+            var studentsWithAverages = ReturnEachStudentWithAverage(students, studentsScores);
+            return studentsWithAverages.ToArray();
         }
 
-        private double GetAverageOfStudentScores(StudentScore[] studentScores)
+        private static IEnumerable<StudentAndAverage> ReturnEachStudentWithAverage(Student[] students,
+            StudentScore[] scores)
         {
-            return !studentScores.Any() ? 0 : studentScores.Select(score => score.Score).Average();
+            return students.GroupJoin(scores
+
+                // two below params map scores to each student 
+                // if score.StudentNumber equals student.StudentNumber
+                , student => student.StudentNumber
+                , score => score.StudentNumber
+
+                // lambda below creates a new object out of each student and its scores
+                , (student, studentScores) =>
+                {
+                    var average = GetAverageOfStudentScores(studentScores);
+                    return new StudentAndAverage(student, average);
+                });
+        }
+
+        private static double GetAverageOfStudentScores(IEnumerable<StudentScore> studentScores)
+        {
+            try
+            {
+                return studentScores.Select(score => score.Score).Average();
+            }
+            catch
+            {
+                return double.NaN;
+            }
         }
     }
 }
