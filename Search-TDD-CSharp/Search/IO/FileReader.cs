@@ -7,10 +7,9 @@ namespace Search.IO
     {
         public Dictionary<string, string> Read(string path)
         {
-            var result = new Dictionary<string, string>();
             var text = File.ReadAllText(path);
             var filename = Path.GetFileName(path);
-            result.Add(filename, text);
+            var result = new Dictionary<string, string> {{filename, text}};
             return result;
         }
     }
