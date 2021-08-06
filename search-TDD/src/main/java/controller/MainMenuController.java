@@ -1,9 +1,6 @@
 package controller;
 
-import java.util.HashSet;
-
 import controller.command.CommandParser;
-import controller.searcher.*;
 import view.Menu;
 
 public class MainMenuController {
