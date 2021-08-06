@@ -7,21 +7,28 @@ import view.Menu;
 
 public class MainMenuController {
 
+    private final static String WELCOME_STRING = "Welcome to Searcher!";
+    private final static String BYE_STRING = "We hope to see you again soon!";
+    private final static String QUIT = "quit";
+    private final static String READ = "read";
+    private final static String SEARCH = "search";
+
+
     public void execute() {
         String command;
-        Menu.showMessage("Welcome to Searcher!");
-        while (!(command = Menu.getNextLine()).equals("quit")) {
+        Menu.showMessage(WELCOME_STRING);
+        while (!(command = Menu.getNextLine()).equals(QUIT)) {
             command = command.toLowerCase();
             chooseCommand(command);
         }
-        Menu.showMessage("We hope to see you again soon!");
+        Menu.showMessage(BYE_STRING);
     }
 
     private void chooseCommand(String command) {
         String parsedCommand = command.substring(command.indexOf(' ') + 1);
-        if (command.startsWith("read")) {
+        if (command.startsWith(READ)) {
             readCommand(parsedCommand);
-        } else if (command.startsWith("search")) {
+        } else if (command.startsWith(SEARCH)) {
             searchCommand(parsedCommand);
         }
     }
