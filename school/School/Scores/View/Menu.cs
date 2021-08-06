@@ -6,18 +6,23 @@ namespace Scores.View
 {
     public class Menu
     {
+
+        private const string OutString = "Student: {0}-{1} ---> Score: {2}";
+        
         public static void PrintHighScoreStudents(Dictionary<Student, double> highScoreStudents)
         {
             foreach (var highScoreStudent in highScoreStudents)
             {
-                ShowMessage("Student: " + highScoreStudent.Key.FirstName + "-" + highScoreStudent.Key.LastName 
-                            + " ---> Score: " + highScoreStudent.Value);
+                ShowMessage(highScoreStudent);
             }
         }
 
-        private static void ShowMessage(String message)
+        private static void ShowMessage(KeyValuePair<Student, double> highScoreStudent)
         {
-            Console.WriteLine(message);
+            Console.WriteLine(OutString, 
+                highScoreStudent.Key.FirstName, 
+                highScoreStudent.Key.LastName, 
+                highScoreStudent.Value);
         }
     }
 }
