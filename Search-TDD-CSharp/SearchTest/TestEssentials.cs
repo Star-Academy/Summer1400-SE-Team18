@@ -12,7 +12,6 @@ namespace SearchTest
     public static class TestEssentials
     {
         
-        private static Manager ManagerInstance = Manager.GetInstance();
 
         public static readonly string Ls = Environment.NewLine;
         
@@ -23,7 +22,7 @@ namespace SearchTest
 
         public static string GetStem(string word)
         {
-            return ManagerInstance.Stemmer.Stem(word);
+            return Manager.GetInstance().Stemmer.Stem(word);
         }
 
         public static void MockFolderReaderForDataBase(IReader reader)
@@ -47,7 +46,7 @@ namespace SearchTest
 
         public static void Reset()
         {
-            Manager.Database.ClearAll();
+            Manager.GetInstance().Database.ClearAll();
         }
 
         public static void MockFolderReaderForDataBase2(IReader reader)

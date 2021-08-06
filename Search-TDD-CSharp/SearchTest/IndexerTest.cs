@@ -12,7 +12,6 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class IndexerTest
     {
-        private Manager ManagerInstance = Manager.GetInstance();
 
         private readonly IIndexer _indexer = new Indexer();
         private readonly IReader _reader = Substitute.For<IReader>();
@@ -54,25 +53,25 @@ namespace SearchTest
             expectedData.Add(MakeData(GetStem("vase"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
             expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
-            Database database = Manager.Database;
+            Database database = Manager.GetInstance().Database;
             var databaseInfo = new HashSet<Data>();
-            databaseInfo.add(database.GetData("hello"));
-            databaseInfo.add(database.GetData("dear"));
-            databaseInfo.add(database.GetData("i"));
-            databaseInfo.add(database.GetData("am"));
-            databaseInfo.add(database.GetData("mohammad"));
-            databaseInfo.add(database.GetData("man"));
-            databaseInfo.add(database.GetData("sag"));
-            databaseInfo.add(database.GetData("mikham"));
-            databaseInfo.add(database.GetData("khoshgel"));
-            databaseInfo.add(database.GetData("mikham"));
-            databaseInfo.add(database.GetData("mio"));
-            databaseInfo.add(database.GetData("mir"));
-            databaseInfo.add(database.GetData("rafte"));
-            databaseInfo.add(database.GetData("dubai"));
-            databaseInfo.add(database.GetData("vase"));
-            databaseInfo.add(database.GetData("nakhle"));
-            databaseInfo.add(database.GetData("talaii"));
+            databaseInfo.Add(database.GetData("hello"));
+            databaseInfo.Add(database.GetData("dear"));
+            databaseInfo.Add(database.GetData("i"));
+            databaseInfo.Add(database.GetData("am"));
+            databaseInfo.Add(database.GetData("mohammad"));
+            databaseInfo.Add(database.GetData("man"));
+            databaseInfo.Add(database.GetData("sag"));
+            databaseInfo.Add(database.GetData("mikham"));
+            databaseInfo.Add(database.GetData("khoshgel"));
+            databaseInfo.Add(database.GetData("mikham"));
+            databaseInfo.Add(database.GetData("mio"));
+            databaseInfo.Add(database.GetData("mir"));
+            databaseInfo.Add(database.GetData("rafte"));
+            databaseInfo.Add(database.GetData("dubai"));
+            databaseInfo.Add(database.GetData("vase"));
+            databaseInfo.Add(database.GetData("nakhle"));
+            databaseInfo.Add(database.GetData("talaii"));
 
             _indexer.Index("TestDataBase");
             Assert.Equal(expectedData, databaseInfo);
@@ -96,7 +95,7 @@ namespace SearchTest
             };
 
             _reader.Read("TestDataBase").Returns(folderData);
-            ManagerInstance.FolderReaderInstance = _reader;
+            Manager.GetInstance().FolderReaderInstance = _reader;
         }
     }
 }

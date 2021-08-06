@@ -8,14 +8,13 @@ namespace Search.Index
     public class Indexer : IIndexer
     {
         
-        private Manager ManagerInstance = Manager.GetInstance();
         
         public void Index(string path)
         {
-            if (ManagerInstance == null) throw new NotImplementedException();
-            if (ManagerInstance.FolderReaderInstance == null) throw new AggregateException();
-            var contents = ManagerInstance.FolderReaderInstance.Read(path);
-            var database = ManagerInstance.Database;
+            if (Manager.GetInstance() == null) throw new NotImplementedException();
+            if (Manager.GetInstance().FolderReaderInstance == null) throw new AggregateException();
+            var contents = Manager.GetInstance().FolderReaderInstance.Read(path);
+            var database = Manager.GetInstance().Database;
             foreach (var (key, value) in contents)
             {
                 AddFileTextToDatabase(value, key, database);
@@ -24,7 +23,7 @@ namespace Search.Index
 
         private void AddFileTextToDatabase(string text, string filename, IDatabase database)
         {
-            var parsedText = ManagerInstance.WordProcessorInstance.ParseText(text);
+            var parsedText = Manager.GetInstance().WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
                 if (database.DoesContainsWord(word)) AppendFilenameToData(word, filename, database);

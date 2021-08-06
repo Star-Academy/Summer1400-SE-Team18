@@ -10,7 +10,6 @@ namespace SearchTest
     public class WordProcessorTest
     {
         
-        private Manager ManagerInstance = Manager.GetInstance();
         private IWordProcessor _wordProcessor = new WordProcessor();
 
         public WordProcessorTest()

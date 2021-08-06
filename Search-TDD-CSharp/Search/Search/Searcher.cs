@@ -10,11 +10,10 @@ namespace Search.Search
     public class Searcher : ISearcher
     {
         
-        private Manager ManagerInstance = Manager.GetInstance();
 
         public HashSet<string> Search(string command)
         {
-            var tags = ManagerInstance.TagCreator.CreateTags(command);
+            var tags = Manager.GetInstance().TagCreator.CreateTags(command);
             var result = GetNoTagWordsData(tags);
             result.UnionWith(GetPlusTagWordsData(tags));
             result.RemoveWhere(fileName => GetMinusTagWordsData(tags).Contains(fileName));
@@ -47,7 +46,7 @@ namespace Search.Search
 
         private Data GetDataForWord(string word)
         {
-            return ManagerInstance.Database.GetData(word);
+            return Manager.GetInstance().Database.GetData(word);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Search.Dependencies
         public IReader FolderReaderInstance { set; get; } = new FolderReader();
         public readonly EnglishStemmer Stemmer = new EnglishStemmer();
         public readonly IWordProcessor WordProcessorInstance = new WordProcessor();
-        public readonly IDatabase Database = new Database();
+        public readonly Database Database = new Database();
         public readonly IIndexer Indexer = new Indexer();
         public readonly TagCreator TagCreator = new TagCreator();
 

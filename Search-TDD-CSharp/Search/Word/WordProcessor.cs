@@ -7,7 +7,6 @@ namespace Search.Word
     public class WordProcessor : IWordProcessor
     {
         
-        private Manager ManagerInstance = Manager.GetInstance();
 
         public string[] ParseText(string text)
         {
@@ -21,7 +20,7 @@ namespace Search.Word
         public string GetStem(string word)
         {
             var lowerCaseWord = word.ToLower();
-            return ManagerInstance.Stemmer.Stem(lowerCaseWord);
+            return Manager.GetInstance().Stemmer.Stem(lowerCaseWord);
         }
 
         public string[] SplitWordsInText(string text)
