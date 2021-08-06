@@ -13,6 +13,7 @@ import model.Database;
 import model.Data;
 
 public class IndexingTest {
+    private ProgramController controllerInstance = ProgramController.getInstance();
 
     @BeforeEach
     public void beforeEach() {
@@ -21,7 +22,7 @@ public class IndexingTest {
 
     @Test
     public void IndexingFolder() {
-        IndexController indexController = ProgramController.getIndexController();
+        IndexController indexController = controllerInstance.getIndexController();
         indexController.addFolderToDatabase("TestDataBase");
         HashSet<Data> expectedData = new HashSet<>();
         //file 1
@@ -53,7 +54,7 @@ public class IndexingTest {
 
     @Test
     public void IndexingFile() {
-        IndexController indexController = ProgramController.getIndexController();
+        IndexController indexController = controllerInstance.getIndexController();
         indexController.addFileTextToDatabase("TestDataBase/1");
         HashSet<Data> expectedData = new HashSet<>();
         expectedData.add(makeData(getStem("hello"), new HashSet<>(List.of("1"))));
@@ -65,7 +66,7 @@ public class IndexingTest {
     }
 
     public String getStem(String word) {
-        return ProgramController.getWordController().getStem(word);
+        return controllerInstance.getWordController().getStem(word);
     }
 
 }

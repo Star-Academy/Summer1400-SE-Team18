@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import controller.reader.*;
 
 public class ReadTest {
-    
     private final String ls = TestEssentials.getLS();
 
     @Test

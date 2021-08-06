@@ -10,10 +10,11 @@ import controller.TagFilter;
 import model.TagsInterface;
 
 public class TagFilterTest {
+    private ProgramController controllerInstance = ProgramController.getInstance();
 
     @Test
     public void tagFilterTest() {
-        TagFilter tagFilter = ProgramController.getTagFilter();
+        TagFilter tagFilter = controllerInstance.getTagFilter();
         String command = "+a +b -c d e +f g";
         TagsInterface filteredTags = tagFilter.parse(command);
         //No Tags

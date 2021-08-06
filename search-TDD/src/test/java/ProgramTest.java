@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 @ExtendWith(MockitoExtension.class) 
 public class ProgramTest {
+    private ProgramController controllerInstance = ProgramController.getInstance();
 
     @Mock
     Scanner scanner;
@@ -26,7 +27,7 @@ public class ProgramTest {
 
     @Test
     public void readCommandTest() {
-        ProgramController.setScanner(scanner);
+        controllerInstance.setScanner(scanner);
         Assertions.assertDoesNotThrow(() -> {
             when(scanner.nextLine()).thenReturn("read TestDataBase").thenReturn("quit");
             Main.main(new String[0]);
@@ -36,7 +37,7 @@ public class ProgramTest {
 
     @Test
     public void searchCommand() {
-        ProgramController.setScanner(scanner);
+        controllerInstance.setScanner(scanner);
         Assertions.assertDoesNotThrow(() -> {
             when(scanner.nextLine()).thenReturn("read TestDataBase").thenReturn("read TestDataBase2")
             .thenReturn("search mir").thenReturn("quit");
@@ -47,7 +48,7 @@ public class ProgramTest {
 
     @Test
     public void advancedSearchCommand() {
-        ProgramController.setScanner(scanner);
+        controllerInstance.setScanner(scanner);
         Assertions.assertDoesNotThrow(() -> {
             when(scanner.nextLine()).thenReturn("read TestDataBase").thenReturn("read TestDataBase2")
             .thenReturn("search +mir -mohammad gorbe").thenReturn("quit");

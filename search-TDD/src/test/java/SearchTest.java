@@ -17,8 +17,8 @@ import controller.searcher.Searcher;
 import model.Database;
 
 public class SearchTest {
-
-    private IndexController indexController = ProgramController.getIndexController();
+    private ProgramController controllerInstance = ProgramController.getInstance();
+    private IndexController indexController = controllerInstance.getIndexController();
 
     @BeforeEach
     public void before() {
@@ -28,7 +28,7 @@ public class SearchTest {
     @Test
     public void normalSearchTest() {
         indexController.addFolderToDatabase("mamal");
-        Searcher searcher = ProgramController.getSearcher();
+        Searcher searcher = controllerInstance.getSearcher();
         assertTrue(searcher.search("abbas").equals(new HashSet<String>()));
         indexController.addFolderToDatabase("TestDataBase");
         assertEquals(searcher.search("mir"), new HashSet<>(Arrays.asList(new String[]{"4"})));
