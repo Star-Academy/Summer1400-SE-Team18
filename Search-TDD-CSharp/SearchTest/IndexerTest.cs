@@ -58,24 +58,24 @@ namespace SearchTest
 
             _indexer.Index("TestDataBase");
 
-            databaseInfo.Add(database.GetData("hello"));
-            databaseInfo.Add(database.GetData("dear"));
-            databaseInfo.Add(database.GetData("i"));
-            databaseInfo.Add(database.GetData("am"));
-            databaseInfo.Add(database.GetData("mohammad"));
-            databaseInfo.Add(database.GetData("man"));
-            databaseInfo.Add(database.GetData("sag"));
-            databaseInfo.Add(database.GetData("mikham"));
-            databaseInfo.Add(database.GetData("khoshgel"));
-            databaseInfo.Add(database.GetData("mikham"));
-            databaseInfo.Add(database.GetData("mio"));
-            databaseInfo.Add(database.GetData("mir"));
-            databaseInfo.Add(database.GetData("rafte"));
-            databaseInfo.Add(database.GetData("dubai"));
-            databaseInfo.Add(database.GetData("vase"));
-            databaseInfo.Add(database.GetData("nakhle"));
-            databaseInfo.Add(database.GetData("talaii"));
-            
+            databaseInfo.Add(database.GetData(GetStem("hello")));
+            databaseInfo.Add(database.GetData(GetStem("dear")));
+            databaseInfo.Add(database.GetData(GetStem("i")));
+            databaseInfo.Add(database.GetData(GetStem("am")));
+            databaseInfo.Add(database.GetData(GetStem("mohammad")));
+            databaseInfo.Add(database.GetData(GetStem("man")));
+            databaseInfo.Add(database.GetData(GetStem("sag")));
+            databaseInfo.Add(database.GetData(GetStem("mikham")));
+            databaseInfo.Add(database.GetData(GetStem("khoshgel")));
+            databaseInfo.Add(database.GetData(GetStem("mikham")));
+            databaseInfo.Add(database.GetData(GetStem("mio")));
+            databaseInfo.Add(database.GetData(GetStem("mir")));
+            databaseInfo.Add(database.GetData(GetStem("rafte")));
+            databaseInfo.Add(database.GetData(GetStem("dubai")));
+            databaseInfo.Add(database.GetData(GetStem("vase")));
+            databaseInfo.Add(database.GetData(GetStem("nakhle")));
+            databaseInfo.Add(database.GetData(GetStem("talaii")));
+
             Assert.Equal(expectedData, databaseInfo);
         }
 
