@@ -14,6 +14,11 @@ namespace Search.DatabaseAndStoring
             FilesWithWordInThem = filesWithWordInThem;
         }
 
+        public bool HasFilesWithWordInThem()
+        {
+            return FilesWithWordInThem.Count != 0;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;

@@ -32,7 +32,7 @@ namespace Search.DatabaseAndStoring
 
         public bool ContainsWord(string word)
         {
-            return GetData(word).FilesWithWordInThem.Count != 0;
+            return GetData(word).HasFilesWithWordInThem();
         }
     }
 }
