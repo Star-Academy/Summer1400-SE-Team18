@@ -12,9 +12,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class AdvancedSearcher implements Searcher {
-    public final static String PLUS_SIGN = ProgramController.getPlusSign();
-    public final static String MINUS_SIGN = ProgramController.getMinusSign();
-    
 
     @Override
     public HashSet<String> search(String command) {
