@@ -15,9 +15,12 @@ import java.util.Set;
 
 public class AdvancedSearcher implements Searcher {
 
+    private final ProgramController controllerInstance = ProgramController.getInstance();
+    private final WordController wordController = controllerInstance.getWordController();
+    private final SetProcessor setProcessor = controllerInstance.getSetProcessor();
+
     @Override
     public HashSet<String> search(String command) {
-        ProgramController controllerInstance = ProgramController.getInstance();
         TagFilter tagFilter = controllerInstance.getTagFilter();
         TagsInterface filteredTags = tagFilter.parse(command);
         TagsInterface answerTags = getAnswerForEachTag(filteredTags);
@@ -25,8 +28,6 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private HashSet<String> getFinalAnswer(TagsInterface answerTags) {
-        ProgramController controllerInstance = ProgramController.getInstance();
-        SetProcessor setProcessor = controllerInstance.getSetProcessor();
         HashSet<String> resultsForPlusTags = answerTags.getPlusTags();
         answerTags.addToNoTags(resultsForPlusTags);
         HashSet<String> resultsForMinusTags = answerTags.getMinusTags();
@@ -44,9 +45,6 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillNoTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
-        ProgramController controllerInstance = ProgramController.getInstance();
-        WordController wordController = controllerInstance.getWordController();
-        SetProcessor setProcessor = controllerInstance.getSetProcessor();
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
         String stemmed = wordController.getStem(iterator.next());
@@ -67,8 +65,6 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        ProgramController controllerInstance = ProgramController.getInstance();
-        WordController wordController = controllerInstance.getWordController();
         SetProcessor setProcessor = controllerInstance.getSetProcessor();
         for (String taggedWord : taggedWords) {
             String stemmed = wordController.getStem(taggedWord);
@@ -78,7 +74,6 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private Data getDataForWord(String word) {
-        ProgramController controllerInstance = ProgramController.getInstance();
         DatabaseController databaseController = controllerInstance.getDatabaseController();
         return databaseController.getDataForWord(word);
     }
