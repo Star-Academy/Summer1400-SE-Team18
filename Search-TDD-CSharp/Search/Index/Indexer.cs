@@ -1,17 +1,28 @@
 using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
+using Search.IO;
+using Search.Word;
 
 namespace Search.Index
 {
     public class Indexer : IIndexer
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
+
+        private readonly IReader _reader;
+        private readonly IWordProcessor _wordProcessor;
+        private readonly IDatabase _database;
+
+        public Indexer(IReader reader, IWordProcessor wordProcessor, IDatabase database)
+        {
+            _reader = reader;
+            _database = database;
+            _wordProcessor = wordProcessor;
+        }
 
         public void Index(string path)
         {
-            var contents = _managerInstance.FolderReaderInstance.Read(path);
+            var contents = _reader.Read(path);
             foreach (var (key, value) in contents)
             {
                 AddFileTextToDatabase(value, key);
@@ -20,7 +31,7 @@ namespace Search.Index
 
         private void AddFileTextToDatabase(string text, string filename)
         {
-            var parsedText = _managerInstance.WordProcessorInstance.ParseText(text);
+            var parsedText = _wordProcessor.ParseText(text);
             foreach (var word in parsedText)
             {
                 ChooseToMakeOrAppend(word, filename);
@@ -29,8 +40,7 @@ namespace Search.Index
 
         private void ChooseToMakeOrAppend(string word, string filename)
         {
-            var database = _managerInstance.Database;
-            if (database.DoesContainsWord(word)) 
+            if (_database.DoesContainsWord(word)) 
                 AppendFilenameToData(word, filename);
             else 
                 MakeKeyInDataBase(word, filename);
@@ -38,16 +48,14 @@ namespace Search.Index
 
         private void MakeKeyInDataBase(string word, string filename)
         {
-            var database = _managerInstance.Database;
             var filenames = new HashSet<string>(new[]{filename});
             var createdData = new Data(word, filenames);
-            database.AddData(createdData);
+            _database.AddData(createdData);
         }
 
         private void AppendFilenameToData(string word, string filename)
         {
-            var database = _managerInstance.Database;
-            var createdData = database.GetData(word);
+            var createdData = _database.GetData(word);
             var filenames = createdData.FilesWithWordInThem;
             filenames.Add(filename);
         }

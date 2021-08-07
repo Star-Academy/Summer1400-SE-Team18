@@ -9,12 +9,19 @@ namespace Search.Search
 {
     public class Searcher : ISearcher
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
+
+        private readonly ITagCreator _tagCreator;
+        private readonly IDatabase _database;
+
+        public Searcher(ITagCreator tagCreator, IDatabase database)
+        {
+            _tagCreator = tagCreator;
+            _database = database;
+        }
 
         public HashSet<string> Search(string command)
         {
-            var tags = _managerInstance.TagCreator.CreateTags(command);
+            var tags = _tagCreator.CreateTags(command);
             var result = GetNoTagWordsData(tags);
             result.UnionWith(GetPlusTagWordsData(tags));
             result.RemoveWhere(fileName => GetMinusTagWordsData(tags).Contains(fileName));
@@ -41,7 +48,7 @@ namespace Search.Search
 
         private Data GetDataForWord(string word)
         {
-            return _managerInstance.Database.GetData(word);
+            return _database.GetData(word);
         }
     }
 }

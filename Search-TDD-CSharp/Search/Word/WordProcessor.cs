@@ -1,22 +1,25 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using Search.Dependencies;
 
 namespace Search.Word
 {
     public class WordProcessor : IWordProcessor
     {
-        private readonly Manager _managerInstance = Manager.GetInstance();
         private const string NonAlphabeticPattern = "[^A-Za-z ]";
         private const string WhiteSpace = " ";
         private const string SpaceRegex = "\\s+";
+        private readonly ICustomStemmer _stemmer;
+
+        public WordProcessor(ICustomStemmer stemmer)
+        {
+            _stemmer = stemmer;
+        }
 
         public string[] ParseText(string text)
         {
             text = RemoveNonAlphabeticalWords(text);
             var splitText = SplitWordsInText(text);
-            var stemmer = Manager.GetInstance().Stemmer;
-            var parsedText = splitText.Select(e => stemmer.Stem(e)).ToArray();
+            var parsedText = splitText.Select(e => _stemmer.Stem(e)).ToArray();
 
             return parsedText;
         }

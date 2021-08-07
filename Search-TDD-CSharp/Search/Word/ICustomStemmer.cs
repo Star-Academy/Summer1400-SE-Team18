@@ -1,6 +1,6 @@
 ﻿namespace Search.Word
 {
-    public interface IStemmer
+    public interface ICustomStemmer
     {
         string Stem(string word);
     }

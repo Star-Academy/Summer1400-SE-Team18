@@ -2,9 +2,14 @@
 
 namespace Search.Word
 {
-    public class Stemmer : IStemmer
+    public class Stemmer : ICustomStemmer
     {
-        private readonly EnglishStemmer _englishStemmer = new EnglishStemmer();
+        private readonly IStemmer _englishStemmer;
+
+        public Stemmer(IStemmer englishStemmer)
+        {
+            _englishStemmer = englishStemmer;
+        }
         public string Stem(string word)
         {
             var stemmed = _englishStemmer.Stem(word);

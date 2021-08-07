@@ -7,8 +7,13 @@ namespace Search.IO
 {
     public class FolderReader : IReader
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
+
+        private readonly IReader _fileReader;
+
+        public FolderReader(IReader fileReader)
+        {
+            _fileReader = fileReader;
+        }
 
         public Dictionary<string, string> Read(string path)
         {
@@ -24,8 +29,8 @@ namespace Search.IO
         private Dictionary<string, string> AddFileContentToDictionary(string fileName,
             IDictionary<string, string> contents)
         {
-            var fileReader = _managerInstance.FileReaderInstance;
-            var fileContent = fileReader.Read(fileName);
+            
+            var fileContent = _fileReader.Read(fileName);
             var merged = contents.Concat(fileContent);
             return merged.ToDictionary(pair => pair.Key, pair => pair.Value);
         }

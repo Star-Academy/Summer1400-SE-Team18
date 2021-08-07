@@ -1,13 +1,18 @@
 ﻿using Search.Dependencies;
+using Search.Word;
 
 namespace Search.Tags
 {
     public class TagProcessor : ITagProcessor
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
         private const string MinusSign = "-";
         private const string PlusSign = "+";
+        private readonly ICustomStemmer _stemmer;
+
+        public TagProcessor(ICustomStemmer stemmer)
+        {
+            _stemmer = stemmer;
+        }
 
         public Tag Process(string word)
         {
@@ -19,12 +24,12 @@ namespace Search.Tags
         private string CleanWord(string word)
         {
             var result = word.ToLower();
-            if (!isNoTag(word))
+            if (!IsNoTag(word))
             {
                 result = result[1..];
             }
 
-            result = _managerInstance.Stemmer.Stem(result);
+            result = _stemmer.Stem(result);
             return result;
         }
 
@@ -35,7 +40,7 @@ namespace Search.Tags
             return TagType.NoTag;
         }
 
-        private bool isNoTag(string word)
+        private bool IsNoTag(string word)
         {
             return !(word.StartsWith(PlusSign) || word.StartsWith(MinusSign));
         }
