@@ -27,7 +27,7 @@ namespace Search.IO
             var fileReader = _managerInstance.FileReaderInstance;
             var fileContent = fileReader.Read(fileName);
             var merged = contents.Concat(fileContent);
-            return merged.ToDictionary(e => e.Key, e => e.Value);
+            return merged.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
