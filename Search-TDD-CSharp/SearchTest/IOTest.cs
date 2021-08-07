@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using NSubstitute;
 using Search.Dependencies;
 using Search.IO;
+using Search.IO.FileIO;
+using Search.IO.FolderIO;
 using Xunit;
 using Xunit.Priority;
 
@@ -13,18 +15,17 @@ namespace SearchTest
     [DefaultPriority(10)]
     public class IoTest
     {
-        private readonly Manager _managerInstance = Manager.GetInstance();
-
-        private readonly IReader _fileReader = new FileReader();
-        private readonly IReader _folderReader = new FolderReader();
         private readonly string _lineSeparator = TestEssentials.LineSeparator;
         private readonly KeyValuePair<string, string>[] _fileContents;
+        private IReader _fileReader;
+        private IReader _folderReader;
 
         public IoTest()
         {
             Reset();
             _fileContents = new KeyValuePair<string, string>[3];
             InitializeFileContent();
+            InitializeFields();
         }
 
         private void InitializeFileContent()
@@ -35,6 +36,11 @@ namespace SearchTest
                 $"man sag mikham{_lineSeparator}sag khoshgel -  !!! mio !!!{_lineSeparator}");
             _fileContents[2] = KeyValuePair.Create("4",
                 "Mir rafte dubai vase nakhle talaii !!");
+        }
+
+        private void InitializeFields()
+        {
+            _fileReader = new FileReader();
         }
 
         [Fact]
@@ -48,7 +54,7 @@ namespace SearchTest
         [Fact]
         public void Read_ShouldReadCorrectly_WhenPathIsDirectory()
         {
-            IReader reader = Substitute.For<IReader>();
+            IFileReader reader = Substitute.For<IFileReader>();
             _fileContents[0] = KeyValuePair.Create("1",
                 $"Hello Dear,{_lineSeparator}I am Mohammad.{_lineSeparator}");
             _fileContents[1] = KeyValuePair.Create("3",
@@ -59,7 +65,7 @@ namespace SearchTest
             reader.Read("TestDataBase\\1").Returns(GetDictionaryForFile1());
             reader.Read("TestDataBase\\3").Returns(GetDictionaryForFile3());
             reader.Read("TestDataBase\\4").Returns(GetDictionaryForFile4());
-            _managerInstance.FileReaderInstance = reader;
+            _folderReader = new FolderReader(reader);
             var readingData = _folderReader.Read("TestDataBase");
             var expectedData = GetDictionaryForFolder();
 
