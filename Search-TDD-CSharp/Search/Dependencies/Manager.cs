@@ -1,9 +1,9 @@
-﻿using Iveonik.Stemmers;
-using Search.DatabaseAndStoring;
+﻿using Search.DatabaseAndStoring;
 using Search.Index;
 using Search.IO;
 using Search.Tags;
 using Search.Word;
+using IStemmer = Search.Word.IStemmer;
 
 namespace Search.Dependencies
 {
@@ -28,7 +28,7 @@ namespace Search.Dependencies
         
         public IReader FileReaderInstance { set; get; }
         public IReader FolderReaderInstance { set; get; }
-        public EnglishStemmer Stemmer; 
+        public IStemmer Stemmer; 
         public IWordProcessor WordProcessorInstance; 
         public Database Database; 
         public IIndexer Indexer; 
@@ -38,7 +38,7 @@ namespace Search.Dependencies
         {
             FileReaderInstance = new FileReader();
             FolderReaderInstance = new FolderReader();
-            Stemmer = new EnglishStemmer();
+            Stemmer = new Stemmer();
             WordProcessorInstance = new WordProcessor();
             Database = new Database();
             Indexer = new Indexer();

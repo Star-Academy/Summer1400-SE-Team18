@@ -9,8 +9,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class WordProcessorTest
     {
-        
-        private IWordProcessor _wordProcessor = new WordProcessor();
+        private readonly IWordProcessor _wordProcessor = Manager.GetInstance().WordProcessorInstance;
+        private readonly IStemmer _stemmer = Manager.GetInstance().Stemmer;
 
         public WordProcessorTest()
         {
@@ -152,7 +152,7 @@ namespace SearchTest
                 "distrusts",
                 "explained"
             };
-            expected = expected.Select(s => _wordProcessor.GetStem(s.ToLower())).ToArray();
+            expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
             var text = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
                        " if style allow he there. Tiled man stand tears ten joy there terms any widen." +
                        " Procuring continued suspicion its ten. Pursuit brother are had fifteen distant has." +
@@ -203,7 +203,7 @@ namespace SearchTest
                 "delightful",
                 "an"
             };
-            expected = expected.Select(s => _wordProcessor.GetStem(s.ToLower())).ToArray();
+            expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
             var text = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
                        " at da##*()(((((()))re rose lose go444od. Feel and make two real miss use ea1233123sy. Celebrated delightful an";
             var parsedText = _wordProcessor.ParseText(text);

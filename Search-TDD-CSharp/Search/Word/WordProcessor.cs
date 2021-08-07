@@ -14,23 +14,18 @@ namespace Search.Word
         {
             text = RemoveNonAlphabeticalWords(text);
             var splitText = SplitWordsInText(text);
-            var parsedText = splitText.Select(GetStem).ToArray();
+            var stemmer = Manager.GetInstance().Stemmer;
+            var parsedText = splitText.Select(e => stemmer.Stem(e)).ToArray();
 
             return parsedText;
         }
 
-        public string GetStem(string word)
-        {
-            var lowerCaseWord = word.ToLower();
-            return _managerInstance.Stemmer.Stem(lowerCaseWord);
-        }
-
-        public string[] SplitWordsInText(string text)
+        private string[] SplitWordsInText(string text)
         {
             return Regex.Split(text, SpaceRegex);
         }
 
-        public string RemoveNonAlphabeticalWords(string text)
+        private string RemoveNonAlphabeticalWords(string text)
         {
             text = Regex.Replace(text, NonAlphabeticPattern, " ");
             return text.Trim();
