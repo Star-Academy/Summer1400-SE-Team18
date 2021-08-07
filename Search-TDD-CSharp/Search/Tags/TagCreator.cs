@@ -22,7 +22,7 @@ namespace Search.Tags
         private HashSet<Tag> CreateTagsFromArray(string[] words) 
             => words.Select(word => new Tag(CleaningWord(word), GetTagTypeFromWord(word))).ToHashSet();
 
-        private string CleaningWord(string word)
+        private string CleanWord(string word)
         {
             string result = word.ToLower();
             if (word.StartsWith("+") || word.StartsWith("-"))
