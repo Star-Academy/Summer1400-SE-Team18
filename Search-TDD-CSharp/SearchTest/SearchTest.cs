@@ -23,9 +23,9 @@ namespace SearchTest
         }
         
         [Fact]
-        public void Should_Search_For_One_Word()
+        public void Search_ShouldSearchCorrectly_ForOneWord()
         {
-            IReader folderReader = Substitute.For<IReader>();
+            var folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
             _managerInstance.FolderReaderInstance = folderReader;
@@ -58,9 +58,9 @@ namespace SearchTest
         }
 
         [Fact]
-        public void Should_Search_Properly_For_One_Folder()
+        public void Search_ShouldSearchCorrectly_ForOneFolder()
         {
-            IReader folderReader = Substitute.For<IReader>();
+            var folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             _managerInstance.Indexer.Index("TestDataBase");
             _managerInstance.FolderReaderInstance = folderReader;
@@ -68,9 +68,9 @@ namespace SearchTest
         }
 
         [Fact]
-        public void Should_Advance_Search_For_Two_Folders()
+        public void Search_ShouldSearchCorrectly_ForTwoFolders()
         {
-            IReader folderReader = Substitute.For<IReader>();
+            var folderReader = Substitute.For<IReader>();
             MockFolderReaderForDataBase(folderReader);
             MockFolderReaderForDataBase2(folderReader);
             _managerInstance.FolderReaderInstance = folderReader;

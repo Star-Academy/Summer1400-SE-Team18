@@ -26,7 +26,7 @@ namespace SearchTest
         }
         
         [Fact]
-        public void Should_Read_When_Path_Is_File()
+        public void Read_ShouldReadCorrectly_WhenPathIsFile()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
             var expectedString = $"man sag mikham{_lineSeparator}sag khoshgel - mikham !!! mio !!!{_lineSeparator}";
@@ -34,7 +34,7 @@ namespace SearchTest
         }
         
         [Fact]
-        public void Should_Read_When_Path_Is_Directory()
+        public void Read_ShouldReadCorrectly_WhenPathIsDirectory()
         {
             IReader reader = Substitute.For<IReader>();
             reader.Read("TestDataBase\\1").Returns(new Dictionary<string, string>()

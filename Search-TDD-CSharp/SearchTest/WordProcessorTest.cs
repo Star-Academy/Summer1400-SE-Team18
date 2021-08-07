@@ -18,7 +18,7 @@ namespace SearchTest
         }
 
         [Fact]
-        public void Should_Parse_Normal_text()
+        public void Parser_ShouldParseNormalText()
         {
             var expected = new[]
             {
@@ -168,7 +168,7 @@ namespace SearchTest
         }
 
         [Fact]
-        public void Should_Parse_Text_When_There_Is_Non_Alphabetical()
+        public void Parser_ShouldParseText_WhenItsNonAlphabetical()
         {
             var expected = new[]
             {

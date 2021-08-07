@@ -25,7 +25,7 @@ namespace SearchTest
         }
 
         [Fact]
-        public void Should_Index_Correctly_WhenReading_Folder()
+        public void Indexer_ShouldIndexCorrectly_WhenReadingFolder()
         {
             MockingFolderReader();
             var expectedData = new HashSet<Data>();
