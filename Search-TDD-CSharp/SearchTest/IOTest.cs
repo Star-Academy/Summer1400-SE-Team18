@@ -13,68 +13,103 @@ namespace SearchTest
     [DefaultPriority(10)]
     public class IoTest
     {
-        
         private readonly Manager _managerInstance = Manager.GetInstance();
 
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
         private readonly string _lineSeparator = TestEssentials.LineSeparator;
+        private readonly KeyValuePair<string, string>[] _fileContents;
 
         public IoTest()
         {
             Reset();
+            _fileContents = new KeyValuePair<string, string>[3];
+            InitializeFileContent();
         }
-        
+
+        private void InitializeFileContent()
+        {
+            _fileContents[0] = KeyValuePair.Create("1",
+                $"Hello Dear,{_lineSeparator}I am Mohammad.{_lineSeparator}");
+            _fileContents[1] = KeyValuePair.Create("3",
+                $"man sag mikham{_lineSeparator}sag khoshgel -  !!! mio !!!{_lineSeparator}");
+            _fileContents[2] = KeyValuePair.Create("4",
+                "Mir rafte dubai vase nakhle talaii !!");
+        }
+
         [Fact]
         public void Read_ShouldReadCorrectly_WhenPathIsFile()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
-            var expectedString = $"man sag mikham{_lineSeparator}sag khoshgel - mikham !!! mio !!!{_lineSeparator}";
-            Assert.Equal(expectedString, readingData["3"]);
+            var expectedString = _fileContents[2].Value;
+            Assert.Equal(expectedString, readingData[_fileContents[2].Key]);
         }
-        
+
         [Fact]
         public void Read_ShouldReadCorrectly_WhenPathIsDirectory()
         {
             IReader reader = Substitute.For<IReader>();
-            reader.Read("TestDataBase\\1").Returns(new Dictionary<string, string>()
-            {
-                {
-                    "1", $"Hello Dear,{_lineSeparator}" +
-                         $"I am Mohammad.{_lineSeparator}"
-                }
-            });
-            reader.Read("TestDataBase\\3").Returns(new Dictionary<string, string>()
-            {
-                {
-                    "3", $"man sag mikham{_lineSeparator}" +
-                         $"sag khoshgel -  !!! mio !!!{_lineSeparator}"
-                }
-            });
-            reader.Read("TestDataBase\\4").Returns(new Dictionary<string, string>()
-            {
-                {
-                    "4", "Mir rafte dubai vase nakhle talaii !!"
-                }
-            });
+            _fileContents[0] = KeyValuePair.Create("1",
+                $"Hello Dear,{_lineSeparator}I am Mohammad.{_lineSeparator}");
+            _fileContents[1] = KeyValuePair.Create("3",
+                $"man sag mikham{_lineSeparator}sag khoshgel -  !!! mio !!!{_lineSeparator}");
+            _fileContents[2] = KeyValuePair.Create("4",
+                "Mir rafte dubai vase nakhle talaii !!");
+
+            reader.Read("TestDataBase\\1").Returns(GetDictionaryForFile1());
+            reader.Read("TestDataBase\\3").Returns(GetDictionaryForFile3());
+            reader.Read("TestDataBase\\4").Returns(GetDictionaryForFile4());
             _managerInstance.FileReaderInstance = reader;
             var readingData = _folderReader.Read("TestDataBase");
-            var expectedData = new Dictionary<string, string>()
-            {
-                {
-                    "1", $"Hello Dear,{_lineSeparator}" +
-                         $"I am Mohammad.{_lineSeparator}"
-                },
-                {
-                    "3", $"man sag mikham{_lineSeparator}" +
-                         $"sag khoshgel -  !!! mio !!!{_lineSeparator}"
-                },
-                {
-                    "4", "Mir rafte dubai vase nakhle talaii !!"
-                }
-            };
+            var expectedData = GetDictionaryForFolder();
 
             Assert.Equal(readingData, expectedData);
+        }
+
+        private Dictionary<string, string> GetDictionaryForFile1()
+        {
+            return new Dictionary<string, string>()
+            {
+                {
+                    _fileContents[0].Key, _fileContents[0].Value
+                }
+            };
+        }
+
+        private Dictionary<string, string> GetDictionaryForFile3()
+        {
+            return new Dictionary<string, string>()
+            {
+                {
+                    _fileContents[1].Key, _fileContents[1].Value
+                }
+            };
+        }
+
+        private Dictionary<string, string> GetDictionaryForFile4()
+        {
+            return new Dictionary<string, string>()
+            {
+                {
+                    _fileContents[2].Key, _fileContents[2].Value
+                }
+            };
+        }
+
+        private Dictionary<string, string> GetDictionaryForFolder()
+        {
+            return new Dictionary<string, string>()
+            {
+                {
+                    _fileContents[0].Key, _fileContents[0].Value
+                },
+                {
+                    _fileContents[1].Key, _fileContents[1].Value
+                },
+                {
+                    _fileContents[2].Key, _fileContents[2].Value
+                }
+            };
         }
     }
 }
