@@ -9,10 +9,13 @@ namespace Search.Tags
     {
         
         private readonly Manager _managerInstance = Manager.GetInstance();
+        private const string SplitRegex = "\\s+";
+        private const string MinusSign = "+";
+        private const string PlusSign = "-";
 
         public HashSet<Tag> CreateTags(string command)
         {
-            var words = Regex.Split(command, "\\s+");
+            var words = Regex.Split(command, SplitRegex);
             return CreateTagsFromArray(words);
         }
 
@@ -32,8 +35,8 @@ namespace Search.Tags
         
         private TagType GetTagTypeFromWord(string word)
         {
-            if (word.StartsWith("+")) return TagType.Plus;
-            if (word.StartsWith("-")) return TagType.Minus; 
+            if (word.StartsWith(PlusSign)) return TagType.Plus;
+            else if (word.StartsWith(MinusSign)) return TagType.Minus; 
             return TagType.NoTag;
         }
     }
