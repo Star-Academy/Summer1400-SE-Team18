@@ -24,17 +24,11 @@ namespace Search.Search
 
         private HashSet<string> GetNoTagWordsData(HashSet<Tag> tags)
         {
-            try
-            {
-                return tags.Where(tag => tag.Type == TagType.NoTag)
-                    .Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem)
-                    .Aggregate((current, next) => current.Intersect(next).ToHashSet())
-                    .ToHashSet();
-            } 
-            catch (Exception)
-            {
-                return new HashSet<string>();
-            }
+            var allNoTagWords = tags.Where(tag => tag.Type == TagType.NoTag);
+            if (!allNoTagWords.Any()) return new HashSet<string>();
+            var allAnswers = allNoTagWords.Select(tag => GetDataForWord(tag.Word).FilesWithWordInThem);
+            return allAnswers.Aggregate((current, next) => current.Intersect(next).ToHashSet())
+                .ToHashSet();
         }
 
         private HashSet<string> GetPlusTagWordsData(HashSet<Tag> tags) 
