@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Search.Dependencies;
 
 namespace Search.IO
@@ -15,20 +16,22 @@ namespace Search.IO
             var fileReader = _managerInstance.FileReaderInstance;
             foreach (var file in Directory.GetFiles(path))
             {
-                var fileContent = fileReader.Read(file);
-                AddFileContentToDictionary(fileContent, result);
+                AddFileContentToDictionary(file, result, fileReader);
             }
 
             return result;
         }
 
-        private static void AddFileContentToDictionary(Dictionary<string, string> fileContent,
-            IDictionary<string, string> contents)
+        private static void AddFileContentToDictionary(string fileName,
+            IDictionary<string, string> contents,
+            IReader fileReader)
         {
-            foreach (var (key, value) in fileContent)
+            var fileContent = fileReader.Read(fileName);
+            fileContent.All(pair =>
             {
-                contents.Add(key, value);
-            }
+                contents.Add(pair);
+                return true;
+            });
         }
     }
 }

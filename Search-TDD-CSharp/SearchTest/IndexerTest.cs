@@ -17,7 +17,7 @@ namespace SearchTest
 
         private readonly IIndexer _indexer = new Indexer();
         private readonly IReader _reader = Substitute.For<IReader>();
-        private readonly string _ls = TestEssentials.Ls;
+        private readonly string _lineSeparator = TestEssentials.LineSeparator;
 
         public IndexerTest()
         {
@@ -86,12 +86,12 @@ namespace SearchTest
             var folderData = new Dictionary<string, string>()
             {
                 {
-                    "1", $"Hello Dear,{_ls}" +
-                         $"I am Mohammad.{_ls}"
+                    "1", $"Hello Dear,{_lineSeparator}" +
+                         $"I am Mohammad.{_lineSeparator}"
                 },
                 {
-                    "3", $"man sag mikham{_ls}" +
-                         $"sag khoshgel - mikham !!! mio !!!{_ls}"
+                    "3", $"man sag mikham{_lineSeparator}" +
+                         $"sag khoshgel - mikham !!! mio !!!{_lineSeparator}"
                 },
                 {
                     "4", "Mir rafte dubai vase nakhle talaii !!"

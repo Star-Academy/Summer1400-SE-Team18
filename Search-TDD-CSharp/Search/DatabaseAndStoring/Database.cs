@@ -15,14 +15,12 @@ namespace Search.DatabaseAndStoring
 
         public Data GetData(string word)
         {
-            try
+            foreach (var data in _data)
             {
-                return _data.First(data => data.Word == word);
+                if (data.Word == word) return data;
             }
-            catch
-            {
-                return Data.NullData;
-            }
+
+            return Data.NullData;
         }
 
         public void ClearAll() => _data.Clear();
@@ -30,6 +28,11 @@ namespace Search.DatabaseAndStoring
         public bool DoesContainsWord(string word)
         {
             return GetData(word).HasFilesWithWordInThem();
+        }
+
+        private bool isDataEmpty()
+        {
+            return _data.Count == 0;
         }
     }
 }

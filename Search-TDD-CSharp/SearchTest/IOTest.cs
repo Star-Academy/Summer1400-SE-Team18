@@ -18,7 +18,7 @@ namespace SearchTest
 
         private readonly IReader _fileReader = new FileReader();
         private readonly IReader _folderReader = new FolderReader();
-        private readonly string _ls = TestEssentials.Ls;
+        private readonly string _lineSeparator = TestEssentials.LineSeparator;
 
         public IoTest()
         {
@@ -29,7 +29,7 @@ namespace SearchTest
         public void Should_Read_When_Path_Is_File()
         {
             var readingData = _fileReader.Read("TestDataBase/3");
-            var expectedString = $"man sag mikham{_ls}sag khoshgel - mikham !!! mio !!!{_ls}";
+            var expectedString = $"man sag mikham{_lineSeparator}sag khoshgel - mikham !!! mio !!!{_lineSeparator}";
             Assert.Equal(expectedString, readingData["3"]);
         }
         
@@ -40,15 +40,15 @@ namespace SearchTest
             reader.Read("TestDataBase\\1").Returns(new Dictionary<string, string>()
             {
                 {
-                    "1", $"Hello Dear,{_ls}" +
-                         $"I am Mohammad.{_ls}"
+                    "1", $"Hello Dear,{_lineSeparator}" +
+                         $"I am Mohammad.{_lineSeparator}"
                 }
             });
             reader.Read("TestDataBase\\3").Returns(new Dictionary<string, string>()
             {
                 {
-                    "3", $"man sag mikham{_ls}" +
-                         $"sag khoshgel -  !!! mio !!!{_ls}"
+                    "3", $"man sag mikham{_lineSeparator}" +
+                         $"sag khoshgel -  !!! mio !!!{_lineSeparator}"
                 }
             });
             reader.Read("TestDataBase\\4").Returns(new Dictionary<string, string>()
@@ -62,12 +62,12 @@ namespace SearchTest
             var expectedData = new Dictionary<string, string>()
             {
                 {
-                    "1", $"Hello Dear,{_ls}" +
-                         $"I am Mohammad.{_ls}"
+                    "1", $"Hello Dear,{_lineSeparator}" +
+                         $"I am Mohammad.{_lineSeparator}"
                 },
                 {
-                    "3", $"man sag mikham{_ls}" +
-                         $"sag khoshgel -  !!! mio !!!{_ls}"
+                    "3", $"man sag mikham{_lineSeparator}" +
+                         $"sag khoshgel -  !!! mio !!!{_lineSeparator}"
                 },
                 {
                     "4", "Mir rafte dubai vase nakhle talaii !!"

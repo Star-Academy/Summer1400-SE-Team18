@@ -14,7 +14,7 @@ namespace SearchTest
         
         private static readonly Manager ManagerInstance = Manager.GetInstance();
 
-        public static readonly string Ls = Environment.NewLine;
+        public static readonly string LineSeparator = Environment.NewLine;
         
         public static Data MakeData(string word, HashSet<string> fileNames)
         {
@@ -35,12 +35,12 @@ namespace SearchTest
                 },
 
                 {
-                    "3", $"man sag mikham{Ls}" +
-                         $"sag khoshgel -  !!! mio !!!{Ls}"
+                    "3", $"man sag mikham{LineSeparator}" +
+                         $"sag khoshgel -  !!! mio !!!{LineSeparator}"
                 },
                 {
-                    "1", $"Hello Dear,{Ls}" +
-                         $"I am Mohammad.{Ls}"
+                    "1", $"Hello Dear,{LineSeparator}" +
+                         $"I am Mohammad.{LineSeparator}"
                 }
             });
         }
