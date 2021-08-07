@@ -20,11 +20,11 @@ namespace Search.Tags
         }
 
         private HashSet<Tag> CreateTagsFromArray(string[] words) 
-            => words.Select(word => new Tag(CleaningWord(word), GetTagTypeFromWord(word))).ToHashSet();
+            => words.Select(word => new Tag(CleanWord(word), GetTagTypeFromWord(word))).ToHashSet();
 
         private string CleanWord(string word)
         {
-            string result = word.ToLower();
+            var result = word.ToLower();
             if (word.StartsWith("+") || word.StartsWith("-"))
             {
                 result = result[1..];
