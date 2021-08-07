@@ -26,19 +26,20 @@ namespace Search.Index
             var parsedText = _managerInstance.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
-                ChooseToMakeOrAppend(word, filename, database);
+                ChooseToMakeOrAppend(word, filename);
             }
         }
 
-        private void ChooseToMakeOrAppend(string word, string filename, IDatabase database)
+        private void ChooseToMakeOrAppend(string word, string filename)
         {
+            var database = _managerInstance.Database;
             if (database.DoesContainsWord(word)) 
-                AppendFilenameToData(word, filename, database);
+                AppendFilenameToData(word, filename);
             else 
-                MakeKeyInDataBase(word, filename, database);
+                MakeKeyInDataBase(word, filename);
         }
 
-        private void MakeKeyInDataBase(string word, string filename, IDatabase database)
+        private void MakeKeyInDataBase(string word, string filename)
         {
             var database = _managerInstance.Database;
             var filenames = new HashSet<string>(new[]{filename});
