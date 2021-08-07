@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Search.IO
+namespace Search.IO.FileIO
 {
-    public class FileReader : IReader
+    public class FileReader : IFileReader
     {
         public Dictionary<string, string> Read(string path)
         {

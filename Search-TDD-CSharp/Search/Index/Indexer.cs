@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Search.DatabaseAndStoring;
-using Search.Dependencies;
 using Search.IO;
+using Search.IO.FolderIO;
 using Search.Word;
 
 namespace Search.Index
@@ -9,20 +9,20 @@ namespace Search.Index
     public class Indexer : IIndexer
     {
 
-        private readonly IReader _reader;
+        private readonly IReader _folderReader;
         private readonly IWordProcessor _wordProcessor;
         private readonly IDatabase _database;
 
-        public Indexer(IReader reader, IWordProcessor wordProcessor, IDatabase database)
+        public Indexer(IFolderReader folderReader, IWordProcessor wordProcessor, IDatabase database)
         {
-            _reader = reader;
+            _folderReader = folderReader;
             _database = database;
             _wordProcessor = wordProcessor;
         }
 
         public void Index(string path)
         {
-            var contents = _reader.Read(path);
+            var contents = _folderReader.Read(path);
             foreach (var (key, value) in contents)
             {
                 AddFileTextToDatabase(value, key);

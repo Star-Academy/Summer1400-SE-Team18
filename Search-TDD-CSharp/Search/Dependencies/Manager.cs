@@ -18,7 +18,7 @@ namespace Search.Dependencies
         public IReader FolderReaderInstance { set; get; }
         public ICustomStemmer Stemmer; 
         public IWordProcessor WordProcessorInstance; 
-        public Database Database; 
+        public IDatabase Database; 
         public IIndexer Indexer; 
         public ITagCreator TagCreator;
         public ITagProcessor TagProcessor;

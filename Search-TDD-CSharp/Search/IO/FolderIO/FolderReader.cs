@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Search.Dependencies;
+using Search.IO.FileIO;
 
-namespace Search.IO
+namespace Search.IO.FolderIO
 {
-    public class FolderReader : IReader
+    public class FolderReader : IFolderReader
     {
 
         private readonly IReader _fileReader;
 
-        public FolderReader(IReader fileReader)
+        public FolderReader(IFileReader fileReader)
         {
             _fileReader = fileReader;
         }
@@ -26,10 +26,9 @@ namespace Search.IO
             return result;
         }
 
-        private Dictionary<string, string> AddFileContentToDictionary(string fileName,
+        public Dictionary<string, string> AddFileContentToDictionary(string fileName,
             IDictionary<string, string> contents)
         {
-            
             var fileContent = _fileReader.Read(fileName);
             var merged = contents.Concat(fileContent);
             return merged.ToDictionary(pair => pair.Key, pair => pair.Value);
