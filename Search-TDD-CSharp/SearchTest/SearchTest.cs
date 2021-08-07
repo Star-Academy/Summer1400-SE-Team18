@@ -31,31 +31,37 @@ namespace SearchTest
             MockFolderReaderForDataBase2(folderReader);
             _managerInstance.FolderReaderInstance = folderReader;
             _managerInstance.Indexer.Index("TestDataBase");
-            Assert.All(new []
+            Dictionary<string, HashSet<string>> tests;
+            
+            tests = new Dictionary<string, HashSet<string>>()
             {
-                new {
-                    SearchFor = "mir",
-                    Answers = new HashSet<string>(new []{"4"})
-                }, 
-                new {
-                    SearchFor = "mikham",
-                    Answers = new HashSet<string>(new []{"3"})
+                {
+                    "mir",
+                    new HashSet<string>(new[] {"4"})
+                },
+                {
+                    "mikham",
+                    new HashSet<string>(new[] {"3"})
                 }
-            }.Select(str => str), (commandAndAnswers) => 
-                Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
+            };  
+            Assert.All(tests.ToList(),
+                testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
+
+            
             _managerInstance.Indexer.Index("TestDataBase2");
-            Assert.All(new []
+            tests = new Dictionary<string, HashSet<string>>()
             {
-                new {
-                    SearchFor = "sag mikham",
-                    Answers = new HashSet<string>(new []{"3"})
-                }, 
-                new {
-                    SearchFor = "dubai",
-                    Answers = new HashSet<string>(new []{"4", "sag"})
+                {
+                    "sag mikham",
+                    new HashSet<string>(new[] {"3"})
+                },
+                {
+                    "dubai",
+                    new HashSet<string>(new[] {"4", "sag"})
                 }
-            }.Select(str => str), (commandAndAnswers) => 
-                Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
+            };
+            Assert.All(tests.ToList(),
+                testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
         }
 
         [Fact]
@@ -77,51 +83,49 @@ namespace SearchTest
             _managerInstance.FolderReaderInstance = folderReader;
             _managerInstance.Indexer.Index("TestDataBase");
             _managerInstance.Indexer.Index("TestDataBase2");
-            Assert.All(new []
+            var tests = new Dictionary<string, HashSet<string>>()
             {
-                new {
-                    SearchFor = "mohammad -am",
-                    Answers = new HashSet<string>(new []{"mohammad"})
+                {
+                    "mohammad -am",
+                    new HashSet<string>(new []{"mohammad"})
                 }, 
-                new {
-                    SearchFor = "-amirraftKhonnashoonKhabeshMioomad",
-                    Answers = new HashSet<string>(new string[]{})
-                },
-                new {
-                    SearchFor = "taghi +mamooli -dubai",
-                    Answers = new HashSet<string>(new string[]{})
-                },
-                new {
-                    SearchFor = "sag +mikham",
-                    Answers = new HashSet<string>(new []{"gorbe", "3"})
-                },
-                new {
-                    SearchFor = "sag -mikham",
-                    Answers = new HashSet<string>(new []{"gorbe"})
-                },
-                new {
-                    SearchFor = "+dubai",
-                    Answers = new HashSet<string>(new []{"sag", "4"})
-                },
-                new {
-                    SearchFor = "+dubai +talaii",
-                    Answers = new HashSet<string>(new []{"sag", "4"})
-                },
-                new {
-                    SearchFor = "mohammad -mikham +mohammad",
-                    Answers = new HashSet<string>(new []{"mohammad", "1"})
-                },
-                new {
-                    SearchFor = "abbas +rafte +dubai +sag -mikham -taghi",
-                    Answers = new HashSet<string>(new []{"4", "gorbe", "mohammad"})
+                {
+                    "-amirraftKhonnashoonKhabeshMioomad",
+                    new HashSet<string>(new string[]{})
+                }, 
+                {
+                    "taghi +mamooli -dubai",
+                    new HashSet<string>(new string[]{})
+                }, 
+                {
+                    "sag +mikham",
+                    new HashSet<string>(new []{"gorbe", "3"})
+                }, 
+                {
+                    "sag -mikham",
+                    new HashSet<string>(new []{"gorbe"})
+                }, 
+                {
+                    "+dubai",
+                    new HashSet<string>(new []{"sag", "4"})
+                }, 
+                {
+                    "+dubai +talaii",
+                    new HashSet<string>(new []{"sag", "4"})
+                }, 
+                {
+                    "mohammad -mikham +mohammad",
+                    new HashSet<string>(new []{"mohammad", "1"})
+                }, 
+                {
+                    "abbas +rafte +dubai +sag -mikham -taghi",
+                    new HashSet<string>(new []{"4", "gorbe", "mohammad"})
                 }
-            }.Select(str => str),
-                (pair) => GetActionForAssertEqual(pair.SearchFor, pair.Answers));
+            };
+            
+            Assert.All(tests.ToList(), 
+                pair => Assert.Equal(_searcher.Search(pair.Key), pair.Value));
         }
 
-        private Action<Assert> GetActionForAssertEqual(string searchFor, HashSet<string> answers)
-        {
-            return (commandAndAnswers) => Assert.Equal(_searcher.Search(searchFor), answers);
-        }
     }
 }
