@@ -12,7 +12,6 @@ namespace SearchTest
     public static class TestEssentials
     {
         
-        private static readonly Manager ManagerInstance = Manager.GetInstance();
 
         public static readonly string LineSeparator = Environment.NewLine;
         

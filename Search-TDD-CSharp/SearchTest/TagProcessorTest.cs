@@ -1,4 +1,6 @@
-﻿using Search.Tags;
+﻿using NSubstitute;
+using Search.Tags;
+using Search.Word;
 using Xunit;
 
 namespace SearchTest
@@ -6,6 +8,20 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class TagProcessorTest
     {
+
+        private ITagProcessor _tagProcessor;
+        
+        public TagProcessorTest()
+        {
+            InitializeFields();
+        }
+
+        private void InitializeFields()
+        {
+            ICustomStemmer customStemmer = Substitute.For<ICustomStemmer>();
+            MockCustomStemmer(customStemmer);
+            _tagProcessor = new TagProcessor(customStemmer);
+        }
         
         [Theory]
         [InlineData("+mohammad", TagType.Plus)]
@@ -13,8 +29,7 @@ namespace SearchTest
         [InlineData("reza", TagType.NoTag)]
         public void Tag_ShouldProcessTagTypesCorrectly_ForAllTagTypes(string command, TagType tagType)
         {
-            var tagProcessor = _managerInstance.TagProcessor;
-            var tagged = tagProcessor.Process(command);
+            var tagged = _tagProcessor.Process(command);
             Assert.Equal(tagged.Type, tagType);
         }
 
@@ -24,9 +39,15 @@ namespace SearchTest
         [InlineData("reza", "reza")]
         public void Tag_ShouldProcessWordsCorrectly_ForAllTagTypes(string command, string word)
         {
-            var tagProcessor = _managerInstance.TagProcessor;
-            var tagged = tagProcessor.Process(command);
+            var tagged = _tagProcessor.Process(command);
             Assert.Equal(tagged.Word, word);
+        }
+
+        private void MockCustomStemmer(ICustomStemmer customStemmer)
+        {
+            customStemmer.Stem("mohammad").Returns("mohammad");
+            customStemmer.Stem("ali").Returns("ali");
+            customStemmer.Stem("reza").Returns("reza");
         }
     }
 }
