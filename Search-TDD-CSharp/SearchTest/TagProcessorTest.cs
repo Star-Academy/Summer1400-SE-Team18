@@ -14,7 +14,7 @@ namespace SearchTest
         private readonly Manager _managerInstance = Manager.GetInstance();
         
         [Fact]
-        public void Tag_Processor_Test()
+        public void Tag_ShouldProcessorCorrectly_ForAllTagTypes()
         {
             var expectedTag = new Tag("mohammad", TagType.Plus);
             var actualTag = _managerInstance.TagProcessor.Process("+mohammad");
