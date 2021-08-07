@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Search.Tags;
+﻿using Search.Tags;
 using Xunit;
 
 namespace SearchTest
@@ -10,8 +6,6 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class TagProcessorTest
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
         
         [Theory]
         [InlineData("+mohammad", TagType.Plus)]

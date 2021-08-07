@@ -20,8 +20,8 @@ namespace Program
         static void Main(string[] args)
         {
             CreateHost();
-            var t = (ProgramController)_serviceProvider.GetService(typeof(ProgramController));
-            t.Run();
+            var programController = (ProgramController)_serviceProvider.GetService(typeof(ProgramController));
+            programController.Run();
         }
 
         private static void CreateHost()

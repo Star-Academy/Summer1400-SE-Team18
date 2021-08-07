@@ -1,11 +1,10 @@
 ﻿using static SearchTest.TestEssentials;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Iveonik.Stemmers;
 using NSubstitute;
-using Search.IO;
-using Search.IO.FileIO;
+using Search.DatabaseAndStoring;
+using Search.Index;
 using Search.IO.FolderIO;
 using Search.Search;
 using Search.Tags;
