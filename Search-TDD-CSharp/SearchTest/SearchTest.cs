@@ -1,12 +1,9 @@
-﻿using System;
-using static SearchTest.TestEssentials;
+﻿using static SearchTest.TestEssentials;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Iveonik.Stemmers;
 using NSubstitute;
-using Search.DatabaseAndStoring;
-using Search.Dependencies;
-using Search.Index;
 using Search.IO;
 using Search.IO.FileIO;
 using Search.IO.FolderIO;

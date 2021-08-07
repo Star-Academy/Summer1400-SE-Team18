@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Iveonik.Stemmers;
 using NSubstitute;
 using Search.DatabaseAndStoring;
-using Search.Dependencies;
+
 using Search.Index;
 using Search.IO;
 using Search.IO.FolderIO;

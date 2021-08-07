@@ -1,7 +1,7 @@
 ﻿using static SearchTest.TestEssentials;
 using System.Collections.Generic;
 using NSubstitute;
-using Search.Dependencies;
+
 using Search.IO;
 using Search.IO.FileIO;
 using Search.IO.FolderIO;

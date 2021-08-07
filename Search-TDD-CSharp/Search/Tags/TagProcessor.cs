@@ -1,5 +1,4 @@
-﻿using Search.Dependencies;
-using Search.Word;
+﻿using Search.Word;
 
 namespace Search.Tags
 {
