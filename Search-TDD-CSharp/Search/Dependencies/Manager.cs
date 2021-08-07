@@ -32,7 +32,8 @@ namespace Search.Dependencies
         public IWordProcessor WordProcessorInstance; 
         public Database Database; 
         public IIndexer Indexer; 
-        public ITagCreator TagCreator; 
+        public ITagCreator TagCreator;
+        public ITagProcessor TagProcessor;
 
         private void Initialize()
         {
@@ -43,6 +44,7 @@ namespace Search.Dependencies
             Database = new Database();
             Indexer = new Indexer();
             TagCreator = new TagCreator();
+            TagProcessor = new TagProcessor();
         }
 
     }
