@@ -16,9 +16,6 @@ namespace SearchTest
         [Fact]
         public void Tag_ShouldProcessorCorrectly_ForAllTagTypes()
         {
-            var expectedTag = new Tag("mohammad", TagType.Plus);
-            var actualTag = _managerInstance.TagProcessor.Process("+mohammad");
-            Action<Assert> test1 = test => Assert.Equal(expectedTag, actualTag);
             var expectedAndActualPair = new Dictionary<Tag, Tag>()
             {
                 {new Tag("mohammad", TagType.Plus), _managerInstance.TagProcessor.Process("+mohammad")},
