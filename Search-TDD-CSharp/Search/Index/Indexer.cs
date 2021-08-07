@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Enumeration;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 
@@ -25,9 +26,16 @@ namespace Search.Index
             var parsedText = _managerInstance.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
-                if (database.DoesContainsWord(word)) AppendFilenameToData(word, filename, database);
-                else MakeKeyInDataBase(word, filename, database);
+                ChooseToMakeOrAppend(word, filename, database);
             }
+        }
+
+        private void ChooseToMakeOrAppend(string word, string filename, IDatabase database)
+        {
+            if (database.DoesContainsWord(word)) 
+                AppendFilenameToData(word, filename, database);
+            else 
+                MakeKeyInDataBase(word, filename, database);
         }
 
         private void MakeKeyInDataBase(string word, string filename, IDatabase database)
