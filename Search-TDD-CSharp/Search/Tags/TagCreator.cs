@@ -5,7 +5,7 @@ using Search.Dependencies;
 
 namespace Search.Tags
 {
-    public class TagCreator
+    public class TagCreator : ITagCreator
     {
         
         private readonly Manager _managerInstance = Manager.GetInstance();
