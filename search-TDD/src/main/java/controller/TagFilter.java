@@ -1,6 +1,5 @@
 package controller;
 
-import static controller.ProgramController.*;
 
 import model.FilteredTags;
 import model.TagsInterface;
@@ -8,6 +7,8 @@ import model.TagsInterface;
 import java.util.HashSet;
 
 public class TagFilter {
+    private static final String PLUS_SIGN = "+";
+    private static final String MINUS_SIGN = "-";
     
     public TagsInterface parse(String tags) {
         FilteredTags filteredTags = new FilteredTags();
@@ -19,9 +20,9 @@ public class TagFilter {
 
     private void assignTagToDesiredArrayList(String tag, FilteredTags filteredTags) {
         String trimmedWord = trimTag(tag);
-        if (tag.startsWith(getPlusSign())) 
+        if (tag.startsWith(PLUS_SIGN))
             addWordToHashSet(trimmedWord, filteredTags.getPlusTags());
-        else if (tag.startsWith(getMinusSign())) 
+        else if (tag.startsWith(MINUS_SIGN))
             addWordToHashSet(trimmedWord, filteredTags.getMinusTags());
         else addWordToHashSet(tag, filteredTags.getNoTags());;
     }

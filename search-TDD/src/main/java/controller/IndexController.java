@@ -1,17 +1,21 @@
 package controller;
 
+import controller.reader.FileReader;
+import controller.reader.Reader;
+
 import static controller.ProgramController.*;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class IndexController {
     private final String WORD_SPLITTER = "~";
 
     public void addFolderToDatabase(String path) {
-        String text = getFolderReader().read(path);
+        String text = getInstance().getFolderReader().read(path);
         if (text == null) return;
         String[] fileNamesAndWords = text.split(WORD_SPLITTER);
         for (int i = 1; i < fileNamesAndWords.length; i = i + 2) {
@@ -20,21 +24,24 @@ public class IndexController {
     }
 
     public void addFileTextToDatabase(String path) {
-        String text = getFileReader().read(path);
+        Reader fileReader = getInstance().getFileReader();
+        String text = fileReader.read(path);
         if (text == null) return;
         String fileName = findFileName(path);
         addFileToDatabase(fileName, text);
     }
 
     private void addFileToDatabase(String filename, String text) {
-        WordController wordController = ProgramController.getWordController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        WordController wordController = controllerInstance.getWordController();
         String[] words = wordController.textSeperator(text);
         Stream<String> wordsStream = Arrays.stream(words);
         wordsStream.forEach(e -> addWordToDatabase(filename, e));
     }
 
     private void addWordToDatabase(String filename, String word) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        ProgramController controllerInstance = ProgramController.getInstance();
+        DatabaseController databaseController = controllerInstance.getDatabaseController();
         if (databaseController.wordExistsInDataBase(word))
             databaseController.getDataForWord(word).getFileNames().add(filename);
         else 
@@ -42,7 +49,7 @@ public class IndexController {
     }
 
     private HashSet<String> convertNameToHashSet(String filename) {
-        return new HashSet<>(Arrays.asList(new String[]{filename}));
+        return new HashSet<>(List.of(filename));
     }
 
     private String findFileName(String path) {

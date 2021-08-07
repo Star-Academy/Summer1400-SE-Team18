@@ -2,6 +2,7 @@ package controller.searcher;
 
 import controller.DatabaseController;
 import controller.ProgramController;
+import controller.SetProcessor;
 import controller.TagFilter;
 import controller.WordController;
 import model.AnswerTags;
@@ -10,24 +11,29 @@ import model.TagsInterface;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class AdvancedSearcher implements Searcher {
-    public final static String PLUS_SIGN = ProgramController.getPlusSign();
-    public final static String MINUS_SIGN = ProgramController.getMinusSign();
-    
+
+    private final ProgramController controllerInstance = ProgramController.getInstance();
+    private final WordController wordController = controllerInstance.getWordController();
+    private final SetProcessor setProcessor = controllerInstance.getSetProcessor();
 
     @Override
     public HashSet<String> search(String command) {
-        TagFilter tagFilter = ProgramController.getTagFilter();
+        TagFilter tagFilter = controllerInstance.getTagFilter();
         TagsInterface filteredTags = tagFilter.parse(command);
         TagsInterface answerTags = getAnswerForEachTag(filteredTags);
         return getFinalAnswer(answerTags);
     }
 
     private HashSet<String> getFinalAnswer(TagsInterface answerTags) {
-        answerTags.addToNoTags(answerTags.getPlusTags());
-        answerTags.getNoTags().removeAll(answerTags.getMinusTags());
-        return answerTags.getNoTags();
+        HashSet<String> resultsForPlusTags = answerTags.getPlusTags();
+        answerTags.addToNoTags(resultsForPlusTags);
+        HashSet<String> resultsForMinusTags = answerTags.getMinusTags();
+        HashSet<String> results = answerTags.getNoTags();
+        setProcessor.removeAll(results, resultsForMinusTags);
+        return results;
     }
 
     private TagsInterface getAnswerForEachTag(TagsInterface filteredTags) {
@@ -39,15 +45,20 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillNoTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
-        WordController wordController = ProgramController.getWordController();
         if (filteredTags.getNoTags().size() == 0) return;
         Iterator<String> iterator = filteredTags.getNoTags().iterator();
         String stemmed = wordController.getStem(iterator.next());
         answerTags.addToNoTags(getFileNamesForWord(stemmed));
         while (iterator.hasNext()) {
             stemmed = wordController.getStem(iterator.next());
-            answerTags.getNoTags().retainAll(getFileNamesForWord(stemmed));
+            updateNoTagAnswers(answerTags, stemmed);
         }
+    }
+
+    private void updateNoTagAnswers(TagsInterface answerTags, String stemmed) {
+        Set<String> initialSet = answerTags.getNoTags();
+        Set<String> secondSet = getFileNamesForWord(stemmed);
+        setProcessor.retainAll(initialSet, secondSet);
     }
 
     private void fillPlusTagsAnswers(TagsInterface answerTags, TagsInterface filteredTags) {
@@ -59,15 +70,19 @@ public class AdvancedSearcher implements Searcher {
     }
 
     private void fillPlusOrMinusAnswers(HashSet<String> answers, HashSet<String> taggedWords) {
-        WordController wordController = ProgramController.getWordController();
         for (String taggedWord : taggedWords) {
-            String stemmed = wordController.getStem(taggedWord);
-            answers.addAll(getFileNamesForWord(stemmed));
+            addWordFilesToAnswer(answers, taggedWord);
         }
     }
 
+    private void addWordFilesToAnswer(HashSet<String> answers, String taggedWord) {
+        String stemmed = wordController.getStem(taggedWord);
+        Set<String> secondSet = getFileNamesForWord(stemmed);
+        setProcessor.addAll(answers, secondSet);
+    }
+
     private Data getDataForWord(String word) {
-        DatabaseController databaseController = ProgramController.getDatabaseController();
+        DatabaseController databaseController = controllerInstance.getDatabaseController();
         return databaseController.getDataForWord(word);
     }
     

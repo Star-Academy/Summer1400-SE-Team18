@@ -1,6 +1,6 @@
 package controller;
 
-import static controller.ProgramController.getPorterStemmer;
+import static controller.ProgramController.getInstance;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -20,7 +20,8 @@ public class WordController {
     }
 
     public String getStem(String word) {
-        return getPorterStemmer().stem(word);
+        ProgramController controllerInstance = getInstance();
+        return controllerInstance.getPorterStemmer().stem(word);
     }
 
     public String removeNonAlphabetical(String text) {

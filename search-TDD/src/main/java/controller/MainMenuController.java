@@ -1,52 +1,25 @@
 package controller;
 
-import java.util.HashSet;
-
-import controller.searcher.*;
+import controller.command.CommandParser;
 import view.Menu;
 
 public class MainMenuController {
 
+    private final static String WELCOME_STRING = "Welcome to Searcher!";
+    private final static String BYE_STRING = "We hope to see you again soon!";
+    private final static String QUIT = "quit";
+
+    private final CommandParser commandParser = ProgramController.getInstance().getCommandParser();
+
+
     public void execute() {
         String command;
-        Menu.showMessage("Welcome to Searcher!");
-        while (!(command = Menu.getNextLine()).equals("quit")) {
+        Menu.showMessage(WELCOME_STRING);
+        while (!(command = Menu.getNextLine()).equals(QUIT)) {
             command = command.toLowerCase();
-            commandParser(command);
+            commandParser.chooseCommand(command);
         }
-        Menu.showMessage("We hope to see you again soon!");
+        Menu.showMessage(BYE_STRING);
     }
 
-    private void commandParser(String command) {
-        String parsedCommand = cutCommandPartOfString(command);
-        if (command.startsWith("read")) {
-            readCommand(parsedCommand);
-        } else if (command.startsWith("search")) {
-            searchCommand(parsedCommand);
-        }
-    }
-
-    private String cutCommandPartOfString(String command) {
-        return command.substring(command.indexOf(' ') + 1);
-    }
- 
-    private void readCommand(String folderName) {
-        IndexController indexController = ProgramController.getIndexController();
-        indexController.addFolderToDatabase(folderName);
-    }
-    
-    private void searchCommand(String command) {
-        Searcher searcher = getCorrectSearcher(command);
-        HashSet<String> searchResult = searcher.search(command);
-        String finalResult = getResult(searchResult);
-        Menu.showMessage(finalResult);
-    }
-
-    private String getResult(HashSet<String> set) {
-        return set.size() == 0 ? "No results found!" : set.toString();
-    }
-
-    private Searcher getCorrectSearcher(String command) {
-        return ProgramController.getSearcher();
-    }
 }
