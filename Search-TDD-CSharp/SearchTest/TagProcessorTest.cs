@@ -13,8 +13,11 @@ namespace SearchTest
         
         private readonly Manager _managerInstance = Manager.GetInstance();
         
-        [Fact]
-        public void Tag_ShouldProcessorCorrectly_ForAllTagTypes()
+        [Theory]
+        [InlineData("+mohammad", TagType.Plus)]
+        [InlineData("-ali", TagType.Minus)]
+        [InlineData("reza", TagType.NoTag)]
+        public void Tag_ShouldProcessorCorrectly_ForAllTagTypes(string word, TagType tagType)
         {
             var expectedAndActualPair = new Dictionary<Tag, Tag>()
             {
@@ -22,8 +25,9 @@ namespace SearchTest
                 {new Tag("ali", TagType.Minus), _managerInstance.TagProcessor.Process("-ali")},
                 {new Tag("reza", TagType.NoTag), _managerInstance.TagProcessor.Process("reza")}
             };
-            Assert.All(expectedAndActualPair.ToList(),
-                pair => Assert.Equal(pair.Key, pair.Value));
+            var tagProcessor = _managerInstance.TagProcessor;
+            var tagged = tagProcessor.Process(word);
+            Assert.Equal(tagged.Type, tagType);
         }
     }
 }
