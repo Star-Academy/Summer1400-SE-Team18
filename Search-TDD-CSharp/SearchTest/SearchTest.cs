@@ -2,10 +2,17 @@
 using static SearchTest.TestEssentials;
 using System.Collections.Generic;
 using System.Linq;
+using Iveonik.Stemmers;
 using NSubstitute;
+using Search.DatabaseAndStoring;
 using Search.Dependencies;
+using Search.Index;
 using Search.IO;
+using Search.IO.FileIO;
+using Search.IO.FolderIO;
 using Search.Search;
+using Search.Tags;
+using Search.Word;
 using Xunit;
 
 namespace SearchTest
@@ -13,27 +20,37 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class SearchTest
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
-
-        private readonly ISearcher _searcher = new Searcher();
+        private ISearcher _searcher;
+        private IIndexer _indexer;
 
         public SearchTest()
         {
             Reset();
+            InitializeFields();
+        }
+
+        private void InitializeFields()
+        {
+            IStemmer stemmer = new EnglishStemmer();
+            ICustomStemmer customStemmer = new Stemmer(stemmer);
+            ITagProcessor tagProcessor = new TagProcessor(customStemmer);
+            ITagCreator tagCreator = new TagCreator(tagProcessor);
+            IDatabase database = new Database();
+            _searcher = new Searcher(tagCreator, database);
+            IFolderReader folderReader = Substitute.For<IFolderReader>();
+            MockFolderReaderForDataBase(folderReader);
+            MockFolderReaderForDataBase2(folderReader);
+            IWordProcessor wordProcessor = new WordProcessor(customStemmer);
+            _indexer = new Indexer(folderReader, wordProcessor, database);
+
         }
         
         [Fact]
         public void Search_ShouldSearchCorrectly_ForOneWord()
         {
-            var folderReader = Substitute.For<IReader>();
-            MockFolderReaderForDataBase(folderReader);
-            MockFolderReaderForDataBase2(folderReader);
-            _managerInstance.FolderReaderInstance = folderReader;
-            _managerInstance.Indexer.Index("TestDataBase");
-            Dictionary<string, HashSet<string>> tests;
-            
-            tests = new Dictionary<string, HashSet<string>>()
+            _indexer.Index("TestDataBase");
+
+            var tests = new Dictionary<string, HashSet<string>>()
             {
                 {
                     "mir",
@@ -48,7 +65,7 @@ namespace SearchTest
                 testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
 
             
-            _managerInstance.Indexer.Index("TestDataBase2");
+            _indexer.Index("TestDataBase2");
             tests = new Dictionary<string, HashSet<string>>()
             {
                 {
@@ -67,22 +84,15 @@ namespace SearchTest
         [Fact]
         public void Search_ShouldSearchCorrectly_ForOneFolder()
         {
-            var folderReader = Substitute.For<IReader>();
-            MockFolderReaderForDataBase(folderReader);
-            _managerInstance.Indexer.Index("TestDataBase");
-            _managerInstance.FolderReaderInstance = folderReader;
+            _indexer.Index("TestDataBase");
             Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
         }
 
         [Fact]
         public void Search_ShouldSearchCorrectly_ForTwoFolders()
         {
-            var folderReader = Substitute.For<IReader>();
-            MockFolderReaderForDataBase(folderReader);
-            MockFolderReaderForDataBase2(folderReader);
-            _managerInstance.FolderReaderInstance = folderReader;
-            _managerInstance.Indexer.Index("TestDataBase");
-            _managerInstance.Indexer.Index("TestDataBase2");
+            _indexer.Index("TestDataBase");
+            _indexer.Index("TestDataBase2");
             var tests = new Dictionary<string, HashSet<string>>()
             {
                 {
