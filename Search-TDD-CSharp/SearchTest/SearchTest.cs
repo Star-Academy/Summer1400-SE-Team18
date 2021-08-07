@@ -1,4 +1,5 @@
-﻿using static SearchTest.TestEssentials;
+﻿using System;
+using static SearchTest.TestEssentials;
 using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
@@ -114,8 +115,13 @@ namespace SearchTest
                     SearchFor = "abbas +rafte +dubai +sag -mikham -taghi",
                     Answers = new HashSet<string>(new []{"4", "gorbe", "mohammad"})
                 }
-            }.Select(str => str), (commandAndAnswers) => 
-                Assert.Equal(_searcher.Search(commandAndAnswers.SearchFor), commandAndAnswers.Answers));
+            }.Select(str => str),
+                (pair) => GetActionForAssertEqual(pair.SearchFor, pair.Answers));
+        }
+
+        private Action<Assert> GetActionForAssertEqual(string searchFor, HashSet<string> answers)
+        {
+            return (commandAndAnswers) => Assert.Equal(_searcher.Search(searchFor), answers);
         }
     }
 }
