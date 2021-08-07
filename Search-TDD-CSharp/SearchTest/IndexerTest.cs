@@ -1,10 +1,13 @@
 ﻿using static SearchTest.TestEssentials;
 using System.Collections.Generic;
+using Iveonik.Stemmers;
 using NSubstitute;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 using Search.Index;
 using Search.IO;
+using Search.IO.FolderIO;
+using Search.Word;
 using Xunit;
 
 namespace SearchTest
@@ -12,76 +15,50 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class IndexerTest
     {
-        
-        private readonly Manager _managerInstance = Manager.GetInstance();
-
-        private readonly IIndexer _indexer = new Indexer();
-        private readonly IReader _reader = Substitute.For<IReader>();
         private readonly string _lineSeparator = TestEssentials.LineSeparator;
+        private IIndexer _indexer;
+        private IFolderReader _reader;
+        private IWordProcessor _wordProcessor;
+        private IDatabase _database;
 
         public IndexerTest()
         {
             Reset();
+            InitializeFields();
+        }
+
+        private void InitializeFields()
+        {
+            _reader = Substitute.For<IFolderReader>();
+            MockFolderReader();
+            IStemmer englishStemmer = new EnglishStemmer();
+            ICustomStemmer stemmer = new Stemmer(englishStemmer);
+            _wordProcessor = new WordProcessor(stemmer);
+            _database = new Database();
+            _indexer = new Indexer(_reader, _wordProcessor, _database);
         }
 
         [Fact]
         public void Indexer_ShouldIndexCorrectly_WhenReadingFolder()
         {
-            MockingFolderReader();
             var expectedData = new HashSet<Data>();
-            var fileNames = new []
+            var fileNames = new[]
             {
                 new HashSet<string>() {"1"},
                 new HashSet<string>() {"3"},
                 new HashSet<string>() {"4"}
             };
-            //file 1
-            expectedData.Add(MakeData(GetStem("hello"), fileNames[0]));
-            expectedData.Add(MakeData(GetStem("dear"), fileNames[0]));
-            expectedData.Add(MakeData(GetStem("i"), fileNames[0]));
-            expectedData.Add(MakeData(GetStem("am"), fileNames[0]));
-            expectedData.Add(MakeData(GetStem("mohammad"), fileNames[0]));
-            //file 3
-            expectedData.Add(MakeData(GetStem("man"), fileNames[1]));
-            expectedData.Add(MakeData(GetStem("sag"), fileNames[1]));
-            expectedData.Add(MakeData(GetStem("mikham"), fileNames[1]));
-            expectedData.Add(MakeData(GetStem("khoshgel"), fileNames[1]));
-            expectedData.Add(MakeData(GetStem("mikham"), fileNames[1]));
-            expectedData.Add(MakeData(GetStem("mio"), fileNames[1]));
-            //file 4
-            expectedData.Add(MakeData(GetStem("mir"), fileNames[2]));
-            expectedData.Add(MakeData(GetStem("rafte"), fileNames[2]));
-            expectedData.Add(MakeData(GetStem("dubai"), fileNames[2]));
-            expectedData.Add(MakeData(GetStem("vase"), fileNames[2]));
-            expectedData.Add(MakeData(GetStem("nakhle"), fileNames[2]));
-            expectedData.Add(MakeData(GetStem("talaii"), fileNames[2]));
-            Database database = _managerInstance.Database;
+            AddFile1Data(expectedData, fileNames);
+            AddFile2Data(expectedData, fileNames);
+            AddFile3Data(expectedData, fileNames);
             var databaseInfo = new HashSet<Data>();
 
             _indexer.Index("TestDataBase");
-
-            databaseInfo.Add(database.GetData(GetStem("hello")));
-            databaseInfo.Add(database.GetData(GetStem("dear")));
-            databaseInfo.Add(database.GetData(GetStem("i")));
-            databaseInfo.Add(database.GetData(GetStem("am")));
-            databaseInfo.Add(database.GetData(GetStem("mohammad")));
-            databaseInfo.Add(database.GetData(GetStem("man")));
-            databaseInfo.Add(database.GetData(GetStem("sag")));
-            databaseInfo.Add(database.GetData(GetStem("mikham")));
-            databaseInfo.Add(database.GetData(GetStem("khoshgel")));
-            databaseInfo.Add(database.GetData(GetStem("mikham")));
-            databaseInfo.Add(database.GetData(GetStem("mio")));
-            databaseInfo.Add(database.GetData(GetStem("mir")));
-            databaseInfo.Add(database.GetData(GetStem("rafte")));
-            databaseInfo.Add(database.GetData(GetStem("dubai")));
-            databaseInfo.Add(database.GetData(GetStem("vase")));
-            databaseInfo.Add(database.GetData(GetStem("nakhle")));
-            databaseInfo.Add(database.GetData(GetStem("talaii")));
-
+            FillDatabaseInfo(databaseInfo, _database);
             Assert.Equal(expectedData, databaseInfo);
         }
 
-        private void MockingFolderReader()
+        private void MockFolderReader()
         {
             var folderData = new Dictionary<string, string>()
             {
@@ -99,7 +76,56 @@ namespace SearchTest
             };
 
             _reader.Read("TestDataBase").Returns(folderData);
-            _managerInstance.FolderReaderInstance = _reader;
+        }
+
+        private void AddFile1Data(HashSet<Data> data, HashSet<string>[] fileNames)
+        {
+            data.Add(MakeData(GetStem("hello"), fileNames[0]));
+            data.Add(MakeData(GetStem("dear"), fileNames[0]));
+            data.Add(MakeData(GetStem("i"), fileNames[0]));
+            data.Add(MakeData(GetStem("am"), fileNames[0]));
+            data.Add(MakeData(GetStem("mohammad"), fileNames[0]));
+        }
+
+        private void AddFile2Data(HashSet<Data> data, HashSet<string>[] fileNames)
+        {
+            data.Add(MakeData(GetStem("man"), fileNames[1]));
+            data.Add(MakeData(GetStem("sag"), fileNames[1]));
+            data.Add(MakeData(GetStem("mikham"), fileNames[1]));
+            data.Add(MakeData(GetStem("khoshgel"), fileNames[1]));
+            data.Add(MakeData(GetStem("mikham"), fileNames[1]));
+            data.Add(MakeData(GetStem("mio"), fileNames[1]));
+        }
+
+        private void AddFile3Data(HashSet<Data> data, HashSet<string>[] fileNames)
+        {
+            data.Add(MakeData(GetStem("mir"), fileNames[2]));
+            data.Add(MakeData(GetStem("rafte"), fileNames[2]));
+            data.Add(MakeData(GetStem("dubai"), fileNames[2]));
+            data.Add(MakeData(GetStem("vase"), fileNames[2]));
+            data.Add(MakeData(GetStem("nakhle"), fileNames[2]));
+            data.Add(MakeData(GetStem("talaii"), fileNames[2]));
+        }
+
+        private void FillDatabaseInfo(HashSet<Data> data, IDatabase database)
+        {
+            data.Add(_database.GetData(GetStem("hello")));
+            data.Add(_database.GetData(GetStem("dear")));
+            data.Add(_database.GetData(GetStem("i")));
+            data.Add(_database.GetData(GetStem("am")));
+            data.Add(_database.GetData(GetStem("mohammad")));
+            data.Add(_database.GetData(GetStem("man")));
+            data.Add(_database.GetData(GetStem("sag")));
+            data.Add(_database.GetData(GetStem("mikham")));
+            data.Add(_database.GetData(GetStem("khoshgel")));
+            data.Add(_database.GetData(GetStem("mikham")));
+            data.Add(_database.GetData(GetStem("mio")));
+            data.Add(_database.GetData(GetStem("mir")));
+            data.Add(_database.GetData(GetStem("rafte")));
+            data.Add(_database.GetData(GetStem("dubai")));
+            data.Add(_database.GetData(GetStem("vase")));
+            data.Add(_database.GetData(GetStem("nakhle")));
+            data.Add(_database.GetData(GetStem("talaii")));
         }
     }
 }
