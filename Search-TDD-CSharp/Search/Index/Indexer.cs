@@ -12,8 +12,6 @@ namespace Search.Index
 
         public void Index(string path)
         {
-            if (_managerInstance == null) throw new NotImplementedException();
-            if (_managerInstance.FolderReaderInstance == null) throw new AggregateException();
             var contents = _managerInstance.FolderReaderInstance.Read(path);
             var database = _managerInstance.Database;
             foreach (var (key, value) in contents)
@@ -34,15 +32,15 @@ namespace Search.Index
 
         private void MakeKeyInDataBase(string word, string filename, IDatabase database)
         {
-            HashSet<string> filenames = new HashSet<string>(new[]{filename});
-            Data createdData = new Data(word, filenames);
+            var filenames = new HashSet<string>(new[]{filename});
+            var createdData = new Data(word, filenames);
             database.AddData(createdData);
         }
 
         private void AppendFilenameToData(string word, string filename, IDatabase database)
         {
-            Data alreadyCreatedData = database.GetData(word);
-            HashSet<string> filenames = alreadyCreatedData.FilesWithWordInThem;
+            var createdData = database.GetData(word);
+            var filenames = createdData.FilesWithWordInThem;
             filenames.Add(filename);
         }
     }
