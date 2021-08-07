@@ -14,7 +14,7 @@ namespace Program.View
             string result = ResultString;
             foreach (var name in searchResult)
             {
-                result += name + ", ";
+                result += name + Comma;
             }
             result = RemoveLastComma(result);
             ShowMessage(result);
