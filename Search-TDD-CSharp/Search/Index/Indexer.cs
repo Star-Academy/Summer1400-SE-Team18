@@ -1,6 +1,6 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO.Enumeration;
+﻿using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 
@@ -14,15 +14,15 @@ namespace Search.Index
         public void Index(string path)
         {
             var contents = _managerInstance.FolderReaderInstance.Read(path);
-            var database = _managerInstance.Database;
             foreach (var (key, value) in contents)
             {
-                AddFileTextToDatabase(value, key, database);
+                AddFileTextToDatabase(value, key);
             }
         }
 
-        private void AddFileTextToDatabase(string text, string filename, IDatabase database)
+        private void AddFileTextToDatabase(string text, string filename)
         {
+            var database = _managerInstance.Database;
             var parsedText = _managerInstance.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
@@ -40,13 +40,15 @@ namespace Search.Index
 
         private void MakeKeyInDataBase(string word, string filename, IDatabase database)
         {
+            var database = _managerInstance.Database;
             var filenames = new HashSet<string>(new[]{filename});
             var createdData = new Data(word, filenames);
             database.AddData(createdData);
         }
 
-        private void AppendFilenameToData(string word, string filename, IDatabase database)
+        private void AppendFilenameToData(string word, string filename)
         {
+            var database = _managerInstance.Database;
             var createdData = database.GetData(word);
             var filenames = createdData.FilesWithWordInThem;
             filenames.Add(filename);
