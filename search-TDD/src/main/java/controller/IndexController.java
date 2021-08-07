@@ -1,10 +1,14 @@
 package controller;
 
+import controller.reader.FileReader;
+import controller.reader.Reader;
+
 import static controller.ProgramController.*;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class IndexController {
@@ -20,7 +24,8 @@ public class IndexController {
     }
 
     public void addFileTextToDatabase(String path) {
-        String text = getInstance().getFileReader().read(path);
+        Reader fileReader = getInstance().getFileReader();
+        String text = fileReader.read(path);
         if (text == null) return;
         String fileName = findFileName(path);
         addFileToDatabase(fileName, text);
@@ -44,7 +49,7 @@ public class IndexController {
     }
 
     private HashSet<String> convertNameToHashSet(String filename) {
-        return new HashSet<>(Arrays.asList(new String[]{filename}));
+        return new HashSet<>(List.of(filename));
     }
 
     private String findFileName(String path) {
