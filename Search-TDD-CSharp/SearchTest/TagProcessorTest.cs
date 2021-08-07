@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Search.Dependencies;
+
 using Search.Tags;
 using Xunit;
 

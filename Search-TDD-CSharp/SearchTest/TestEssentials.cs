@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NSubstitute;
 using Search.DatabaseAndStoring;
-using Search.Dependencies;
+
 using Search.IO;
 using Xunit;
 
