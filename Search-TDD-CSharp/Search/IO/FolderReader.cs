@@ -13,19 +13,18 @@ namespace Search.IO
         public Dictionary<string, string> Read(string path)
         {
             var result = new Dictionary<string, string>();
-            var fileReader = _managerInstance.FileReaderInstance;
             foreach (var file in Directory.GetFiles(path))
             {
-                AddFileContentToDictionary(file, result, fileReader);
+                AddFileContentToDictionary(file, result);
             }
 
             return result;
         }
 
-        private static void AddFileContentToDictionary(string fileName,
-            IDictionary<string, string> contents,
-            IReader fileReader)
+        private void AddFileContentToDictionary(string fileName,
+            IDictionary<string, string> contents)
         {
+            var fileReader = _managerInstance.FileReaderInstance;
             var fileContent = fileReader.Read(fileName);
             fileContent.All(pair =>
             {
