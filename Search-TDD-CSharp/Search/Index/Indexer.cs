@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO.Enumeration;
-﻿using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.Dependencies;
 
@@ -22,7 +20,6 @@ namespace Search.Index
 
         private void AddFileTextToDatabase(string text, string filename)
         {
-            var database = _managerInstance.Database;
             var parsedText = _managerInstance.WordProcessorInstance.ParseText(text);
             foreach (var word in parsedText)
             {
