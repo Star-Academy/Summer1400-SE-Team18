@@ -1,4 +1,6 @@
-﻿using static SearchTest.TestEssentials;
+﻿using System;
+using System.Collections.Generic;
+using static SearchTest.TestEssentials;
 using System.Linq;
 using Iveonik.Stemmers;
 using Search.Word;
@@ -39,10 +41,17 @@ namespace SearchTest
             _wordProcessor = new WordProcessor(_stemmer);
         }
 
-        [Fact]
-        public void Parser_ShouldParseNormalText()
+        [Theory]
+        [MemberData(nameof(Get_Parser_ShouldParseNormalText_TestData))]
+        public void Parser_ShouldParseNormalText(string[] expected)
         {
-            var expected = new[]
+            var parsedText = _wordProcessor.ParseText(_firstTest);
+            Assert.Equal(expected, parsedText);
+        }
+
+        public static IEnumerable<Object[]> Get_Parser_ShouldParseNormalText_TestData()
+        {
+           var returnValue =  new[]
             {
                 "Advice",
                 "me",
@@ -174,16 +183,22 @@ namespace SearchTest
                 "distrusts",
                 "explained"
             };
-            expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
-            
-            var parsedText = _wordProcessor.ParseText(_firstTest);
+           IStemmer stemmer = new EnglishStemmer();
+           returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
+           return new List<object[]>(new[] {returnValue});
+        }
+
+        [Theory]
+        [MemberData(nameof(Get_Parser_ShouldParseText_WhenItsNonAlphabetical_TestData))]
+        public void Parser_ShouldParseText_WhenItsNonAlphabetical(string[] expected)
+        {
+            var parsedText = _wordProcessor.ParseText(_secondText);
             Assert.Equal(expected, parsedText);
         }
 
-        [Fact]
-        public void Parser_ShouldParseText_WhenItsNonAlphabetical()
+        public static IEnumerable<Object[]> Get_Parser_ShouldParseText_WhenItsNonAlphabetical_TestData()
         {
-            var expected = new[]
+            var returnValue =  new[]
             {
                 "Detract",
                 "yet",
@@ -216,9 +231,9 @@ namespace SearchTest
                 "delightful",
                 "an"
             };
-            expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
-            var parsedText = _wordProcessor.ParseText(_secondText);
-            Assert.Equal(expected, parsedText);
+            IStemmer stemmer = new EnglishStemmer();
+            returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
+            return new List<object[]>(new[] {returnValue});
         }
     }
 }
