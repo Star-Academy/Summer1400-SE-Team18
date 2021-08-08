@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Search.DatabaseAndStoring;
 
 namespace Search.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210808150823_File and DataAndFile tables removed")]
+    partial class FileandDataAndFiletablesremoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,17 +20,14 @@ namespace Search.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Search.Models.DataEntity", b =>
+            modelBuilder.Entity("Search.Models.Data", b =>
                 {
                     b.Property<string>("Word")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("Word");
 
-                    b.HasKey("Word", "FileName");
-
-                    b.ToTable("DataEntities");
+                    b.ToTable("Data");
                 });
 #pragma warning restore 612, 618
         }

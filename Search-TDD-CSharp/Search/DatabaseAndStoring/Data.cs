@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Search.Models
+namespace Search.DatabaseAndStoring
 {
     public class Data
     {

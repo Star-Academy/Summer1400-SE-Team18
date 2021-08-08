@@ -34,7 +34,7 @@ namespace SearchTest
             IStemmer englishStemmer = new EnglishStemmer();
             ICustomStemmer stemmer = new Stemmer(englishStemmer);
             _wordProcessor = new WordProcessor(stemmer);
-            _database = new Database();
+            _database = new Database(new DatabaseContext());
             _indexer = new Indexer(_reader, _wordProcessor, _database);
         }
 

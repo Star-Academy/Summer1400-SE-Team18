@@ -31,7 +31,7 @@ namespace SearchTest
             ICustomStemmer customStemmer = new Stemmer(stemmer);
             ITagProcessor tagProcessor = new TagProcessor(customStemmer);
             ITagCreator tagCreator = new TagCreator(tagProcessor);
-            IDatabase database = new Database();
+            IDatabase database = new Database(new DatabaseContext());
             _searcher = new Searcher(tagCreator, database);
             IFolderReader folderReader = Substitute.For<IFolderReader>();
             MockFolderReaderForDataBase(folderReader);

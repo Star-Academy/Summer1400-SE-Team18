@@ -28,6 +28,7 @@ namespace Program
         {
             var host = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
             {
+                services.AddSingleton<DatabaseContext>();
                 services.AddSingleton<ProgramController>();
                 services.AddSingleton<IFileReader, FileReader>();
                 services.AddSingleton<IFolderReader, FolderReader>();

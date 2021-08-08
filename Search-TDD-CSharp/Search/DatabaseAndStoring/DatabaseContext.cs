@@ -5,7 +5,7 @@ namespace Search.DatabaseAndStoring
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Data> Data { get; set; }
+        public DbSet<DataEntity> DataEntities { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optins)
@@ -17,8 +17,8 @@ namespace Search.DatabaseAndStoring
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Data>()
-                .HasKey(c => new { c.Word });
+            modelBuilder.Entity<DataEntity>()
+                .HasKey(d => new { d.Word, d.FileName });
         }
     }
 }

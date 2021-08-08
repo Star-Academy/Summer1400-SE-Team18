@@ -7,25 +7,31 @@ namespace Search.DatabaseAndStoring
 {
     public class Database : IDatabase
     {
-        private readonly HashSet<Data> _data = new HashSet<Data>();
-        private readonly Data _nullData = new Data("", new HashSet<string>());
+        private readonly DatabaseContext _databaseContext;
 
-        public void AddData(Data data)
+        public Database(DatabaseContext databaseContext)
         {
-            _data.Add(data);
+            _databaseContext = databaseContext;
+        }
+        
+        public void AddModelData(DataEntity data)
+        {
+            Console.WriteLine(data.Word + " " + data.FileName);
+            _databaseContext.Add(data);
+            _databaseContext.SaveChanges();
         }
 
         public Data GetData(string word)
         {
-            foreach (var data in _data)
+            var fileNames = new HashSet<string>();
+            var query = _databaseContext.DataEntities;
+            foreach (var dataEntity in query)
             {
-                if (data.Word == word) return data;
+                if (word == dataEntity.Word) fileNames.Add(dataEntity.FileName);
             }
 
-            return _nullData;
+            return new Data(word, fileNames);
         }
-
-        public void ClearAll() => _data.Clear();
 
         public bool DoesContainsWord(string word)
         {

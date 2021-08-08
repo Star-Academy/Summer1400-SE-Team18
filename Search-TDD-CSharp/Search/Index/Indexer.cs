@@ -49,9 +49,8 @@ namespace Search.Index
 
         private void MakeKeyInDataBase(string word, string filename)
         {
-            var filenames = new HashSet<string>(new[]{filename});
-            var createdData = new Data(word, filenames);
-            _database.AddData(createdData);
+            var createdData = new DataEntity(word, filename);
+            _database.AddModelData(createdData);
         }
 
         private void AppendFilenameToData(string word, string filename)
