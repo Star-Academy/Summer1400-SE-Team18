@@ -5,6 +5,6 @@ namespace Scores.Controller.Calculators
 {
     public interface ICalculator
     {
-        public StudentAndAverage[] Calculate(Student[] students, StudentScore[] scores);
+        public Dictionary<int, double> Calculate(StudentScore[] scores);
     }
 }

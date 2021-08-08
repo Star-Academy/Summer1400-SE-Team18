@@ -6,31 +6,37 @@ namespace Scores.Controller.Calculators
 {
     public class HighScoreCalculator : ICalculator
     {
-        public StudentAndAverage[] Calculate(Student[] students, StudentScore[] studentsScores)
+        public Dictionary<int, double> Calculate(StudentScore[] studentsScores)
         {
             var averageCalculator = ProgramController.AverageCalculator;
-            var studentsWithAverage = averageCalculator.Calculate(students, studentsScores);
+            var studentsWithAverage = averageCalculator.Calculate(studentsScores);
             var sortedList = SortStudentsByAverage(studentsWithAverage);
             return ReturnProperSizeOfSortedList(sortedList);
         }
 
-        private IEnumerable<StudentAndAverage> SortStudentsByAverage(StudentAndAverage[] averages)
+        private IEnumerable<KeyValuePair<int, double>> SortStudentsByAverage(Dictionary<int, double> averages)
         {
-            // sorts by StudentAndAverage.Average
-            var sorted = averages.OrderByDescending(element => element.Average);
+            var sorted = averages.OrderByDescending(element => element.Value);
             return sorted;
         }
 
-        private StudentAndAverage[] ReturnProperSizeOfSortedList(IEnumerable<StudentAndAverage> averages)
+        private Dictionary<int, double> ReturnProperSizeOfSortedList(IEnumerable<KeyValuePair<int, double>> averages)
         {
+            var keyValuePairs = averages as KeyValuePair<int, double>[] ?? averages.ToArray();
             try
             {
-                return averages.Take(3).ToArray();
+                return GetDictionary(keyValuePairs.Take(3));
             }
             catch
             {
-                return averages.ToArray();
+                return GetDictionary(keyValuePairs);
             }
+        }
+
+        private Dictionary<int, double> GetDictionary(IEnumerable<KeyValuePair<int, double>> averages)
+        {
+            return averages
+                .ToDictionary(k => k.Key, v => v.Value);
         }
     }
 }

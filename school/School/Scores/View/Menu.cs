@@ -9,7 +9,7 @@ namespace Scores.View
     {
         private const string OutString = "Student: {0}-{1} ---> Score: {2}";
 
-        public static void PrintHighScoreStudents(StudentAndAverage[] highScoreStudents)
+        public static void PrintHighScoreStudents(Dictionary<Student, double> highScoreStudents)
         {
             foreach (var studentAndAverage in highScoreStudents)
             {
@@ -17,12 +17,12 @@ namespace Scores.View
             }
         }
 
-        private static void ShowMessage(StudentAndAverage studentAndAverage)
+        private static void ShowMessage(KeyValuePair<Student, double> studentAndAverage)
         {
             Console.WriteLine(OutString,
-                studentAndAverage.Student.FirstName,
-                studentAndAverage.Student.LastName,
-                studentAndAverage.Average);
+                studentAndAverage.Key.FirstName,
+                studentAndAverage.Key.LastName,
+                studentAndAverage.Value);
         }
     }
 }
