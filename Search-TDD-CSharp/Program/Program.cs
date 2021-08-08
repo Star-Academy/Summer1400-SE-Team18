@@ -21,7 +21,7 @@ namespace Program
         {
             CreateHost();
             var programController = (ProgramController)_serviceProvider.GetService(typeof(ProgramController));
-            programController.Run();
+            programController?.Run();
         }
 
         private static void CreateHost()
