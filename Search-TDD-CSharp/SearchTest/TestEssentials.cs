@@ -5,6 +5,7 @@ using NSubstitute;
 using Search.DatabaseAndStoring;
 
 using Search.IO;
+using Search.Models;
 using Xunit;
 
 namespace SearchTest

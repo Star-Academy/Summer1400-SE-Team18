@@ -7,6 +7,7 @@ using Search.DatabaseAndStoring;
 using Search.Index;
 using Search.IO;
 using Search.IO.FolderIO;
+using Search.Models;
 using Search.Word;
 using Xunit;
 

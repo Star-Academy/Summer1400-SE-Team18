@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Search.Models;
 
 namespace Search.DatabaseAndStoring
 {

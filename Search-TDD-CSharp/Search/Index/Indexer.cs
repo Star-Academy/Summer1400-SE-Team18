@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.IO;
 using Search.IO.FolderIO;
+using Search.Models;
 using Search.Word;
 
 namespace Search.Index

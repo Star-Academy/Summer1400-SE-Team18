@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Search.Models;
 
 namespace Search.DatabaseAndStoring
 {
     public class Database : IDatabase
     {
         private readonly HashSet<Data> _data = new HashSet<Data>();
+        private readonly Data _nullData = new Data("", new HashSet<string>());
 
         public void AddData(Data data)
         {
@@ -20,7 +22,7 @@ namespace Search.DatabaseAndStoring
                 if (data.Word == word) return data;
             }
 
-            return Data.NullData;
+            return _nullData;
         }
 
         public void ClearAll() => _data.Clear();
@@ -28,11 +30,6 @@ namespace Search.DatabaseAndStoring
         public bool DoesContainsWord(string word)
         {
             return GetData(word).HasFilesWithWordInThem();
-        }
-
-        private bool isDataEmpty()
-        {
-            return _data.Count == 0;
         }
     }
 }
