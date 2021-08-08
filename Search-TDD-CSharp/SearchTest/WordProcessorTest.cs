@@ -14,7 +14,7 @@ namespace SearchTest
         private WordProcessor _wordProcessor;
         private ICustomStemmer _stemmer;
         
-        private string _firstTest = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
+        private const string FirstTest = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
         " if style allow he there. Tiled man stand tears ten joy there terms any widen." +
         " Procuring continued suspicion its ten. Pursuit brother are had fifteen distant has." +
         " Early had add equal china quiet visit. Appear an manner as no limits either praise in." +
@@ -25,7 +25,7 @@ namespace SearchTest
         " need of wife paid that be. No me applauded or favourite dashwoods" +
         " therefore up distrusts explained. ";
         
-        private string _secondText = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
+        private const string SecondText = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
                                      " at da##*()(((((()))re rose lose go444od. Feel and make two real miss use ea12331" +
                                      "23sy. Celebrated delightful an";
 
@@ -45,7 +45,7 @@ namespace SearchTest
         [MemberData(nameof(Get_Parser_ShouldParseNormalText_TestData))]
         public void Parser_ShouldParseNormalText(string[] expected)
         {
-            var parsedText = _wordProcessor.ParseText(_firstTest);
+            var parsedText = _wordProcessor.ParseText(FirstTest);
             Assert.Equal(expected, parsedText);
         }
 
@@ -192,7 +192,7 @@ namespace SearchTest
         [MemberData(nameof(Get_Parser_ShouldParseText_WhenItsNonAlphabetical_TestData))]
         public void Parser_ShouldParseText_WhenItsNonAlphabetical(string[] expected)
         {
-            var parsedText = _wordProcessor.ParseText(_secondText);
+            var parsedText = _wordProcessor.ParseText(SecondText);
             Assert.Equal(expected, parsedText);
         }
 
