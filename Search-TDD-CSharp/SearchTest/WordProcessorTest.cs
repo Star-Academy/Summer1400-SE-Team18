@@ -51,7 +51,7 @@ namespace SearchTest
 
         public static IEnumerable<Object[]> Get_Parser_ShouldParseNormalText_TestData()
         {
-           var returnValue =  new[]
+            var returnValue =  new[]
             {
                 "Advice",
                 "me",
@@ -185,7 +185,11 @@ namespace SearchTest
             };
            IStemmer stemmer = new EnglishStemmer();
            returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
-           return new List<object[]>(new[] {returnValue});
+           var a = new List<object[]>()
+           {
+               new object[]{returnValue}
+           };
+           return a;
         }
 
         [Theory]
@@ -233,7 +237,10 @@ namespace SearchTest
             };
             IStemmer stemmer = new EnglishStemmer();
             returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
-            return new List<object[]>(new[] {returnValue});
+            return new List<object[]>()
+            {
+                new object[] { returnValue}
+            };
         }
     }
 }
