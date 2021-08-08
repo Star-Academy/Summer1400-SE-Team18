@@ -203,4 +203,8 @@ buildNumber.properties
 # Ignore Database
 school/School/Scores/Database/*
 
+# ignore test files 
+search-TDD/TestDataBase/*
+search-TDD/TestDataBase2/*
+
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
