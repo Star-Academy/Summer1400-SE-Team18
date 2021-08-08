@@ -1,4 +1,5 @@
-﻿using static SearchTest.TestEssentials;
+﻿using System;
+using static SearchTest.TestEssentials;
 using System.Collections.Generic;
 using System.Linq;
 using Iveonik.Stemmers;
@@ -37,9 +38,8 @@ namespace SearchTest
             MockFolderReaderForDataBase2(folderReader);
             IWordProcessor wordProcessor = new WordProcessor(customStemmer);
             _indexer = new Indexer(folderReader, wordProcessor, database);
-
         }
-        
+
         [Fact]
         public void Search_ShouldSearchCorrectly_ForOneWord()
         {
@@ -55,11 +55,11 @@ namespace SearchTest
                     "mikham",
                     new HashSet<string>(new[] {"3"})
                 }
-            };  
+            };
             Assert.All(tests.ToList(),
                 testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
 
-            
+
             _indexer.Index("TestDataBase2");
             tests = new Dictionary<string, HashSet<string>>()
             {
@@ -80,57 +80,68 @@ namespace SearchTest
         public void Search_ShouldSearchCorrectly_ForOneFolder()
         {
             _indexer.Index("TestDataBase");
-            Assert.Equal(_searcher.Search("mohammad -am"), (new HashSet<string>(new string[] { })));
+            Assert.Equal(new HashSet<string>(System.Array.Empty<string>()), _searcher.Search("mohammad -am"));
         }
 
-        [Fact]
-        public void Search_ShouldSearchCorrectly_ForTwoFolders()
+        [Theory]
+        [MemberData(nameof(Get_Search_ShouldSearchCorrectly_ForTwoFolders_TestData))]
+        public void Search_ShouldSearchCorrectly_ForTwoFolders(string searchFor, HashSet<string> expectedAnswer)
         {
             _indexer.Index("TestDataBase");
             _indexer.Index("TestDataBase2");
-            var tests = new Dictionary<string, HashSet<string>>()
-            {
-                {
-                    "mohammad -am",
-                    new HashSet<string>(new []{"mohammad"})
-                }, 
-                {
-                    "-amirraftKhonnashoonKhabeshMioomad",
-                    new HashSet<string>(new string[]{})
-                }, 
-                {
-                    "taghi +mamooli -dubai",
-                    new HashSet<string>(new string[]{})
-                }, 
-                {
-                    "sag +mikham",
-                    new HashSet<string>(new []{"gorbe", "3"})
-                }, 
-                {
-                    "sag -mikham",
-                    new HashSet<string>(new []{"gorbe"})
-                }, 
-                {
-                    "+dubai",
-                    new HashSet<string>(new []{"sag", "4"})
-                }, 
-                {
-                    "+dubai +talaii",
-                    new HashSet<string>(new []{"sag", "4"})
-                }, 
-                {
-                    "mohammad -mikham +mohammad",
-                    new HashSet<string>(new []{"mohammad", "1"})
-                }, 
-                {
-                    "abbas +rafte +dubai +sag -mikham -taghi",
-                    new HashSet<string>(new []{"4", "gorbe", "mohammad"})
-                }
-            };
-            
-            Assert.All(tests.ToList(), 
-                pair => Assert.Equal(_searcher.Search(pair.Key), pair.Value));
+            Assert.Equal(expectedAnswer, _searcher.Search(searchFor));
         }
 
+        public static IEnumerable<Object[]> Get_Search_ShouldSearchCorrectly_ForTwoFolders_TestData()
+        {
+            return new List<object[]>()
+            {
+                new object[]
+                {
+                    "mohammad -am",
+                    new HashSet<string>(new[] {"mohammad"})
+                },
+                new object[]
+                {
+                    "-amirraftKhonnashoonKhabeshMioomad",
+                    new HashSet<string>(new string[] { })
+                },
+                new object[]
+                {
+                    "taghi +mamooli -dubai",
+                    new HashSet<string>(new string[] { })
+                },
+                new object[]
+                {
+                    "sag +mikham",
+                    new HashSet<string>(new[] {"gorbe", "3"})
+                },
+                new object[]
+                {
+                    "sag -mikham",
+                    new HashSet<string>(new[] {"gorbe"})
+                },
+                new object[]
+                {
+                    "+dubai",
+                    new HashSet<string>(new[] {"sag", "4"})
+                },
+                new object[]
+                {
+                    "+dubai +talaii",
+                    new HashSet<string>(new[] {"sag", "4"})
+                },
+                new object[]
+                {
+                    "mohammad -mikham +mohammad",
+                    new HashSet<string>(new[] {"mohammad", "1"})
+                },
+                new object[]
+                {
+                    "abbas +rafte +dubai +sag -mikham -taghi",
+                    new HashSet<string>(new[] {"4", "gorbe", "mohammad"})
+                }
+            };
+        }
     }
 }
