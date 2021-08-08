@@ -47,9 +47,7 @@ namespace SearchTest
                 new HashSet<string>() {"3"},
                 new HashSet<string>() {"4"}
             };
-            AddFile1Data(expectedData, fileNames);
-            AddFile2Data(expectedData, fileNames);
-            AddFile3Data(expectedData, fileNames);
+            AddFilesData(expectedData, fileNames);
             var databaseInfo = new HashSet<Data>();
 
             _indexer.Index("TestDataBase");
@@ -84,6 +82,14 @@ namespace SearchTest
             data.Add(MakeData(GetStem("i"), fileNames[0]));
             data.Add(MakeData(GetStem("am"), fileNames[0]));
             data.Add(MakeData(GetStem("mohammad"), fileNames[0]));
+        }
+
+        private void AddFilesData(HashSet<Data> data, HashSet<string>[] fileNames)
+        {
+            
+            AddFile1Data(data, fileNames);
+            AddFile2Data(data, fileNames);
+            AddFile3Data(data, fileNames);
         }
 
         private void AddFile2Data(HashSet<Data> data, HashSet<string>[] fileNames)
