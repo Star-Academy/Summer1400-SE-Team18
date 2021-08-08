@@ -1,6 +1,6 @@
 ﻿using static SearchTest.TestEssentials;
 using System.Linq;
-
+using Iveonik.Stemmers;
 using Search.Word;
 using Xunit;
 
@@ -9,12 +9,34 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public class WordProcessorTest
     {
-        private readonly IWordProcessor _wordProcessor = Manager.GetInstance().WordProcessorInstance;
-        private readonly IStemmer _stemmer = Manager.GetInstance().Stemmer;
+        private WordProcessor _wordProcessor;
+        private ICustomStemmer _stemmer;
+        
+        private string _firstTest = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
+        " if style allow he there. Tiled man stand tears ten joy there terms any widen." +
+        " Procuring continued suspicion its ten. Pursuit brother are had fifteen distant has." +
+        " Early had add equal china quiet visit. Appear an manner as no limits either praise in." +
+        " In in written on charmed justice is amiable farther besides. Law insensible middletons" +
+        " unsatiable for apartments boy delightful unreserved.Admiration we surrounded possession" +
+        " frequently he. Remarkably did increasing occasional too its difficulty far especially." +
+        " Known tiled but sorry joy balls. Bed sudden manner indeed fat now feebly. Face do with in" +
+        " need of wife paid that be. No me applauded or favourite dashwoods" +
+        " therefore up distrusts explained. ";
+        
+        private string _secondText = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
+                                     " at da##*()(((((()))re rose lose go444od. Feel and make two real miss use ea12331" +
+                                     "23sy. Celebrated delightful an";
 
         public WordProcessorTest()
         {
-            Reset();
+            InitializeFields();
+        }
+
+        private void InitializeFields()
+        {
+            IStemmer englishStemmer = new EnglishStemmer();
+            _stemmer = new Stemmer(englishStemmer);
+            _wordProcessor = new WordProcessor(_stemmer);
         }
 
         [Fact]
@@ -153,17 +175,8 @@ namespace SearchTest
                 "explained"
             };
             expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
-            var text = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
-                       " if style allow he there. Tiled man stand tears ten joy there terms any widen." +
-                       " Procuring continued suspicion its ten. Pursuit brother are had fifteen distant has." +
-                       " Early had add equal china quiet visit. Appear an manner as no limits either praise in." +
-                       " In in written on charmed justice is amiable farther besides. Law insensible middletons" +
-                       " unsatiable for apartments boy delightful unreserved.Admiration we surrounded possession" +
-                       " frequently he. Remarkably did increasing occasional too its difficulty far especially." +
-                       " Known tiled but sorry joy balls. Bed sudden manner indeed fat now feebly. Face do with in" +
-                       " need of wife paid that be. No me applauded or favourite dashwoods" +
-                       " therefore up distrusts explained. ";
-            var parsedText = _wordProcessor.ParseText(text);
+            
+            var parsedText = _wordProcessor.ParseText(_firstTest);
             Assert.Equal(expected, parsedText);
         }
 
@@ -204,9 +217,7 @@ namespace SearchTest
                 "an"
             };
             expected = expected.Select(s => _stemmer.Stem(s.ToLower())).ToArray();
-            var text = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
-                       " at da##*()(((((()))re rose lose go444od. Feel and make two real miss use ea1233123sy. Celebrated delightful an";
-            var parsedText = _wordProcessor.ParseText(text);
+            var parsedText = _wordProcessor.ParseText(_secondText);
             Assert.Equal(expected, parsedText);
         }
     }

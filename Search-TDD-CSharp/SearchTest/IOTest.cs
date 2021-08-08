@@ -22,7 +22,6 @@ namespace SearchTest
 
         public IoTest()
         {
-            Reset();
             _fileContents = new KeyValuePair<string, string>[3];
             InitializeFileContent();
             InitializeFields();

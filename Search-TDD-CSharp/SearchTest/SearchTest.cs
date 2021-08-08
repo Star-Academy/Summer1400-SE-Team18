@@ -21,7 +21,6 @@ namespace SearchTest
 
         public SearchTest()
         {
-            Reset();
             InitializeFields();
         }
 

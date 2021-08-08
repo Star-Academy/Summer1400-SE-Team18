@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Iveonik.Stemmers;
 using NSubstitute;
 using Search.DatabaseAndStoring;
 
@@ -22,7 +23,8 @@ namespace SearchTest
 
         public static string GetStem(string word)
         {
-            return ManagerInstance.Stemmer.Stem(word);
+            IStemmer stemmer = new EnglishStemmer();
+            return stemmer.Stem(word);
         }
 
         public static void MockFolderReaderForDataBase(IReader reader)
@@ -42,11 +44,6 @@ namespace SearchTest
                          $"I am Mohammad.{LineSeparator}"
                 }
             });
-        }
-
-        public static void Reset()
-        {
-            ManagerInstance.Database.ClearAll();
         }
 
         public static void MockFolderReaderForDataBase2(IReader reader)
