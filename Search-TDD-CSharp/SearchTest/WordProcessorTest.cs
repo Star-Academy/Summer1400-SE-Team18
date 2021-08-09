@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using static SearchTest.TestEssentials;
 using System.Linq;
 using Iveonik.Stemmers;
+using NSubstitute;
 using Search.Word;
 using Xunit;
 
@@ -12,22 +13,6 @@ namespace SearchTest
     public class WordProcessorTest
     {
         private WordProcessor _wordProcessor;
-        private ICustomStemmer _stemmer;
-        
-        private const string FirstTest = "Advice me cousin an spring of needed. Tell use paid law ever yet new. Meant to learn of vexed" +
-        " if style allow he there. Tiled man stand tears ten joy there terms any widen." +
-        " Procuring continued suspicion its ten. Pursuit brother are had fifteen distant has." +
-        " Early had add equal china quiet visit. Appear an manner as no limits either praise in." +
-        " In in written on charmed justice is amiable farther besides. Law insensible middletons" +
-        " unsatiable for apartments boy delightful unreserved.Admiration we surrounded possession" +
-        " frequently he. Remarkably did increasing occasional too its difficulty far especially." +
-        " Known tiled but sorry joy balls. Bed sudden manner indeed fat now feebly. Face do with in" +
-        " need of wife paid that be. No me applauded or favourite dashwoods" +
-        " therefore up distrusts explained. ";
-        
-        private const string SecondText = "Detract111222333 yet delight written farther11111 his general2222. If in so bred" +
-                                     " at da##*()(((((()))re rose lose go444od. Feel and make two real miss use ea12331" +
-                                     "23sy. Celebrated delightful an";
 
         public WordProcessorTest()
         {
@@ -36,21 +21,22 @@ namespace SearchTest
 
         private void InitializeFields()
         {
-            IStemmer englishStemmer = new EnglishStemmer();
-            _stemmer = new Stemmer(englishStemmer);
-            _wordProcessor = new WordProcessor(_stemmer);
+            var stemmer = Substitute.For<ICustomStemmer>();
+            stemmer.Stem(Arg.Any<string>()).Returns(x => x.Arg<string>());
+            _wordProcessor = new WordProcessor(stemmer);
         }
 
         [Theory]
         [MemberData(nameof(Get_Parser_ShouldParseNormalText_TestData))]
-        public void Parser_ShouldParseNormalText(string[] expected)
+        public void Parser_ShouldParseNormalText(string text, string[] expected)
         {
-            var parsedText = _wordProcessor.ParseText(FirstTest);
+            var parsedText = _wordProcessor.ParseText(text);
             Assert.Equal(expected, parsedText);
         }
 
         public static IEnumerable<Object[]> Get_Parser_ShouldParseNormalText_TestData()
         {
+            const string text = "Advice me cousin an spring of needed.";
             var returnValue =  new[]
             {
                 "Advice",
@@ -59,156 +45,29 @@ namespace SearchTest
                 "an",
                 "spring",
                 "of",
-                "needed",
-                "Tell",
-                "use",
-                "paid",
-                "law",
-                "ever",
-                "yet",
-                "new",
-                "Meant",
-                "to",
-                "learn",
-                "of",
-                "vexed",
-                "if",
-                "style",
-                "allow",
-                "he",
-                "there",
-                "Tiled",
-                "man",
-                "stand",
-                "tears",
-                "ten",
-                "joy",
-                "there",
-                "terms",
-                "any",
-                "widen",
-                "Procuring",
-                "continued",
-                "suspicion",
-                "its",
-                "ten",
-                "Pursuit",
-                "brother",
-                "are",
-                "had",
-                "fifteen",
-                "distant",
-                "has",
-                "Early",
-                "had",
-                "add",
-                "equal",
-                "china",
-                "quiet",
-                "visit",
-                "Appear",
-                "an",
-                "manner",
-                "as",
-                "no",
-                "limits",
-                "either",
-                "praise",
-                "in",
-                "In",
-                "in",
-                "written",
-                "on",
-                "charmed",
-                "justice",
-                "is",
-                "amiable",
-                "farther",
-                "besides",
-                "Law",
-                "insensible",
-                "middletons",
-                "unsatiable",
-                "for",
-                "apartments",
-                "boy",
-                "delightful",
-                "unreserved",
-                "Admiration",
-                "we",
-                "surrounded",
-                "possession",
-                "frequently",
-                "he",
-                "Remarkably",
-                "did",
-                "increasing",
-                "occasional",
-                "too",
-                "its",
-                "difficulty",
-                "far",
-                "especially",
-                "Known",
-                "tiled",
-                "but",
-                "sorry",
-                "joy",
-                "balls",
-                "Bed",
-                "sudden",
-                "manner",
-                "indeed",
-                "fat",
-                "now",
-                "feebly",
-                "Face",
-                "do",
-                "with",
-                "in",
-                "need",
-                "of",
-                "wife",
-                "paid",
-                "that",
-                "be",
-                "No",
-                "me",
-                "applauded",
-                "or",
-                "favourite",
-                "dashwoods",
-                "therefore",
-                "up",
-                "distrusts",
-                "explained"
+                "needed"
             };
-           IStemmer stemmer = new EnglishStemmer();
-           returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
            var a = new List<object[]>()
            {
-               new object[]{returnValue}
+               new object[]{ text, returnValue }
            };
            return a;
         }
 
         [Theory]
         [MemberData(nameof(Get_Parser_ShouldParseText_WhenItsNonAlphabetical_TestData))]
-        public void Parser_ShouldParseText_WhenItsNonAlphabetical(string[] expected)
+        public void Parser_ShouldParseText_WhenItsNonAlphabetical(string text, string[] expected)
         {
-            var parsedText = _wordProcessor.ParseText(SecondText);
+            var parsedText = _wordProcessor.ParseText(text);
             Assert.Equal(expected, parsedText);
         }
 
         public static IEnumerable<Object[]> Get_Parser_ShouldParseText_WhenItsNonAlphabetical_TestData()
         {
+            const string text = "Detract111222333 his general2222. If in so bred at da##*()(((((()))re rose lose go444od.";
             var returnValue =  new[]
             {
                 "Detract",
-                "yet",
-                "delight",
-                "written",
-                "farther",
                 "his",
                 "general",
                 "If",
@@ -221,25 +80,11 @@ namespace SearchTest
                 "rose",
                 "lose",
                 "go",
-                "od",
-                "Feel",
-                "and",
-                "make",
-                "two",
-                "real",
-                "miss",
-                "use",
-                "ea",
-                "sy",
-                "Celebrated",
-                "delightful",
-                "an"
+                "od"
             };
-            IStemmer stemmer = new EnglishStemmer();
-            returnValue = returnValue.Select(s => stemmer.Stem(s.ToLower())).ToArray();
             return new List<object[]>()
             {
-                new object[] { returnValue}
+                new object[] { text, returnValue}
             };
         }
     }
