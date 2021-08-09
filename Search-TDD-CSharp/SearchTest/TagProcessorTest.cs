@@ -18,8 +18,8 @@ namespace SearchTest
 
         private void InitializeFields()
         {
-            ICustomStemmer customStemmer = Substitute.For<ICustomStemmer>();
-            MockCustomStemmer(customStemmer);
+            var customStemmer = Substitute.For<ICustomStemmer>();
+            customStemmer.Stem(Arg.Any<string>()).Returns(x => x.Arg<string>());
             _tagProcessor = new TagProcessor(customStemmer);
         }
         
@@ -41,13 +41,6 @@ namespace SearchTest
         {
             var tagged = _tagProcessor.Process(command);
             Assert.Equal(tagged.Word, word);
-        }
-
-        private void MockCustomStemmer(ICustomStemmer customStemmer)
-        {
-            customStemmer.Stem("mohammad").Returns("mohammad");
-            customStemmer.Stem("ali").Returns("ali");
-            customStemmer.Stem("reza").Returns("reza");
         }
     }
 }
