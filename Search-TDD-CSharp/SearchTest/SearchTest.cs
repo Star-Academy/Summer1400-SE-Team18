@@ -40,7 +40,7 @@ namespace SearchTest
             {
                 "1", "2"
             }));
-            database.GetData(Arg.Is<string>(s => s == "dubai")).Returns(new Data("mir", new HashSet<string>()
+            database.GetData(Arg.Is<string>(s => s == "dubai")).Returns(new Data("dubai", new HashSet<string>()
             {
                 "1"
             }));
