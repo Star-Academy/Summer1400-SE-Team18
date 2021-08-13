@@ -5,6 +5,8 @@
 .metadata
 bin/
 tmp/
+obj/
+*.user
 *.tmp
 *.bak
 *.swp
@@ -188,14 +190,22 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+*/pom.xml
+
+*/*.xml
+*/.vscode/
+search-TDD/pom.xml
+
 
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*/.vscode/
+search-TDD/TestDataBase/
+search-TDD/TestDataBase2/
+
 
 # Ignore all local history of files
 .history
-
-# End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
