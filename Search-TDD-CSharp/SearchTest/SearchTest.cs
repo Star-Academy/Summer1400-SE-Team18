@@ -1,15 +1,8 @@
-﻿using System;
-using static SearchTest.TestEssentials;
-using System.Collections.Generic;
-using System.Linq;
-using Iveonik.Stemmers;
+﻿using System.Collections.Generic;
 using NSubstitute;
 using Search.DatabaseAndStoring;
-using Search.Index;
-using Search.IO.FolderIO;
 using Search.Search;
 using Search.Tags;
-using Search.Word;
 using Xunit;
 
 namespace SearchTest
@@ -18,130 +11,99 @@ namespace SearchTest
     public class SearchTest
     {
         private ISearcher _searcher;
-        private IIndexer _indexer;
 
-        public SearchTest()
+        [Fact]
+        public void Search_ShouldOperateCorrectSetOperations_WhenRetainingAndJoining1()
         {
-            InitializeFields();
-        }
+            // mock tag creator
+            var tagCreator = Substitute.For<ITagCreator>();
+            tagCreator.CreateTags("mir").Returns(new HashSet<Tag>()
+            {
+                new Tag("mir", TagType.NoTag)
+            });
+            tagCreator.CreateTags("mir dubai").Returns(new HashSet<Tag>()
+            {
+                new Tag("dubai", TagType.NoTag),
+                new Tag("mir", TagType.NoTag)
+            });
 
-        private void InitializeFields()
-        {
-            IStemmer stemmer = new EnglishStemmer();
-            ICustomStemmer customStemmer = new Stemmer(stemmer);
-            ITagProcessor tagProcessor = new TagProcessor(customStemmer);
-            ITagCreator tagCreator = new TagCreator(tagProcessor);
-            IDatabase database = new Database();
+            // mock database
+            var database = Substitute.For<IDatabase>();
+            database.GetData(Arg.Is<string>(s => s == "mir")).Returns(new Data("mir", new HashSet<string>()
+            {
+                "1", "2"
+            }));
+            database.GetData(Arg.Is<string>(s => s == "dubai")).Returns(new Data("dubai", new HashSet<string>()
+            {
+                "1"
+            }));
+
+            // create searcher
             _searcher = new Searcher(tagCreator, database);
-            IFolderReader folderReader = Substitute.For<IFolderReader>();
-            MockFolderReaderForDataBase(folderReader);
-            MockFolderReaderForDataBase2(folderReader);
-            IWordProcessor wordProcessor = new WordProcessor(customStemmer);
-            _indexer = new Indexer(folderReader, wordProcessor, database);
+
+            Assert.Equal(_searcher.Search("mir"), new HashSet<string>() {"1", "2"});
+            Assert.Equal(_searcher.Search("mir dubai"), new HashSet<string>() {"1"});
         }
 
         [Fact]
-        public void Search_ShouldSearchCorrectly_ForOneWord()
+        public void Search_ShouldOperateCorrectSetOperations_WhenRetainingAndJoining2()
         {
-            _indexer.Index("TestDataBase");
-
-            var tests = new Dictionary<string, HashSet<string>>()
+            const string firstTest = "mir +mohammad -ali";
+            const string secondTest = "mir +mohammad";
+            const string thirdTest = "+mohammad -ali";
+            const string fourthTest = "ali -mir";
+            const string fifthTest = "-mir";
+            // mock tag creator
+            var tagCreator = Substitute.For<ITagCreator>();
+            tagCreator.CreateTags(firstTest).Returns(new HashSet<Tag>()
             {
-                {
-                    "mir",
-                    new HashSet<string>(new[] {"4"})
-                },
-                {
-                    "mikham",
-                    new HashSet<string>(new[] {"3"})
-                }
-            };
-            Assert.All(tests.ToList(),
-                testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
-
-
-            _indexer.Index("TestDataBase2");
-            tests = new Dictionary<string, HashSet<string>>()
+                new Tag("mir", TagType.NoTag),
+                new Tag("mohammad", TagType.Plus),
+                new Tag("ali", TagType.Minus),
+            });
+            tagCreator.CreateTags(secondTest).Returns(new HashSet<Tag>()
             {
-                {
-                    "sag mikham",
-                    new HashSet<string>(new[] {"3"})
-                },
-                {
-                    "dubai",
-                    new HashSet<string>(new[] {"4", "sag"})
-                }
-            };
-            Assert.All(tests.ToList(),
-                testPair => Assert.Equal(_searcher.Search(testPair.Key), testPair.Value));
-        }
-
-        [Fact]
-        public void Search_ShouldSearchCorrectly_ForOneFolder()
-        {
-            _indexer.Index("TestDataBase");
-            Assert.Equal(new HashSet<string>(System.Array.Empty<string>()), _searcher.Search("mohammad -am"));
-        }
-
-        [Theory]
-        [MemberData(nameof(Get_Search_ShouldSearchCorrectly_ForTwoFolders_TestData))]
-        public void Search_ShouldSearchCorrectly_ForTwoFolders(string searchFor, HashSet<string> expectedAnswer)
-        {
-            _indexer.Index("TestDataBase");
-            _indexer.Index("TestDataBase2");
-            Assert.Equal(expectedAnswer, _searcher.Search(searchFor));
-        }
-
-        public static IEnumerable<Object[]> Get_Search_ShouldSearchCorrectly_ForTwoFolders_TestData()
-        {
-            return new List<object[]>()
+                new Tag("mohammad", TagType.Plus),
+                new Tag("mir", TagType.NoTag)
+            });
+            tagCreator.CreateTags(thirdTest).Returns(new HashSet<Tag>()
             {
-                new object[]
-                {
-                    "mohammad -am",
-                    new HashSet<string>(new[] {"mohammad"})
-                },
-                new object[]
-                {
-                    "-amirraftKhonnashoonKhabeshMioomad",
-                    new HashSet<string>(new string[] { })
-                },
-                new object[]
-                {
-                    "taghi +mamooli -dubai",
-                    new HashSet<string>(new string[] { })
-                },
-                new object[]
-                {
-                    "sag +mikham",
-                    new HashSet<string>(new[] {"gorbe", "3"})
-                },
-                new object[]
-                {
-                    "sag -mikham",
-                    new HashSet<string>(new[] {"gorbe"})
-                },
-                new object[]
-                {
-                    "+dubai",
-                    new HashSet<string>(new[] {"sag", "4"})
-                },
-                new object[]
-                {
-                    "+dubai +talaii",
-                    new HashSet<string>(new[] {"sag", "4"})
-                },
-                new object[]
-                {
-                    "mohammad -mikham +mohammad",
-                    new HashSet<string>(new[] {"mohammad", "1"})
-                },
-                new object[]
-                {
-                    "abbas +rafte +dubai +sag -mikham -taghi",
-                    new HashSet<string>(new[] {"4", "gorbe", "mohammad"})
-                }
-            };
+                new Tag("mohammad", TagType.Plus),
+                new Tag("ali", TagType.Minus)
+            });
+            tagCreator.CreateTags(fourthTest).Returns(new HashSet<Tag>()
+            {
+                new Tag("ali", TagType.NoTag),
+                new Tag("mir", TagType.Minus)
+            });
+            tagCreator.CreateTags(fifthTest).Returns(new HashSet<Tag>()
+            {
+                new Tag("mir", TagType.Minus)
+            });
+
+            // mock database
+            var database = Substitute.For<IDatabase>();
+            database.GetData(Arg.Is<string>(s => s == "mir")).Returns(new Data("mir", new HashSet<string>()
+            {
+                "1", "2"
+            }));
+            database.GetData(Arg.Is<string>(s => s == "mohammad")).Returns(new Data("mohammad", new HashSet<string>()
+            {
+                "1", "3", "4"
+            }));
+            database.GetData(Arg.Is<string>(s => s == "ali")).Returns(new Data("ali", new HashSet<string>()
+            {
+                "1", "2", "4"
+            }));
+
+            // create searcher
+            _searcher = new Searcher(tagCreator, database);
+
+            Assert.Equal(_searcher.Search(firstTest), new HashSet<string>() {"3"});
+            Assert.Equal(_searcher.Search(secondTest), new HashSet<string>() {"1", "2", "3", "4"});
+            Assert.Equal(_searcher.Search(thirdTest), new HashSet<string>() {"3"});
+            Assert.Equal(_searcher.Search(fourthTest), new HashSet<string>() {"4"});
+            Assert.Equal(_searcher.Search(fifthTest), new HashSet<string>());
         }
     }
 }

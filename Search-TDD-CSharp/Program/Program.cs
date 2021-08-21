@@ -1,5 +1,7 @@
 ﻿using System;
-using Iveonik.Stemmers;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Program.CommandController;
@@ -16,12 +18,14 @@ namespace Program
     class Program
     {
         private static IServiceProvider _serviceProvider;
-        
+
         static void Main(string[] args)
         {
             CreateHost();
-            var programController = (ProgramController)_serviceProvider.GetService(typeof(ProgramController));
+            var programController = (ProgramController) _serviceProvider.GetService(typeof(ProgramController));
             programController?.Run();
+            var db = (IDatabase) _serviceProvider.GetService(typeof(IDatabase));
+            Console.WriteLine(db.GetData("hi").FilesWithWordInThem.Count);
         }
 
         private static void CreateHost()
@@ -31,7 +35,6 @@ namespace Program
                 services.AddSingleton<ProgramController>();
                 services.AddSingleton<IFileReader, FileReader>();
                 services.AddSingleton<IFolderReader, FolderReader>();
-                services.AddSingleton<IStemmer, EnglishStemmer>();
                 services.AddSingleton<ICustomStemmer, Stemmer>();
                 services.AddSingleton<IWordProcessor, WordProcessor>();
                 services.AddSingleton<IDatabase, Database>();
@@ -41,7 +44,7 @@ namespace Program
                 services.AddSingleton<ISearcher, Searcher>();
                 services.AddSingleton<ICommandParser, CommandParser>();
             }).Build();
-            
+
             _serviceProvider = host.Services;
         }
     }

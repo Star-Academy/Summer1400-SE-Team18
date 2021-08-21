@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Iveonik.Stemmers;
 using NSubstitute;
 using Search.DatabaseAndStoring;
 
 using Search.IO;
+using Search.Models;
+using Search.Word;
 using Xunit;
 
 namespace SearchTest
@@ -23,7 +24,7 @@ namespace SearchTest
 
         public static string GetStem(string word)
         {
-            IStemmer stemmer = new EnglishStemmer();
+            ICustomStemmer stemmer = new Stemmer();
             return stemmer.Stem(word);
         }
 

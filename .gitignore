@@ -212,3 +212,7 @@ Search-TDD-CSharp/SearchTest/TestResults/
 
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
 Search-TDD-CSharp/Search-TDD-CSharp.sln.DotSettings.user
+Search-TDD-CSharp/Dockerfile
+Search-TDD-CSharp/.dockerignore
+Search-TDD-CSharp/SearchWeb/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js
+Search-TDD-CSharp/SearchApi/Dockerfile

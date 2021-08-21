@@ -1,12 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Search.DatabaseAndStoring
 {
     public class Data
     {
-        public static Data NullData => new Data("", new HashSet<string>());
-        public string Word { get; }
+        [Key]
+        public string Word { get; set; }
+
+        [Required]
         public HashSet<string> FilesWithWordInThem { get; }
+
+        public Data()
+        {
+            Word = "";
+            FilesWithWordInThem = new HashSet<string>();
+        }
 
         public Data(string word, HashSet<string> filesWithWordInThem)
         {
