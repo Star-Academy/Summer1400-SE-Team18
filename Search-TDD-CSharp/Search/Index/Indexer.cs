@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Search.DatabaseAndStoring;
 using Search.IO;
 using Search.IO.FolderIO;
+using Search.Models;
 using Search.Word;
 
 namespace Search.Index
@@ -34,11 +35,11 @@ namespace Search.Index
             var parsedText = _wordProcessor.ParseText(text);
             foreach (var word in parsedText)
             {
-                ChooseToMakeOrAppend(word, filename);
+                AddFileName(word, filename);
             }
         }
 
-        private void ChooseToMakeOrAppend(string word, string filename)
+        private void AddFileName(string word, string filename)
         {
             if (_database.DoesContainsWord(word)) 
                 AppendFilenameToData(word, filename);
@@ -48,9 +49,9 @@ namespace Search.Index
 
         private void MakeKeyInDataBase(string word, string filename)
         {
-            var filenames = new HashSet<string>(new[]{filename});
+            var filenames = new HashSet<string>() {filename};
             var createdData = new Data(word, filenames);
-            _database.AddData(createdData);
+            _database.AddModelData(createdData);
         }
 
         private void AppendFilenameToData(string word, string filename)

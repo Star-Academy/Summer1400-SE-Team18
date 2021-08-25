@@ -6,12 +6,6 @@ namespace Search.Tags
     {
         private const string MinusSign = "-";
         private const string PlusSign = "+";
-        private readonly ICustomStemmer _stemmer;
-
-        public TagProcessor(ICustomStemmer stemmer)
-        {
-            _stemmer = stemmer;
-        }
 
         public Tag Process(string word)
         {
@@ -28,7 +22,6 @@ namespace Search.Tags
                 result = result[1..];
             }
 
-            result = _stemmer.Stem(result);
             return result;
         }
 

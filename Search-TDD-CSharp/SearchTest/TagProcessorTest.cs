@@ -9,18 +9,11 @@ namespace SearchTest
     public class TagProcessorTest
     {
 
-        private ITagProcessor _tagProcessor;
+        private readonly ITagProcessor _tagProcessor;
         
         public TagProcessorTest()
         {
-            InitializeFields();
-        }
-
-        private void InitializeFields()
-        {
-            ICustomStemmer customStemmer = Substitute.For<ICustomStemmer>();
-            MockCustomStemmer(customStemmer);
-            _tagProcessor = new TagProcessor(customStemmer);
+            _tagProcessor = new TagProcessor();
         }
         
         [Theory]
@@ -41,13 +34,6 @@ namespace SearchTest
         {
             var tagged = _tagProcessor.Process(command);
             Assert.Equal(tagged.Word, word);
-        }
-
-        private void MockCustomStemmer(ICustomStemmer customStemmer)
-        {
-            customStemmer.Stem("mohammad").Returns("mohammad");
-            customStemmer.Stem("ali").Returns("ali");
-            customStemmer.Stem("reza").Returns("reza");
         }
     }
 }
