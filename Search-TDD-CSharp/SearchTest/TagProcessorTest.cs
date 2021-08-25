@@ -9,18 +9,11 @@ namespace SearchTest
     public class TagProcessorTest
     {
 
-        private ITagProcessor _tagProcessor;
+        private readonly ITagProcessor _tagProcessor;
         
         public TagProcessorTest()
         {
-            InitializeFields();
-        }
-
-        private void InitializeFields()
-        {
-            var customStemmer = Substitute.For<ICustomStemmer>();
-            customStemmer.Stem(Arg.Any<string>()).Returns(x => x.Arg<string>());
-            _tagProcessor = new TagProcessor(customStemmer);
+            _tagProcessor = new TagProcessor();
         }
         
         [Theory]

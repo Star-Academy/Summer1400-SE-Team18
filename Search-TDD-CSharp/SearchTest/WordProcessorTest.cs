@@ -15,14 +15,11 @@ namespace SearchTest
 
         public WordProcessorTest()
         {
-            InitializeFields();
+            _wordProcessor = new WordProcessor();
         }
 
         private void InitializeFields()
         {
-            var stemmer = Substitute.For<ICustomStemmer>();
-            stemmer.Stem(Arg.Any<string>()).Returns(x => x.Arg<string>());
-            _wordProcessor = new WordProcessor(stemmer);
         }
 
         [Theory]
@@ -36,7 +33,7 @@ namespace SearchTest
         public static IEnumerable<Object[]> Get_Parser_ShouldParseNormalText_TestData()
         {
             const string text = "Advice me cousin an spring of needed.";
-            var returnValue =  new[]
+            var seperatedText =  new[]
             {
                 "Advice",
                 "me",
@@ -46,11 +43,11 @@ namespace SearchTest
                 "of",
                 "needed"
             };
-           var a = new List<object[]>()
+           var returnValue = new List<object[]>()
            {
-               new object[]{ text, returnValue }
+               new object[]{ text, seperatedText }
            };
-           return a;
+           return returnValue;
         }
 
         [Theory]

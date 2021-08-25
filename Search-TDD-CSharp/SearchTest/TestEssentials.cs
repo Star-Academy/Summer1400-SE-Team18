@@ -13,20 +13,8 @@ namespace SearchTest
     [Collection("Test Collection 1")]
     public static class TestEssentials
     {
-        
 
         public static readonly string LineSeparator = Environment.NewLine;
-        
-        public static Data MakeData(string word, HashSet<string> fileNames)
-        {
-            return new Data(word, fileNames);
-        }
-
-        public static string GetStem(string word)
-        {
-            ICustomStemmer stemmer = new Stemmer();
-            return stemmer.Stem(word);
-        }
 
         public static void MockFolderReaderForDataBase(IReader reader)
         {

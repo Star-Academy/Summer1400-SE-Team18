@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Search.Word
@@ -8,25 +9,18 @@ namespace Search.Word
         private const string NonAlphabeticPattern = "[^A-Za-z ]";
         private const string WhiteSpace = " ";
         private const string SpaceRegex = "\\s+";
-        private readonly ICustomStemmer _stemmer;
-
-        public WordProcessor(ICustomStemmer stemmer)
-        {
-            _stemmer = stemmer;
-        }
-
-        public string[] ParseText(string text)
+        
+        public List<string> ParseText(string text)
         {
             text = RemoveNonAlphabeticalWords(text);
             var splitText = SplitWordsInText(text);
-            var parsedText = splitText.Select(e => _stemmer.Stem(e)).ToArray();
 
-            return parsedText;
+            return splitText;
         }
 
-        private string[] SplitWordsInText(string text)
+        private List<string> SplitWordsInText(string text)
         {
-            return Regex.Split(text, SpaceRegex);
+            return Regex.Split(text, SpaceRegex).ToList();
         }
 
         private string RemoveNonAlphabeticalWords(string text)

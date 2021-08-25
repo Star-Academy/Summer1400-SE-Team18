@@ -1,7 +1,9 @@
-﻿namespace Search.Word
+﻿using System.Collections.Generic;
+
+namespace Search.Word
 {
     public interface IWordProcessor
     {
-        string[] ParseText(string text);
+        List<string> ParseText(string text);
     }
 }

@@ -34,7 +34,7 @@ namespace SearchTest
         public void Indexer_ShouldCallDatabase_WhenFolderIsNotEmpty()
         {
             var wordProcessor = Substitute.For<IWordProcessor>();
-            wordProcessor.ParseText(default).ReturnsForAnyArgs(new string[] {"ali", "rafte", "biroon"});
+            wordProcessor.ParseText(default).ReturnsForAnyArgs(new List<string>() {"ali", "rafte", "biroon"});
             
             var folderReader = Substitute.For<IFolderReader>();
             folderReader.Read("mohammad").Returns(new Dictionary<string, string>() {{"mohammad", null}});

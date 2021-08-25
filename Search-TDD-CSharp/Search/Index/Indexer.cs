@@ -35,11 +35,11 @@ namespace Search.Index
             var parsedText = _wordProcessor.ParseText(text);
             foreach (var word in parsedText)
             {
-                ChooseToMakeOrAppend(word, filename);
+                AddFileName(word, filename);
             }
         }
 
-        private void ChooseToMakeOrAppend(string word, string filename)
+        private void AddFileName(string word, string filename)
         {
             if (_database.DoesContainsWord(word)) 
                 AppendFilenameToData(word, filename);

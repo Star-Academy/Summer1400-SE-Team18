@@ -22,9 +22,9 @@ namespace Program
         static void Main(string[] args)
         {
             CreateHost();
-            var programController = (ProgramController) _serviceProvider.GetService(typeof(ProgramController));
+            var programController = _serviceProvider.GetService<ProgramController>();
             programController?.Run();
-            var db = (IDatabase) _serviceProvider.GetService(typeof(IDatabase));
+            var db = _serviceProvider.GetService<Database>();
             Console.WriteLine(db.GetData("hi").FilesWithWordInThem.Count);
         }
 
@@ -35,7 +35,6 @@ namespace Program
                 services.AddSingleton<ProgramController>();
                 services.AddSingleton<IFileReader, FileReader>();
                 services.AddSingleton<IFolderReader, FolderReader>();
-                services.AddSingleton<ICustomStemmer, Stemmer>();
                 services.AddSingleton<IWordProcessor, WordProcessor>();
                 services.AddSingleton<IDatabase, Database>();
                 services.AddSingleton<IIndexer, Indexer>();

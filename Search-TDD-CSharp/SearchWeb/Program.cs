@@ -32,7 +32,6 @@ namespace SearchWeb
                 {
                     services.AddSingleton<IFileReader, FileReader>();
                     services.AddSingleton<IFolderReader, FolderReader>();
-                    services.AddSingleton<ICustomStemmer, Stemmer>();
                     services.AddSingleton<IWordProcessor, WordProcessor>();
                     services.AddSingleton<IDatabase, Database>();
                     services.AddSingleton<IIndexer, Indexer>();

@@ -14,9 +14,13 @@ namespace SearchWeb.Controllers
         public static string ResultString { get; set; }
         private ISearcher _searcher;
 
+        public ResultController(ISearcher searcher)
+        {
+            _searcher = searcher;
+        }
+
         public IActionResult Result([FromQuery]string text)
         {
-            InitializeSearcher();
             if (IsStringValid(text))
             {
                 ResultString = HashSetToString(_searcher.Search(text));
@@ -29,11 +33,6 @@ namespace SearchWeb.Controllers
         private string HashSetToString(HashSet<string> set)
         {
             return set.Count == 0 ? "Nothing Found" : set.Aggregate((next, current) => next + ", " + current);
-        }
-
-        private void InitializeSearcher()
-        {
-            _searcher = (ISearcher) Program.HostStatic.Services.GetService(typeof(ISearcher));
         }
 
         private static bool IsStringValid(string text)
