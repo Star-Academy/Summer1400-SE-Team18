@@ -5,6 +5,8 @@
 .metadata
 bin/
 tmp/
+obj/
+*.user
 *.tmp
 *.bak
 *.swp
@@ -195,7 +197,22 @@ buildNumber.properties
 !.vscode/launch.json
 !.vscode/extensions.json
 
+search-TDD/TestDataBase/
+search-TDD/TestDataBase2/
+search-TDD/.vscode/
+search-TDD/pom.xml
+school/School/Database
+Search-TDD-CSharp/Search/obj/Debug/
+Search-TDD-CSharp/Search/obj/
+Search-TDD-CSharp/SearchTest/obj/
+Search-TDD-CSharp/SearchTest/TestResults/
+
 # Ignore all local history of files
 .history
 
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij+all,visualstudiocode
+Search-TDD-CSharp/Search-TDD-CSharp.sln.DotSettings.user
+Search-TDD-CSharp/Dockerfile
+Search-TDD-CSharp/.dockerignore
+Search-TDD-CSharp/SearchWeb/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js
+Search-TDD-CSharp/SearchApi/Dockerfile

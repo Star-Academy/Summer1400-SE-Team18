@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Abbas123-Search";
+}
+
+<div class="text-center">
+    <style>
+            .someButton:hover {
+              box-shadow: 0 0 8px 4px rgba(22,22,22,0.2); 
+            }
+            
+            .someButton{
+              font-size:17px;
+              min-width:115px;
+              border-radius: 7px;
+              border-style: hidden;
+              background-color: #53d9fe;
+              text-align: center;
+            }
+        </style>
+    <br>
+    <br>
+    <img src="~/css/search.png" alt="Our fantastic search logo" width="225" height="225">
+    <br>
+    <br>
+    <p> ..اینجا کجاست ؟ اینجا میشه سرچ زد</p>
+
+    <br>
+    <br>
+    <input id="searchbar" maxlength="35" class="input-search" placeholder="input your search"  onclick="SearchBarClicked()"/>
+
+    <br>
+    <br>
+    <input type="button" value="Search" onclick="SearchClicked()" class="someButton"/>
+
+
+</div>
+
+<script>
+function SearchClicked() {
+        const stringContent = document.getElementById('searchbar').value;
+        if (stringContent == null || stringContent === '') return;
+        window.location.assign("http://localhost:5000/api/Result/Result?text=" + stringContent);
+}
+
+function SearchBarClicked() {
+        document.getElementById('searchbar').placeholder = "";    
+}
+    
+</script>
